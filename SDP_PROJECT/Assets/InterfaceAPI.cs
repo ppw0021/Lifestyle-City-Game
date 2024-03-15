@@ -13,7 +13,7 @@ public class InterfaceAPI : MonoBehaviour
     void Start()
     {
         
-        StartCoroutine(GetRequest("http://penushost.ddns.net:686/api"));
+        StartCoroutine(GetRequest("https://penushost.ddns.net/api"));
     }
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
