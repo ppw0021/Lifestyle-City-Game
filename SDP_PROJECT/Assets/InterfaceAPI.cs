@@ -12,7 +12,9 @@ public class InterfaceAPI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //maybe we can use websockets?
+
+        //GET
         StartCoroutine(GetRequest("https://penushost.ddns.net/api"));
     }
 
