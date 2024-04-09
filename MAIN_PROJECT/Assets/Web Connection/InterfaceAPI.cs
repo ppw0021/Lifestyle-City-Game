@@ -38,9 +38,12 @@ public class InterfaceAPI : MonoBehaviour
                     Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
                     break;
                 case UnityWebRequest.Result.Success:
+
                     text.text = webRequest.downloadHandler.text;
                     break;
             }
         }
     }
+
+    
 }

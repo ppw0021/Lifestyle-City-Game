@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/api", (req, res) => {
-    res.json({ "users": ["userOne", "userTwo", "userThree"] })
+    //res.json({ "users": ["userOne", "userTwo", "userThree"] })
     client.query('SELECT * FROM CLIENTS', (sqlerr, sqlres) => {
         if(!sqlerr){
             res.json(sqlres.rows);
@@ -67,12 +67,12 @@ const sslServer = https.createServer(
         //https://www.youtube.com/watch?v=USrMdBF0zcg
 
         //Unofficial keys
-        key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-        cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
+        //key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+        //cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
         
         //Raspberry pi keys
-        //cert: fs.readFileSync('/cert/fullchain1.pem'),
-        //key: fs.readFileSync('/cert/privkey1.pem')
+        cert: fs.readFileSync('/cert/fullchain1.pem'),
+        key: fs.readFileSync('/cert/privkey1.pem')
     },
     app
 )
