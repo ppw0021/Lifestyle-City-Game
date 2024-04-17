@@ -4,15 +4,20 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine;
 using System;
+using Unity.PlasticSCM.Editor.WebApi;
 
 public class InterfaceAPI : MonoBehaviour
 {
     //public TextMeshPro text;
 
     // Start is called before the first frame update
+
+    public User CurrentUser = new User();
+
     void Start()
     {
-        StartCoroutine(GetRequest("https://penushost.ddns.net/api"));       //Test example
+        //StartCoroutine(GetRequest("https://penushost.ddns.net/api"));       //Test example
+        //StartCoroutine(LoginPost("https://penushost.ddns.net/login", "{\"username\": \"dec5star\"}"));
     }
 
 
@@ -43,15 +48,30 @@ public class InterfaceAPI : MonoBehaviour
         }
     }
 
-    IEnumerator SendJsonRequest(string uri, string jsonData)    //This function sends a POST request to a specified URI with a JSON payload
+    public IEnumerator LoginPost(string uri, string jsonData)    //This function sends a POST request to a specified URI with a JSON payload
     {
         //Create POST request
-        using (UnityWebRequest webRequest = UnityWebRequest.Post(uri, "application/json"))
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
         {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
             webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
             webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
             yield return webRequest.SendWebRequest();                                       //Send the actual request
+            switch (webRequest.result)                                                                  //When request arrives
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+                    break;
+                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
+                    string jsonRaw = webRequest.downloadHandler.text;
+                    string strippedString = StripSquareBrackets(jsonRaw);                                    //Get RAW JSON
+                    Debug.Log(strippedString);
+                    User data = JsonUtility.FromJson<User>(strippedString);                 //Deserialize JSON string into a DataPacket object      
+                    //text.text = data.first_name;
+                    data.PrintDetails();
+                    break;
+            }
         }
     }
 
