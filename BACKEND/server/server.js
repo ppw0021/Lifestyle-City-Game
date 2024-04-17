@@ -48,6 +48,13 @@ app.get("/", (req, res) => {
     res.json({ "testing": ["one", "two", "three"] })
 })
 
+app.post("/login", (req, res) => {
+    client.query('')
+})
+
+
+
+
 app.get("/api", (req, res) => {
     //res.json({ "users": ["userOne", "userTwo", "userThree"] })
     client.query('SELECT * FROM CLIENTS', (sqlerr, sqlres) => {
