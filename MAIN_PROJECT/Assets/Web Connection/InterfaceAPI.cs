@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine;
 using System;
 using Unity.PlasticSCM.Editor.WebApi;
+using UnityEditor.Compilation;
 
 public class InterfaceAPI : MonoBehaviour
 {
@@ -12,16 +13,20 @@ public class InterfaceAPI : MonoBehaviour
 
     // Start is called before the first frame update
 
-    public User CurrentUser = new User();
-
+    public User currentUser;
+    private User userReceived;
+    private Response serverResponse;
     void Start()
     {
+        //Retired
         //StartCoroutine(GetRequest("https://penushost.ddns.net/api"));       //Test example
         //StartCoroutine(LoginPost("https://penushost.ddns.net/login", "{\"username\": \"dec5star\"}"));
     }
 
 
-    IEnumerator GetRequest(string uri)      //This function tests the connection using a get request and converts the results to an obect
+
+    //Needs to be re written for generic get reqs
+    /*IEnumerator GetRequest(string uri)      //This function tests the connection using a get request and converts the results to an obect
     {
         //Create GET request
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
@@ -37,7 +42,7 @@ public class InterfaceAPI : MonoBehaviour
                 case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
                     string jsonRaw = webRequest.downloadHandler.text;                                   //Get RAW JSON
                     string strippedString = StripSquareBrackets(jsonRaw);                               //Strip [] array brackets as it is sent as an array
-                    DataPacket data = JsonUtility.FromJson<DataPacket>(strippedString);                 //Deserialize JSON string into a DataPacket object      
+                    //DataPacket data = JsonUtility.FromJson<DataPacket>(strippedString);                 //Deserialize JSON string into a DataPacket object      
                     Debug.Log("ID: " + data.id);                                                        //Now you can access the properties of the DataPacket object
                     Debug.Log("First Name: " + data.first_name);
                     Debug.Log("Last Name: " + data.last_name);
@@ -46,7 +51,7 @@ public class InterfaceAPI : MonoBehaviour
                     break;
             }
         }
-    }
+    }*/
 
     public IEnumerator LoginPost(string uri, string jsonData)    //This function sends a POST request to a specified URI with a JSON payload
     {
@@ -65,11 +70,74 @@ public class InterfaceAPI : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
                     string jsonRaw = webRequest.downloadHandler.text;
-                    string strippedString = StripSquareBrackets(jsonRaw);                                    //Get RAW JSON
-                    Debug.Log(strippedString);
-                    User data = JsonUtility.FromJson<User>(strippedString);                 //Deserialize JSON string into a DataPacket object      
-                    //text.text = data.first_name;
-                    data.PrintDetails();
+                    Debug.Log("Raw Response: " + jsonRaw);
+                    bool isResponseUser = false;
+                    bool isResponseResponse = false;
+                    
+                    if (jsonRaw == "[]")
+                    {
+                        //Response is empty
+                        Debug.LogError("Empty SQL query recieved ([])");
+                        break;
+                    }
+
+                    //Try Covert JSON to Response
+                    try
+                    {
+                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                        if (serverResponse == null)
+                        {
+                            throw new Exception("Null serverResponse variable (Not Response type)");
+                        }
+                        isResponseResponse = true;
+                        
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e);
+                        serverResponse = null;
+                    }
+                    
+                    //Try Convert JSON to User
+                    try
+                    {
+                        if (isResponseResponse)
+                        {
+
+                        }
+                        else
+                        {
+                            string strippedString = StripSquareBrackets(jsonRaw);
+                            userReceived = JsonUtility.FromJson<User>(strippedString);
+                            if (userReceived == null)
+                            {
+                                throw new Exception("Null userReceived variable (Not User Type)");
+                            }
+                            isResponseUser = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e);
+                    }
+                    
+                    if (isResponseUser)
+                    {
+                        //Response is User type
+                        Debug.Log("Successful Login");
+                        userReceived.printDetails();
+                        currentUser = userReceived;
+                    }
+                    else if (isResponseResponse)
+                    {
+                        //Response is a Response type
+                        Debug.Log("Successful Response Recieved");
+                        serverResponse.printResponse();
+                    }
+                    else
+                    {
+                        //Response is not Response type or User Type
+                    }
                     break;
             }
         }

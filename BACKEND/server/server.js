@@ -1,16 +1,16 @@
 /*Launch Server
 * Execute this to build
-* docker build --platform linux/arm64 -t dec5star/backend:arm64 .
+docker build --platform linux/arm64 -t dec5star/backend:arm64 .
 * 
 * Then push to docker hub
-* docker push dec5star/backend:arm64
+docker push dec5star/backend:arm64
 * 
 * Execute this on Raspberry PI to pull
-* docker pull dec5star/backend:arm64
+docker pull dec5star/backend:arm64
 * 
 * This will run, and port forward HTTPS port 443, if you would like to add HTTP, uncomment the corresponding line and add -p 80:80
 * docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5star/backend:arm
-docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5star/backend:arm64 for pi_five
+docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5star/backend:arm64
 */
 
 //How to run POSTGRES shell
@@ -19,7 +19,11 @@ docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5
 //install PG
 
 //How to connect to psql
-// psql -h localhost -U postgres -d test_erp
+/*
+psql -h localhost -U postgres -d test_erp
+*/
+// 
+
 
 
 const express = require('express');
@@ -57,13 +61,24 @@ app.get("/", (req, res) => {
 app.use(bodyParser.json());
 
 app.post("/login", (req, res) => {
-    const { username } = req.body;
+    const { username, password } = req.body;
     console.log(username);
-    client.query('SELECT user_id, username, sesh_token, level, coins FROM users WHERE username = \'' + username + '\'', (sqlerr, sqlres) => {
+    client.query('SELECT user_id, username, sesh_token, level, coins FROM users WHERE username = \'' + username + '\' AND password = \'' + password + '\'', (sqlerr, sqlres) => {
         if(!sqlerr){
-            res.json(sqlres.rows);
+            console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                res.json({ response: "no_match"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                res.json(sqlres.rows);
+            }
         } else {
-            res.json(sqlerr.message);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
         }
         client.end;
     })
@@ -73,6 +88,7 @@ app.get("/api", (req, res) => {
     //res.json({ "users": ["userOne", "userTwo", "userThree"] })
     client.query('SELECT * FROM CLIENTS', (sqlerr, sqlres) => {
         if(!sqlerr){
+            
             res.json(sqlres.rows);
         } else {
             res.json(sqlerr.message);

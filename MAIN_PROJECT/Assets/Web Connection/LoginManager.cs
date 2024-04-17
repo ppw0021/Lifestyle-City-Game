@@ -14,7 +14,7 @@ public class LoginManager : MonoBehaviour
     public InterfaceAPI interfaceAPIObject;
 
     public void LoginButtonPressed() {
-        Debug.Log(usernameEmail.text);
-        StartCoroutine(interfaceAPIObject.LoginPost("https://penushost.ddns.net/login", "{\"username\": \"" + usernameEmail.text + "\"}"));
+        //Debug.Log(usernameEmail.text);
+        StartCoroutine(interfaceAPIObject.LoginPost("https://penushost.ddns.net/login", "{\"username\": \"" + usernameEmail.text + "\", \"password\": \"" + passwordInput.text + "\"}"));
     }
 }
