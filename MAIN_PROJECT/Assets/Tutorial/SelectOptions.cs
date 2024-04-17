@@ -4,44 +4,32 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SelectOptions : MonoBehaviour, IPointerClickHandler
+public class SelectOptions : MonoBehaviour
 {
-      public RawImage[] tutorialImages; // Array to hold RawImage components for each tutorial image
-    public int[] imageIndices; // Array to hold the index of the associated tutorial image for each button
+    public RawImage tutorialImage; // Reference to the tutorial image to display
 
-    public void OnPointerClick(PointerEventData eventData)
+    void Start()
     {
-        // Get the index of the clicked button
-        int buttonIndex = GetButtonIndex();
-
-        // Check if the button index is valid and corresponds to an image index
-        if (buttonIndex >= 0 && buttonIndex < imageIndices.Length)
-        {
-            int imageIndex = imageIndices[buttonIndex];
-
-            // Show the associated tutorial image
-            if (imageIndex >= 0 && imageIndex < tutorialImages.Length)
-            {
-                foreach (RawImage image in tutorialImages)
-                {
-                    image.gameObject.SetActive(false);
-                }
-                tutorialImages[imageIndex].gameObject.SetActive(true);
-            }
-        }
+        // Hide all tutorial images initially
+        HideAllTutorialImages();
     }
 
-    private int GetButtonIndex()
+    public void OnButtonClick()
     {
-        // Find the index of this button in the parent's child list
-        Transform parent = transform.parent;
-        for (int i = 0; i < parent.childCount; i++)
+        // Hide all tutorial images
+        HideAllTutorialImages();
+
+        // Show the associated tutorial image
+        tutorialImage.gameObject.SetActive(true);
+    }
+
+    private void HideAllTutorialImages()
+    {
+        // Find all tutorial images in the scene and hide them
+        RawImage[] allTutorialImages = FindObjectsOfType<RawImage>();
+        foreach (RawImage image in allTutorialImages)
         {
-            if (parent.GetChild(i) == transform)
-            {
-                return i;
-            }
+            image.gameObject.SetActive(false);
         }
-        return -1;
     }
 }
