@@ -18,6 +18,10 @@ docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5
 
 //install PG
 
+//How to connect to psql
+// psql -h localhost -U postgres -d test_erp
+
+
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
