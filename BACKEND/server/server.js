@@ -89,10 +89,10 @@ app.post("/login", (req, res) => {
 
 app.post("/getbase", (req, res) => {
     
-    const { sesh_token, user_id } = req.body;
+    const { sesh_id, user_id } = req.body;
 
     const getBaseQuery = 'SELECT bi.instance_id, bi.structure_id, bp.building_name, bi.x_pos, bi.y_pos, u.username AS owner_username FROM building_instances bi JOIN building_prefabs bp ON bi.structure_id = bp.structure_id JOIN buildings_owner bo ON bi.instance_id = bo.building_instance_id JOIN users u ON bo.base_owner_id = u.user_id WHERE u.user_id = \'' + user_id + '\'';
-    console.log("getbase pos request for (sesh_id, username): " + sesh_token, user_id);
+    console.log("getbase pos request for (sesh_id, username): " + sesh_id, user_id);
     client.query(getBaseQuery, (sqlerr, sqlres) => {
 
         if(!sqlerr){
@@ -106,7 +106,7 @@ app.post("/getbase", (req, res) => {
             else
             {
                 //This can only be called ONCE
-                console.log("base found: " + user_id);
+                console.log("base found for id: " + user_id);
                 res.json(sqlres.rows);
             }
         } else {
