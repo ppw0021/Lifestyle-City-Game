@@ -15,12 +15,13 @@ public class InterfaceAPI : MonoBehaviour
 
     public User currentUser;
     private User userReceived;
-    private Response serverResponse;
+    //private Response serverResponse;
     void Start()
     {
         //Retired
         //StartCoroutine(GetRequest("https://penushost.ddns.net/api"));       //Test example
         //StartCoroutine(LoginPost("https://penushost.ddns.net/login", "{\"username\": \"dec5star\"}"));
+        StartCoroutine(GetBasePost("https://penushost.ddns.net/getbase",  "{\"sesh_id\": \"abcdefg\", \"user_id\": 0}"));
     }
 
 
@@ -55,6 +56,8 @@ public class InterfaceAPI : MonoBehaviour
 
     public IEnumerator LoginPost(string uri, string jsonData)    //This function sends a POST request to a specified URI with a JSON payload
     {
+        Response serverResponse;
+        
         //Create POST request
         using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
         {
@@ -143,7 +146,101 @@ public class InterfaceAPI : MonoBehaviour
         }
     }
 
+    public IEnumerator GetBasePost(string uri, string jsonData)
+    {
+        /*
+        Response serverResponse;
+        BuildingInstance buildingInstanceReceived;
+        */
+        //Create POST request
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
+            webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
+            yield return webRequest.SendWebRequest();                                       //Send the actual request
+            switch (webRequest.result)                                                                  //When request arrives
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+                    break;
+                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
+                    string jsonRaw = webRequest.downloadHandler.text;
+                    Debug.Log("Raw Response: " + jsonRaw);
+                    /*
+                    bool isResponseBuildingInstance = false;
+                    bool isResponseResponse = false;
+                    
+                    if (jsonRaw == "[]")
+                    {
+                        //Response is empty
+                        Debug.LogError("Empty SQL query recieved ([])");
+                        break;
+                    }
 
+                    //Try Covert JSON to Response
+                    try
+                    {
+                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                        if (serverResponse == null)
+                        {
+                            throw new Exception("Null serverResponse variable (Not Response type)");
+                        }
+                        isResponseResponse = true;
+                        
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e);
+                        serverResponse = null;
+                    }
+                    
+                    //Try Convert JSON to User
+                    try
+                    {
+                        if (isResponseResponse)
+                        {
+
+                        }
+                        else
+                        {
+                            //string strippedString = StripSquareBrackets(jsonRaw);
+                            buildingInstanceReceived = JsonUtility.FromJson<BuildingInstance>(jsonRaw);
+                            if (userReceived == null)
+                            {
+                                throw new Exception("Null userReceived variable (Not User Type)");
+                            }
+                            isResponseBuildingInstance = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e);
+                    }
+                    
+                    if (isResponseBuildingInstance)
+                    {
+                        //Response is User type
+                        Debug.Log("Successful Login");
+                        userReceived.printDetails();
+                        currentUser = userReceived;
+                    }
+                    else if (isResponseResponse)
+                    {
+                        //Response is a Response type
+                        Debug.Log("Successful Response Recieved");
+                        serverResponse.printResponse();
+                    }
+                    else
+                    {
+                        //Response is not Response type or User Type
+                    }
+                    */
+                    break;
+            }
+        }
+    }
     string StripSquareBrackets(string input)
     {
         if (input.Length < 2)
@@ -165,6 +262,4 @@ public class InterfaceAPI : MonoBehaviour
             }
         }
     }
-
-    
 }

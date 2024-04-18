@@ -62,26 +62,61 @@ app.use(bodyParser.json());
 
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
-    console.log(username);
+    console.log("login post request for: " + username);
     client.query('SELECT user_id, username, sesh_token, level, coins FROM users WHERE username = \'' + username + '\' AND password = \'' + password + '\'', (sqlerr, sqlres) => {
         if(!sqlerr){
-            console.log(sqlres);
+            //console.log(sqlres);
             if (sqlres.rowCount == 0)
             {
                 //No rows, send response
+                console.log("login failed (incorrect details): " + username);
                 res.json({ response: "no_match"});
             }
             else
             {
                 //This can only be called ONCE
+                console.log("login success: " + username);
                 res.json(sqlres.rows);
             }
         } else {
+            console.log("sql_error for: " + username);
             res.json({ response: "sql_error"});
             //res.json(sqlerr.message);
         }
         client.end;
     })
+})
+
+app.post("/getbase", (req, res) => {
+    
+    const { sesh_token, user_id } = req.body;
+
+    const getBaseQuery = 'SELECT bi.instance_id, bi.structure_id, bp.building_name, bi.x_pos, bi.y_pos, u.username AS owner_username FROM building_instances bi JOIN building_prefabs bp ON bi.structure_id = bp.structure_id JOIN buildings_owner bo ON bi.instance_id = bo.building_instance_id JOIN users u ON bo.base_owner_id = u.user_id WHERE u.user_id = \'' + user_id + '\'';
+    console.log("getbase pos request for (sesh_id, username): " + sesh_token, user_id);
+    client.query(getBaseQuery, (sqlerr, sqlres) => {
+
+        if(!sqlerr){
+            //console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                console.log("no base for: " + user_id);
+                res.json({ response: "no_base"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                console.log("base found: " + user_id);
+                res.json(sqlres.rows);
+            }
+        } else {
+            console.log("sql_error for: " + user_id);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
+        }
+        client.end;
+    })
+
 })
 
 app.get("/api", (req, res) => {
