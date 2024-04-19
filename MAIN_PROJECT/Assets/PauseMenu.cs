@@ -12,11 +12,15 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         pauseMenu.SetActive(true);
+        Time.timeScale = 0;
+        Debug.Log("Game paused");
     }
 
     public void Resume()
     {
         pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        Debug.Log("Game resumed");
     }
 
     public void Exit()
@@ -24,5 +28,6 @@ public class PauseMenu : MonoBehaviour
         /* this method currently exits the application when pressed
         will be changed to something else (i.e. go back to the main menu etc.) */
         Application.Quit();
+        Debug.Log("Game closed");
     }
 }
