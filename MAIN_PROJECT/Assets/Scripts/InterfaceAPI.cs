@@ -1,28 +1,33 @@
-using TMPro;
+//using TMPro;
 using System.Collections;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine;
 using System;
-using Unity.PlasticSCM.Editor.WebApi;
-using UnityEditor.Compilation;
+//using Unity.PlasticSCM.Editor.WebApi;
+//using UnityEditor.Compilation;
+using UnityEngine.SceneManagement;
 
-public class InterfaceAPI : MonoBehaviour
+public static class InterfaceAPI
 {
-    //public TextMeshPro text;
+    //Proceed to next scene
+    private static void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 
-    // Start is called before the first frame update
-
-    public User currentUser;
-    private User userReceived;
+    public static User currentUser;
+    private static User userReceived;
     //private Response serverResponse;
-    void Start()
+    /*void Start()
     {
         //Retired
         //StartCoroutine(GetRequest("https://penushost.ddns.net/api"));       //Test example
+        
+        //Active
         //StartCoroutine(LoginPost("https://penushost.ddns.net/login", "{\"username\": \"dec5star\"}"));
-        StartCoroutine(GetBasePost("https://penushost.ddns.net/getbase",  "{\"sesh_id\": \"abcdefg\", \"user_id\": 0}"));
-    }
+        //StartCoroutine(GetBasePost("https://penushost.ddns.net/getbase",  "{\"sesh_id\": \"abcdefg\", \"user_id\": 0}"));
+    }*/
 
 
 
@@ -54,7 +59,7 @@ public class InterfaceAPI : MonoBehaviour
         }
     }*/
 
-    public IEnumerator LoginPost(string uri, string jsonData)    //This function sends a POST request to a specified URI with a JSON payload
+    public static IEnumerator LoginPost(string uri, string jsonData)    //This function sends a POST request to a specified URI with a JSON payload
     {
         Response serverResponse;
         
@@ -73,7 +78,7 @@ public class InterfaceAPI : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
                     string jsonRaw = webRequest.downloadHandler.text;
-                    Debug.Log("Raw Response: " + jsonRaw);
+                    //Debug.Log("Raw Response: " + jsonRaw);
                     bool isResponseUser = false;
                     bool isResponseResponse = false;
                     
@@ -97,7 +102,7 @@ public class InterfaceAPI : MonoBehaviour
                     }
                     catch (Exception e)
                     {
-                        Debug.Log(e);
+                        //Debug.Log(e);
                         serverResponse = null;
                     }
                     
@@ -128,8 +133,9 @@ public class InterfaceAPI : MonoBehaviour
                     {
                         //Response is User type
                         Debug.Log("Successful Login");
-                        userReceived.printDetails();
+                        //userReceived.printDetails();
                         currentUser = userReceived;
+                        LoadScene("MainMenuScene");
                     }
                     else if (isResponseResponse)
                     {
@@ -146,7 +152,7 @@ public class InterfaceAPI : MonoBehaviour
         }
     }
 
-    public IEnumerator GetBasePost(string uri, string jsonData)
+    public static IEnumerator GetBasePost(string uri, string jsonData)
     {
         /*
         Response serverResponse;
@@ -241,7 +247,7 @@ public class InterfaceAPI : MonoBehaviour
             }
         }
     }
-    string StripSquareBrackets(string input)
+    private static string StripSquareBrackets(string input)
     {
         if (input.Length < 2)
         {
