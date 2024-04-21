@@ -5,9 +5,8 @@ using TMPro;
 
 public class CurrencyScript : MonoBehaviour
 {
-    //InterfaceAPI MAINAPI;
 
-    public int coins = 0;
+    public int coins;
     public int farmsOwned = 0;
     public float coinGenerationInterval = 1;
     public TextMeshProUGUI coinDisplay;
@@ -18,7 +17,7 @@ public class CurrencyScript : MonoBehaviour
     {
         StartCoroutine(GenerateCoins());
         UpdateUI();
-        int coins = InterfaceAPI.currentUser.coins;
+        coins = InterfaceAPI.currentUser.coins;
     }
 
     private IEnumerator GenerateCoins()

@@ -165,7 +165,7 @@ public static class InterfaceAPI
                         Debug.Log("Successful Login");
                         //userReceived.printDetails();
                         currentUser = userReceived;
-                        LoadScene("MainMenuScene");
+                        LoadScene("Currency");
                     }
                     else if (isResponseResponse)
                     {
