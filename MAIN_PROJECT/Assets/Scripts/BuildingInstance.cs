@@ -6,10 +6,16 @@ using UnityEngine;
 [System.Serializable]
 public class BuildingInstance
 {
-    public int instance_id = -1;
-    public int structure_id = -1;
+    public string instance_id = "";
+    public string structure_id = "";
     public string building_name = "";
-    public int x_pos = -1;
-    public int y_pos = -1;
+    public string x_pos = "";
+    public string y_pos = "";
     public string owner_username;
+
+    public void printDetails()
+    {
+        Debug.Log("Owner: " + owner_username + ", Instance ID: " + instance_id + ", Structure ID: " + structure_id + ", Building Name: " + building_name + ", X Pos: " + x_pos + ", Y Pos: " + y_pos + ".");
+    }
+
 }

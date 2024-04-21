@@ -1,23 +1,50 @@
-//using TMPro;
+/*
+InterfaceAPI class
+Written by Declan Ross
+21/4/24
+
+Description:
+This class is a static class that acts as a monolithic controller for the accessing of 
+information from the penushost server. As the class is static, it can be accessed from anywhere.
+
+For example, getting the getting user instance (User class) can be retrieved using this.
+InterfaceAPI.currentUser
+
+Likewise, methods can be called from other scripts to update the current users information,
+an example of this is when the game first loads and the LoginManager calls LoginPost
+
+InterfaceAPI.LoginPost();
+
+In the future, the InterfaceAPI should not control the Scenes, instead it should just return if the operation was a success
+*/
+
 using System.Collections;
-//using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine;
 using System;
-//using Unity.PlasticSCM.Editor.WebApi;
-//using UnityEditor.Compilation;
+using System.Collections.Generic;
+
 using UnityEngine.SceneManagement;
+using System.Runtime.Serialization;
 
 public static class InterfaceAPI
 {
-    //Proceed to next scene
+
+    public class ObjectFromJSON
+    {
+        public string name;
+        public BuildingInstance[] InnerBuildingObjects;
+    }
+
+    //Proceed to next scene, this needs to moved out of here, InterfaceAPI should not be the controller of the game, instead its methods should return if the operation was a success or not
     private static void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
 
     public static User currentUser;
-    private static User userReceived;
+    public static List<BuildingInstance> buildingList = new List<BuildingInstance>();
+    //private static User userReceived;
     //private Response serverResponse;
     /*void Start()
     {
@@ -59,10 +86,11 @@ public static class InterfaceAPI
         }
     }*/
 
-    public static IEnumerator LoginPost(string uri, string jsonData)    //This function sends a POST request to a specified URI with a JSON payload
+    public static IEnumerator LoginPost(string uri, string jsonData)    //This function sends a POST request to a specified URI with a JSON payload (FUTURE, JSON should be created in thisfnuction)
     {
         Response serverResponse;
-        
+        User userReceived = new User();
+
         //Create POST request
         using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
         {
@@ -100,13 +128,14 @@ public static class InterfaceAPI
                         isResponseResponse = true;
                         
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         //Debug.Log(e);
                         serverResponse = null;
                     }
                     
                     //Try Convert JSON to User
+                    
                     try
                     {
                         if (isResponseResponse)
@@ -116,6 +145,7 @@ public static class InterfaceAPI
                         else
                         {
                             string strippedString = StripSquareBrackets(jsonRaw);
+                            
                             userReceived = JsonUtility.FromJson<User>(strippedString);
                             if (userReceived == null)
                             {
@@ -124,9 +154,9 @@ public static class InterfaceAPI
                             isResponseUser = true;
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
-                        Debug.Log(e);
+                        //Debug.Log(e);
                     }
                     
                     if (isResponseUser)
@@ -154,10 +184,8 @@ public static class InterfaceAPI
 
     public static IEnumerator GetBasePost(string uri, string jsonData)
     {
-        /*
         Response serverResponse;
-        BuildingInstance buildingInstanceReceived;
-        */
+        
         //Create POST request
         using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
         {
@@ -173,9 +201,10 @@ public static class InterfaceAPI
                     break;
                 case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
                     string jsonRaw = webRequest.downloadHandler.text;
-                    Debug.Log("Raw Response: " + jsonRaw);
-                    /*
-                    bool isResponseBuildingInstance = false;
+                    //Debug.Log("JSON");
+                    //Debug.Log(jsonRaw);
+                    
+                    bool isResponseBuildingListObj = false;
                     bool isResponseResponse = false;
                     
                     if (jsonRaw == "[]")
@@ -196,9 +225,10 @@ public static class InterfaceAPI
                         isResponseResponse = true;
                         
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
-                        Debug.Log(e);
+                        
+                        //Debug.Log(e);
                         serverResponse = null;
                     }
                     
@@ -212,25 +242,36 @@ public static class InterfaceAPI
                         else
                         {
                             //string strippedString = StripSquareBrackets(jsonRaw);
-                            buildingInstanceReceived = JsonUtility.FromJson<BuildingInstance>(jsonRaw);
-                            if (userReceived == null)
+                            buildingList.Clear();
+                            string appendedJson = "{\"name\": \"name\",\"InnerBuildingObjects\":" + jsonRaw + "}";
+                            ObjectFromJSON buildingListObj = JsonUtility.FromJson<ObjectFromJSON>(appendedJson);
+
+                            Debug.Log("Building Count: " + buildingListObj.InnerBuildingObjects.Length);
+                            for (int i = 0; i < buildingListObj.InnerBuildingObjects.Length; i++)
                             {
-                                throw new Exception("Null userReceived variable (Not User Type)");
+                                buildingList.Add(buildingListObj.InnerBuildingObjects[i]);
                             }
-                            isResponseBuildingInstance = true;
+
+                            if (buildingListObj == null)
+                            {
+                                throw new Exception("Null buildingListObj variable (Not User Type)");
+                            }
+                            isResponseBuildingListObj = true;
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
-                        Debug.Log(e);
+                        //Debug.Log(e);
                     }
                     
-                    if (isResponseBuildingInstance)
+                    if (isResponseBuildingListObj)
                     {
-                        //Response is User type
-                        Debug.Log("Successful Login");
-                        userReceived.printDetails();
-                        currentUser = userReceived;
+                        //Response is building list obj
+                        Debug.Log("Building List Recieved Successfully");
+                        foreach (BuildingInstance buildInst in buildingList)
+                        {
+                            buildInst.printDetails();
+                        }
                     }
                     else if (isResponseResponse)
                     {
@@ -242,7 +283,8 @@ public static class InterfaceAPI
                     {
                         //Response is not Response type or User Type
                     }
-                    */
+                    
+                    
                     break;
             }
         }

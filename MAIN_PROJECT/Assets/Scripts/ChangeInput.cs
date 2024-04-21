@@ -37,7 +37,7 @@ public class ChangeInput : MonoBehaviour
             }
         } else if (Input.GetKeyDown(KeyCode.Return)) {
             submitButton.onClick.Invoke();
-            Debug.Log("Button Pressed");
+            //Debug.Log("Button Pressed");
         }
     }
 }
