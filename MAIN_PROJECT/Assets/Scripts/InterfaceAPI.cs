@@ -165,6 +165,7 @@ public static class InterfaceAPI
                         Debug.Log("Successful Login");
                         //userReceived.printDetails();
                         currentUser = userReceived;
+                        InterfaceAPI.GetBasePost("https://penushost.ddns.net/getbase", "{\"sesh_id\": \"" + InterfaceAPI.currentUser.sesh_token + "\", \"user_id\": " + InterfaceAPI.currentUser.user_id + "}");
                         LoadScene("Currency");
                     }
                     else if (isResponseResponse)

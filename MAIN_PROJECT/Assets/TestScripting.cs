@@ -9,7 +9,7 @@ public class TestScripting : MonoBehaviour
     void Start()
     {
         Debug.Log("Current User is: " + InterfaceAPI.currentUser.username);
-        StartCoroutine(InterfaceAPI.GetBasePost("https://penushost.ddns.net/getbase", "{\"sesh_id\": \"" + InterfaceAPI.currentUser.sesh_token + "\", \"user_id\": " + InterfaceAPI.currentUser.user_id + "}"));
+        //StartCoroutine(InterfaceAPI.GetBasePost("https://penushost.ddns.net/getbase", "{\"sesh_id\": \"" + InterfaceAPI.currentUser.sesh_token + "\", \"user_id\": " + InterfaceAPI.currentUser.user_id + "}"));
     }
 
     // Update is called once per frame
