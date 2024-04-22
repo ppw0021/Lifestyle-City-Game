@@ -92,7 +92,7 @@ app.post("/getbase", (req, res) => {
     const { sesh_id, user_id } = req.body;
 
     const getBaseQuery = 'SELECT bi.instance_id, bi.structure_id, bp.building_name, bi.x_pos, bi.y_pos, u.username AS owner_username FROM building_instances bi JOIN building_prefabs bp ON bi.structure_id = bp.structure_id JOIN buildings_owner bo ON bi.instance_id = bo.building_instance_id JOIN users u ON bo.base_owner_id = u.user_id WHERE u.user_id = \'' + user_id + '\'';
-    console.log("getbase pos request for (sesh_id, username): " + sesh_id, user_id);
+    console.log("getbase pos request for (sesh_id, username): " + sesh_id + user_id);
     client.query(getBaseQuery, (sqlerr, sqlres) => {
 
         if(!sqlerr){
@@ -117,6 +117,13 @@ app.post("/getbase", (req, res) => {
         client.end;
     })
 
+})
+
+app.post("/updateuserproperty", (req, res) => {
+    const { sesh_id, user_id, property_to_update, new_property_value} = req.body;
+    const updateUserPropertyStatement = '';
+    console.log("update user property request for (sesh_id, username, property_to_update, new_property_value): " + sesh_id + user_id + property_to_update + new_property_value);
+    client.end;
 })
 
 app.get("/api", (req, res) => {
