@@ -11,7 +11,7 @@ public class TestScripting : MonoBehaviour
         //Debug.Log("Current User is: " + InterfaceAPI.currentUser.username);
         //StartCoroutine(InterfaceAPI.GetBasePost("https://penushost.ddns.net/getbase", "{\"sesh_id\": \"" + InterfaceAPI.currentUser.sesh_token + "\", \"user_id\": " + InterfaceAPI.currentUser.user_id + "}"));
         //StartCoroutine(InterfaceAPI.currentUser.setCoins(1000));
-        StartCoroutine(InterfaceAPI.setCoins(10000));
+        StartCoroutine(InterfaceAPI.setCoins(99));
     }
 
     // Update is called once per frame

@@ -110,7 +110,7 @@ app.post("/getbase", (req, res) => {
                 res.json(sqlres.rows);
             }
         } else {
-            console.log("sql_error for: " + user_id);
+            console.log("sql_error for (base): " + user_id);
             res.json({ response: "sql_error"});
             //res.json(sqlerr.message);
         }
@@ -121,7 +121,52 @@ app.post("/getbase", (req, res) => {
 
 app.post("/updateuserproperty", (req, res) => {
     const { sesh_id, user_id, property_to_update, new_property_value} = req.body;
-    const updateUserPropertyStatement = '';
+    const sqlStatment = (usrid, ptu, npv) => {
+        return ('UPDATE "users" SET "' + ptu + '" = ' + npv + ' WHERE "user_id" = ' + usrid + ' RETURNING "' + ptu + '"');
+    }
+    const sqlConfirmationStatement = (usrid, ptu, npv) => {
+        return ('SELECT "' + ptu + '" FROM "users" WHERE "user_id" = ' + usrid)
+    }
+    console.log(sqlStatment(user_id, property_to_update, new_property_value));
+    client.query(sqlStatment(user_id, property_to_update, new_property_value), (sqlerr, sqlres) => {
+        if(!sqlerr){
+            //console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                console.log("did not complete coin change for: " + user_id);
+                res.json({ response: "set_sql_failed"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                console.log("updated coins for: " + user_id);
+                
+                //This returns undefined, this is the point of the second query, to confirm that it worked
+                //console.log(res.rows);
+                client.query(sqlConfirmationStatement(user_id, property_to_update, new_property_value), (sql2err, sql2res) => {
+                    if (!sql2err){
+                        if (sql2res.rowCount == 0)
+                        {
+                            console.log("confirmation squery failed for: " + user_id);
+                            res.json({ response: "conf_query_failed"});
+                        }
+                        else
+                        {
+                            console.log(sql2res.rows)
+                            res.json({ response: "conf_query_success"});
+                        }
+                    }
+                })
+                //res.json(sqlres.rows);
+            }
+        } else {
+            console.log("sql_error (coins) for: " + user_id);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
+        }
+        client.end;
+    });
     console.log("update user property request for (sesh_id, username, property_to_update, new_property_value): " + sesh_id + user_id + property_to_update + new_property_value);
     client.end;
 })
