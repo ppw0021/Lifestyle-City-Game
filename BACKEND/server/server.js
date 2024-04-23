@@ -122,7 +122,7 @@ app.post("/getbase", (req, res) => {
 app.post("/updateuserproperty", (req, res) => {
     const { sesh_id, user_id, property_to_update, new_property_value} = req.body;
     const sqlStatment = (usrid, ptu, npv) => {
-        return ('UPDATE "users" SET "' + ptu + '" = ' + npv + ' WHERE "user_id" = ' + usrid + ' RETURNING "' + ptu + '"');
+        return ('UPDATE "users" SET "' + ptu + '" = ' + npv + ' WHERE "user_id" = ' + usrid);
     }
     const sqlConfirmationStatement = (usrid, ptu, npv) => {
         return ('SELECT "' + ptu + '" FROM "users" WHERE "user_id" = ' + usrid)
@@ -153,6 +153,8 @@ app.post("/updateuserproperty", (req, res) => {
                         }
                         else
                         {
+                            const jsonObject = sql2res.body;
+                            
                             console.log(sql2res.rows)
                             res.json({ response: "conf_query_success"});
                         }
