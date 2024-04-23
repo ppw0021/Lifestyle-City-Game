@@ -27,6 +27,7 @@ public class PauseMenu : MonoBehaviour
     {
         /* this method currently exits the application when pressed
         will be changed to something else (i.e. go back to the main menu etc.) */
+        pauseMenu.SetActive(false);    
         Application.Quit();
         Debug.Log("Game closed");
     }
