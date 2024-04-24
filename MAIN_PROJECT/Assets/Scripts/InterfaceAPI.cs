@@ -90,13 +90,27 @@ public static class InterfaceAPI
     }
     public static IEnumerator setCoins(int coinsToSet)
     {
+        //Update coins
         string coinsToSetString = coinsToSet.ToString();
-        Debug.Log("Set coins");
+        Debug.Log("Old Coin Value: " + getCoins());
         IEnumerator response = UpdateUserProperty("coins", coinsToSetString);
         while (response.MoveNext())
         {
             yield return response.Current;
         }
+        
+        
+        //Update User
+        IEnumerator response2 = UpdateUser();
+        while (response2.MoveNext())
+        {
+            yield return response2.Current;
+        }
+        if (coinsToSet == getCoins())
+        {
+            yield return true;
+        }
+        Debug.Log("New Coin Value: " + getCoins());
     }
 
     public static List<BuildingInstance> buildingList = new List<BuildingInstance>();
@@ -250,6 +264,110 @@ public static class InterfaceAPI
         }
     }
 
+    public static IEnumerator UpdateUser()
+    {
+        string uri = url + "/updateuser";
+        string jsonData = ("{\"user_id\": \"" + getUserID() + "\", \"sesh_id\": \"" + getSeshToken() + "\"}");
+        Response serverResponse;
+        User userReceived = new User();
+        //Create POST request
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
+            webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
+            yield return webRequest.SendWebRequest();                                       //Send the actual request
+            switch (webRequest.result)                                                                  //When request arrives
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+                    break;
+                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
+                    string jsonRaw = webRequest.downloadHandler.text;
+                    //Debug.Log("Raw Response: " + jsonRaw);
+                    bool isResponseUser = false;
+                    bool isResponseResponse = false;
+                    
+                    if (jsonRaw == "[]")
+                    {
+                        //Response is empty
+                        Debug.LogError("Empty SQL query recieved ([])");
+                        break;
+                    }
+
+                    //Try Covert JSON to Response
+                    try
+                    {
+                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                        if (serverResponse == null)
+                        {
+                            throw new Exception("Null serverResponse variable (Not Response type)");
+                        }
+                        isResponseResponse = true;
+                        
+                    }
+                    catch (Exception)
+                    {
+                        //Debug.Log(e);
+                        serverResponse = null;
+                    }
+                    
+                    //Try Convert JSON to User
+                    
+                    try
+                    {
+                        if (isResponseResponse)
+                        {
+
+                        }
+                        else
+                        {
+                            string strippedString = StripSquareBrackets(jsonRaw);
+                            
+                            userReceived = JsonUtility.FromJson<User>(strippedString);
+                            if (userReceived == null)
+                            {
+                                throw new Exception("Null userReceived variable (Not User Type)");
+                            }
+                            isResponseUser = true;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        //Debug.Log(e);
+                    }
+                    
+                    if (isResponseUser)
+                    {
+                        //Response is User type
+                        
+                        //userReceived.printDetails();
+                        currentUser = userReceived;
+                        /*IEnumerator getBaseMethod = GetBase();
+                        while (getBaseMethod.MoveNext())
+                        {
+                            yield return getBaseMethod.Current;
+                        }*/
+
+                        Debug.Log("Successful UserUpdate: " + InterfaceAPI.getUsername());
+                    }
+                    else if (isResponseResponse)
+                    {
+                        //Response is a Response type
+                        Debug.Log("Successful Response Recieved");
+                        serverResponse.printResponse();
+                    }
+                    else
+                    {
+                        //Response is not Response type or User Type
+                    }
+                    break;
+            }
+            
+            
+        }
+    }
     public static IEnumerator GetBase()
     {
         string uri = url + "/getbase";
