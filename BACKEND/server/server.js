@@ -1,16 +1,16 @@
 /*Launch Server
 * Execute this to build
-* docker build --platform linux/arm/v7 -t dec5star/backend:arm .
+docker build --platform linux/arm64 -t dec5star/backend:arm64 .
 * 
 * Then push to docker hub
-* docker push dec5star/backend:arm
+docker push dec5star/backend:arm64
 * 
 * Execute this on Raspberry PI to pull
-* docker pull dec5star/backend:arm
+docker pull dec5star/backend:arm64
 * 
 * This will run, and port forward HTTPS port 443, if you would like to add HTTP, uncomment the corresponding line and add -p 80:80
 * docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5star/backend:arm
-docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5star/backend:arm64 for pi_five
+docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5star/backend:arm64
 */
 
 //How to run POSTGRES shell
@@ -18,11 +18,20 @@ docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5
 
 //install PG
 
+//How to connect to psql
+/*
+psql -h localhost -U postgres -d test_erp
+*/
+// 
+
+
+
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const {Client} = require('pg');
+const bodyParser = require('body-parser');
 
 const app = express();
 const client = new Client({
@@ -48,10 +57,156 @@ app.get("/", (req, res) => {
     res.json({ "testing": ["one", "two", "three"] })
 })
 
+// Parse JSON bodies
+app.use(bodyParser.json());
+
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+    console.log("LOGIN REQUEST (username): " + username);
+    client.query('SELECT user_id, username, sesh_token, level, coins FROM users WHERE username = \'' + username + '\' AND password = \'' + password + '\'', (sqlerr, sqlres) => {
+        if(!sqlerr){
+            //console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                console.log("   wrong login (username): " + username);
+                res.json({ response: "no_match"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                console.log("   login success (username): " + username);
+                res.json(sqlres.rows);
+            }
+        } else {
+            console.log("   sql_error for: " + username);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
+        }
+        client.end;
+    })
+})
+
+app.post("/updateuser", (req, res) => {
+    const { user_id, sesh_id } = req.body;
+    console.log("UPDATE USER REQUEST (user_id, sesh_id): " + user_id + ", " + sesh_id);
+    client.query('SELECT user_id, username, sesh_token, level, coins FROM users WHERE user_id = \'' + user_id + '\'', (sqlerr, sqlres) => {
+        if(!sqlerr){
+            //console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                console.log("   update user failed (user_id): " + user_id);
+                res.json({ response: "no_match"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                console.log("   update user success (user_id): " + user_id);
+                res.json(sqlres.rows);
+            }
+        } else {
+            console.log("   sql_error for (user_id): " + user_id);
+            console.log(sqlerr.message);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
+        }
+        client.end;
+    })
+})
+
+app.post("/getbase", (req, res) => {
+    
+    const { sesh_id, user_id } = req.body;
+
+    const getBaseQuery = 'SELECT bi.instance_id, bi.structure_id, bp.building_name, bi.x_pos, bi.y_pos, u.username AS owner_username FROM building_instances bi JOIN building_prefabs bp ON bi.structure_id = bp.structure_id JOIN buildings_owner bo ON bi.instance_id = bo.building_instance_id JOIN users u ON bo.base_owner_id = u.user_id WHERE u.user_id = \'' + user_id + '\'';
+    console.log("GETBASE REQUEST (sesh_id, user_id): " + sesh_id + ", " + user_id);
+    client.query(getBaseQuery, (sqlerr, sqlres) => {
+
+        if(!sqlerr){
+            //console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                console.log("   no base (user_id): " + user_id);
+                res.json({ response: "no_base"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                console.log("   base found (user_id): " + user_id);
+                res.json(sqlres.rows);
+            }
+        } else {
+            console.log("   sql_error for (user_id): " + user_id);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
+        }
+        client.end;
+    })
+
+})
+
+app.post("/updateuserproperty", (req, res) => {
+    const { sesh_id, user_id, property_to_update, new_property_value} = req.body;
+    const sqlStatment = (usrid, ptu, npv) => {
+        return ('UPDATE "users" SET "' + ptu + '" = ' + npv + ' WHERE "user_id" = ' + usrid);
+    }
+    const sqlConfirmationStatement = (usrid, ptu, npv) => {
+        return ('SELECT "' + ptu + '" FROM "users" WHERE "user_id" = ' + usrid)
+    }
+    console.log("UPDATE USER PROP (user_id, property_to_update, new_property_value): " + user_id + ", " + property_to_update + ", " + new_property_value);
+    //console.log(sqlStatment(user_id, property_to_update, new_property_value));
+    client.query(sqlStatment(user_id, property_to_update, new_property_value), (sqlerr, sqlres) => {
+        if(!sqlerr){
+            //console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                console.log("   failed (user_id): " + user_id);
+                res.json({ response: "set_sql_failed"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                console.log("   updated property (user_id): " + user_id);
+                
+                //This returns undefined, this is the point of the second query, to confirm that it worked
+                //console.log(res.rows);
+                /*client.query(sqlConfirmationStatement(user_id, property_to_update, new_property_value), (sql2err, sql2res) => {
+                    if (!sql2err){
+                        if (sql2res.rowCount == 0)
+                        {
+                            console.log("       confirmation query failed (user_id): " + user_id);
+                            res.json({ response: "conf_query_failed"});
+                        }
+                        else
+                        {
+                            const jsonObject = sql2res.body;
+                            
+                            console.log("       " + sql2res.rows)
+                            res.json({ response: "conf_query_success"});
+                        }
+                    }
+                })
+                //res.json(sqlres.rows);*/
+            }
+        } else {
+            console.log("   sql_error (coins) for: " + user_id);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
+        }
+        client.end;
+    });
+    //console.log("update user property request for (sesh_id, username, property_to_update, new_property_value): " + sesh_id + user_id + property_to_update + new_property_value);
+    client.end;
+})
+
 app.get("/api", (req, res) => {
     //res.json({ "users": ["userOne", "userTwo", "userThree"] })
     client.query('SELECT * FROM CLIENTS', (sqlerr, sqlres) => {
         if(!sqlerr){
+            
             res.json(sqlres.rows);
         } else {
             res.json(sqlerr.message);
