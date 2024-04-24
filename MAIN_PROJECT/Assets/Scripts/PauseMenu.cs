@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*using UnityEngine.SceneManagement;  
-remove comment when scenes are ready, 
+using UnityEngine.SceneManagement;  
+/*remove comment when scenes are ready, 
 for adding other buttons that can access other scenes
 */
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
+
     public void Pause()
     {
         pauseMenu.SetActive(true);
@@ -28,7 +29,8 @@ public class PauseMenu : MonoBehaviour
         /* this method currently exits the application when pressed
         will be changed to something else (i.e. go back to the main menu etc.) */
         pauseMenu.SetActive(false);    
-        Application.Quit();
+        //Application.Quit();
+        SceneManager.LoadScene("Working Test Connection");
         Debug.Log("Game closed");
     }
 }
