@@ -114,6 +114,8 @@ public static class InterfaceAPI
     }
 
     public static List<BuildingInstance> buildingList = new List<BuildingInstance>();
+
+
     //private static User userReceived;
     //private Response serverResponse;
     /*void Start()
@@ -459,7 +461,7 @@ public static class InterfaceAPI
                         Debug.Log("Building List Recieved Successfully");
                         foreach (BuildingInstance buildInst in buildingList)
                         {
-                            buildInst.printDetails();
+                            //buildInst.printDetails();
                         }
                     }
                     else if (isResponseResponse)

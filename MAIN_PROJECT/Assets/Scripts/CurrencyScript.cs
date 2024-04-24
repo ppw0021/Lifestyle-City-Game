@@ -15,7 +15,7 @@ public class CurrencyScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        coins = InterfaceAPI.currentUser.coins;  // Set coins first based on the current user
+        coins = InterfaceAPI.getCoins();  // Set coins first based on the current user
         Debug.Log(coins);
         StartCoroutine(GenerateCoins());
         UpdateUI();  // Ensure UI updates immediately after setting the coins

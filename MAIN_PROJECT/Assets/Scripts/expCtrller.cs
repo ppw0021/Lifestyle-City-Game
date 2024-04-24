@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class expCtrller : MonoBehaviour
 {
-   [SerializeField] private TextMeshProUGUI expText;
+    [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private TextMeshProUGUI lvlText;
     [SerializeField] public int level;
     public float CurrentExp;
