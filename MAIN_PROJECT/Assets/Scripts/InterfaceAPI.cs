@@ -26,6 +26,7 @@ using System.Collections.Generic;
 
 using UnityEngine.SceneManagement;
 using System.Runtime.Serialization;
+using Unity.VisualScripting;
 
 public static class InterfaceAPI
 {
@@ -44,7 +45,17 @@ public static class InterfaceAPI
         SceneManager.LoadScene(sceneName);
     }
 
+    private static MonoBehaviour monoBehaviourInstance;
 
+    public static void Initialize(MonoBehaviour monoBehaviour)
+    {
+        monoBehaviourInstance = monoBehaviour;
+    }
+
+    public static void printUser()
+    {
+        currentUser.printDetails();
+    }
 
     private static User currentUser;
     
@@ -68,49 +79,45 @@ public static class InterfaceAPI
     {
         return currentUser.coins;
     }
+    /*
+    public static bool setUsername(string usernameToSet)
+    {
+        if (monoBehaviourInstance == null)
+        {
+            Debug.LogError("MonoBehaviour instance not set. Call Initialize() first.");
+            return false;
+        }
 
-    public static IEnumerator setUsername(string usernameToSet)
+        // Call the coroutine using the MonoBehaviour instance
+        currentUser.username = usernameToSet;
+        monoBehaviourInstance.StartCoroutine(UpdateUserProperty("\"username\"", usernameToSet));
+        return true;
+    }*/
+    public static bool setLevel(int levelToSet)
     {
-        Debug.Log("Set username");
-        IEnumerator response = UpdateUserProperty("username", usernameToSet);
-        while (response.MoveNext())
+        if (monoBehaviourInstance == null)
         {
-            yield return response.Current;
+            Debug.LogError("MonoBehaviour instance not set. Call Initialize() first.");
+            return false;
         }
+
+        // Call the coroutine using the MonoBehaviour instance
+        currentUser.level = levelToSet;
+        monoBehaviourInstance.StartCoroutine(UpdateUserProperty("level", levelToSet.ToString()));
+        return true;
     }
-    public static IEnumerator setLevel(int levelToSet)
+    public static bool setCoins(int coinsToSet)
     {
-        string levelToSetString = levelToSet.ToString();
-        Debug.Log("Set level");
-        IEnumerator response = UpdateUserProperty("coins", levelToSetString);
-        while (response.MoveNext())
+        if (monoBehaviourInstance == null)
         {
-            yield return response.Current;
+            Debug.LogError("MonoBehaviour instance not set. Call Initialize() first.");
+            return false;
         }
-    }
-    public static IEnumerator setCoins(int coinsToSet)
-    {
-        //Update coins
-        string coinsToSetString = coinsToSet.ToString();
-        Debug.Log("Old Coin Value: " + getCoins());
-        IEnumerator response = UpdateUserProperty("coins", coinsToSetString);
-        while (response.MoveNext())
-        {
-            yield return response.Current;
-        }
-        
-        
-        //Update User
-        IEnumerator response2 = UpdateUser();
-        while (response2.MoveNext())
-        {
-            yield return response2.Current;
-        }
-        if (coinsToSet == getCoins())
-        {
-            yield return true;
-        }
-        Debug.Log("New Coin Value: " + getCoins());
+
+        // Call the coroutine using the MonoBehaviour instance
+        currentUser.coins = coinsToSet;
+        monoBehaviourInstance.StartCoroutine(UpdateUserProperty("coins", coinsToSet.ToString()));
+        return true;
     }
 
     public static List<BuildingInstance> buildingList = new List<BuildingInstance>();
@@ -247,7 +254,7 @@ public static class InterfaceAPI
                         }
 
                         Debug.Log("Successful Login: " + InterfaceAPI.getUsername());
-                        LoadScene("MainMenuScene");
+                        LoadScene("Currency");
                     }
                     else if (isResponseResponse)
                     {
@@ -265,7 +272,6 @@ public static class InterfaceAPI
             
         }
     }
-
     public static IEnumerator UpdateUser()
     {
         string uri = url + "/updateuser";
@@ -478,7 +484,6 @@ public static class InterfaceAPI
             }
         }
     }
-
     public static IEnumerator UpdateUserProperty(string propertyName, string newValue)
     {
         string uri = url + "/updateuserproperty";

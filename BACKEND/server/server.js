@@ -115,6 +115,33 @@ app.post("/updateuser", (req, res) => {
     })
 })
 
+app.post("/placebuilding", (req, res) => {
+    const { user_id, sesh_id, structure_id, x_pos, y_pos} = req.body;
+    console.log("PLACE BUILDING REQUEST (user_id, sesh_id, structure_id, x_pos, y_pos): " + user_id + ", " + sesh_id + ", " +  structure_id + ", " + x_pos + ", " + y_pos);
+    client.query("INSERT INTO building_instances (structure_id, x_pos, y_pos) " + "VALUES (" + structureId + ", " + xPos + ", " + yPos + ") " + "RETURNING instance_id;", (sqlerr, sqlres) => {
+        if(!sqlerr){
+            //console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                console.log("   update user failed (user_id): " + user_id);
+                res.json({ response: "no_match"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                console.log("   update user success (user_id): " + user_id);
+                res.json(sqlres.rows);
+            }
+        } else {
+            console.log("   sql_error for (user_id): " + user_id);
+            console.log(sqlerr.message);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
+        }
+        client.end;
+    })
+})
 app.post("/getbase", (req, res) => {
     
     const { sesh_id, user_id } = req.body;
