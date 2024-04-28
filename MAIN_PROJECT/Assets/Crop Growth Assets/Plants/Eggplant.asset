@@ -19,3 +19,4 @@ MonoBehaviour:
   - {fileID: 47210895, guid: b2f3c84d45decf74f9abaaa582d3ee17, type: 3}
   - {fileID: 234225661, guid: b2f3c84d45decf74f9abaaa582d3ee17, type: 3}
   growthTime: 4
+  icon: {fileID: 825047706, guid: b2f3c84d45decf74f9abaaa582d3ee17, type: 3}
