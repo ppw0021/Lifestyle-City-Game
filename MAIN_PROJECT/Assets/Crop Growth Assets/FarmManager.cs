@@ -22,12 +22,14 @@ public class FarmManager : MonoBehaviour
     {
         if (selectPlant == newPlant)
         {
+            Debug.Log("Deselected " + selectPlant.plant.plantName);
             selectPlant = null;
             isPlanting = false;
         }
         else
         {
             selectPlant = newPlant;
+            Debug.Log("Selected " + selectPlant.plant.plantName);
             isPlanting = true;
         }
     }
