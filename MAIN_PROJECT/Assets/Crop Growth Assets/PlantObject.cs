@@ -7,5 +7,5 @@ public class PlantObject : ScriptableObject
 {
     public string plantName;
     public Sprite[] plantStages;
-    public float timeBtwStages;
+    public float growthTime;
 }
