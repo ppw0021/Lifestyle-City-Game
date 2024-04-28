@@ -9,12 +9,13 @@ public class PlotManager : MonoBehaviour
     public SpriteRenderer plant;
     int plantStage = 0;
     float timer;
-    public PlantObject selectedPlant;
+    PlantObject selectedPlant;
+    FarmManager fm;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        fm = transform.parent.GetComponent<FarmManager>();
     }
 
     // Update is called once per frame
@@ -40,11 +41,10 @@ public class PlotManager : MonoBehaviour
             {
                 Harvest();
             }
-            
         }
-        else
+        else if(fm.isPlanting)
         {
-            Plant();
+            Plant(fm.selectPlant.plant);
         }
     }
 
@@ -55,8 +55,9 @@ public class PlotManager : MonoBehaviour
         plant.gameObject.SetActive(false);
     }
 
-    void Plant()
+    void Plant(PlantObject newPlant)
     {
+        selectedPlant = newPlant;
         Debug.Log("Planted");
         isPlanted = true;
         plantStage = 0;
