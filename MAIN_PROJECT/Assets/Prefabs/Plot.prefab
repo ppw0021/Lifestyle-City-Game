@@ -184,11 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plant: {fileID: 3846186843866718952}
-  plantStages:
-  - {fileID: 1497118498, guid: b2f3c84d45decf74f9abaaa582d3ee17, type: 3}
-  - {fileID: 1989219843, guid: b2f3c84d45decf74f9abaaa582d3ee17, type: 3}
-  - {fileID: 827986728, guid: b2f3c84d45decf74f9abaaa582d3ee17, type: 3}
-  - {fileID: 467419467, guid: b2f3c84d45decf74f9abaaa582d3ee17, type: 3}
+  selectedPlant: {fileID: 11400000, guid: 816ec7fec9574ef4eb1e1ae7b8630302, type: 2}
 --- !u!61 &5167143746910669869
 BoxCollider2D:
   m_ObjectHideFlags: 0
