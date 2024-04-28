@@ -825,7 +825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f117a8cb621f8c34cbcec5e1fe492037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectPlant: {fileID: 0}
+  selectPlant: {fileID: 6987114455651743864}
   isPlanting: 0
 --- !u!1 &958533774
 GameObject:
@@ -2312,6 +2312,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5679632506740148168, guid: 5dd970359c9f7dc4fa97c33a300947bd, type: 3}
   m_PrefabInstance: {fileID: 6987114455651743862}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6987114455651743864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4625812683961109183, guid: 5dd970359c9f7dc4fa97c33a300947bd, type: 3}
+  m_PrefabInstance: {fileID: 6987114455651743862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1d733a5c5592d4e9b7a6a729ddd60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
