@@ -7,10 +7,9 @@ public class PlotManager : MonoBehaviour
 {
     bool isPlanted = false;
     public SpriteRenderer plant;
-    public Sprite[] plantStages;
     int plantStage = 0;
-    float growthTime = 2f;// Time between stages
     float timer;
+    public PlantObject selectedPlant;
 
     // Start is called before the first frame update
     void Start()
@@ -24,9 +23,9 @@ public class PlotManager : MonoBehaviour
         if (isPlanted)
         {
             timer -= Time.deltaTime;
-            if (timer < 0 && plantStage < plantStages.Length - 1)
+            if (timer < 0 && plantStage < selectedPlant.plantStages.Length - 1)
             {
-                timer = growthTime;
+                timer = selectedPlant.growthTime;
                 plantStage++;
                 UpdatePlant();
             }
@@ -37,7 +36,7 @@ public class PlotManager : MonoBehaviour
     {
         if (isPlanted)
         {
-            if(plantStage == plantStages.Length - 1)
+            if(plantStage == selectedPlant.plantStages.Length - 1)
             {
                 Harvest();
             }
@@ -62,12 +61,12 @@ public class PlotManager : MonoBehaviour
         isPlanted = true;
         plantStage = 0;
         UpdatePlant();
-        timer = growthTime;
+        timer = selectedPlant.growthTime;
         plant.gameObject.SetActive(true);
     }
 
     void UpdatePlant()
     {
-        plant.sprite = plantStages[plantStage];
+        plant.sprite = selectedPlant.plantStages[plantStage];
     }
 }
