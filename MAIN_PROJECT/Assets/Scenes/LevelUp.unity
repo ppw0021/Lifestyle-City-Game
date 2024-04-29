@@ -420,8 +420,8 @@ MonoBehaviour:
   lvlText: {fileID: 1321541697}
   level: 0
   CurrentExp: 0
-  TargetExp: 100
-  expProgressBar: {fileID: 1227862289}
+  TargetExp: 0
+  expProgressBar: {fileID: 0}
 --- !u!1 &1165177599
 GameObject:
   m_ObjectHideFlags: 0

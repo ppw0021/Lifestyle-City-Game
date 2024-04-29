@@ -6,6 +6,95 @@ using UnityEngine.UI;
 
 public class expCtrller : MonoBehaviour
 {
+    
+    [SerializeField] private TextMeshProUGUI expText;
+    [SerializeField] private TextMeshProUGUI lvlText;
+    [SerializeField] private int level;
+    public float currentExp;
+    [SerializeField] private float targetExp;
+    [SerializeField] private Image expProgressBar;
+
+    private void Start()
+    {
+        // Initialize XP values
+        GetXPFromAPI();
+    }
+
+    public void GainXP(float amount)
+    {
+        currentExp += amount;
+        CheckLevelUp();
+        UpdateXPDisplay();
+        SetXPToAPI();
+    }
+
+    private void CheckLevelUp()
+    {
+        if (currentExp >= targetExp)
+        {
+            currentExp -= targetExp;
+            level++;
+            targetExp += 50;
+        }
+    }
+
+    private void UpdateXPDisplay()
+    {
+        expText.text = currentExp + " / " + targetExp;
+        lvlText.text = "Level: " + level.ToString();
+        expProgressBar.fillAmount = currentExp / targetExp;
+    }
+
+    private void GetXPFromAPI()
+    {
+        currentExp = InterfaceAPI.getXp();
+        level = InterfaceAPI.getLevel();
+        targetExp = CalculateTargetExp(level); // may need to adjust this method based on game's leveling system
+
+        // Debug log to show simulated XP and level values
+        Debug.Log("XP from API: " + currentExp);
+        Debug.Log("Level from API: " + level);
+
+        UpdateXPDisplay();
+    }
+
+    private void SetXPToAPI()
+    {
+        // Simulating API call to set XP and level values
+        // Here we don't need to actually set anything since it's a simulation
+
+        // Debug log to confirm simulated XP and level values set to API
+        Debug.Log("XP set to API: " + currentExp);
+        Debug.Log("Level set to API: " + level);
+    }
+
+    // Placeholder method to calculate target XP based on level
+    private float CalculateTargetExp(int level)
+    {
+        return 100 + (level * 50); // Adjust this formula as needed
+    }
+}
+
+
+// before code
+
+
+
+
+
+/*
+
+code without space
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+
+public class expCtrller : MonoBehaviour
+{
     [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private TextMeshProUGUI lvlText;
     [SerializeField] public int level;
@@ -45,3 +134,12 @@ public class expCtrller : MonoBehaviour
     }
 
 }
+*/
+
+
+
+
+
+
+
+
