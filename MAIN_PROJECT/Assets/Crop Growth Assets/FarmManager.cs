@@ -9,7 +9,10 @@ public class FarmManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        InterfaceAPI.Initialize(this);
+        InterfaceAPI.setXp(482);
+        int x = InterfaceAPI.getXp();
+        int level = InterfaceAPI.getLevel();
     }
 
     // Update is called once per frame

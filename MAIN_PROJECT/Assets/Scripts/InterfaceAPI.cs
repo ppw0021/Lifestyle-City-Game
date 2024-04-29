@@ -32,6 +32,7 @@ public static class InterfaceAPI
 {
     public static string url = "https://penushost.ddns.net";
 
+    private static int xp = 69;
 
     public class ObjectFromJSON
     {
@@ -52,6 +53,15 @@ public static class InterfaceAPI
         monoBehaviourInstance = monoBehaviour;
     }
 
+    public static int getXp()
+    {
+        return xp;
+    }
+
+    public static void setXp(int xpToSet)
+    {
+        xp = xpToSet;
+    }
     public static void printUser()
     {
         currentUser.printDetails();
