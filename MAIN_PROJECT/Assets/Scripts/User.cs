@@ -10,6 +10,7 @@ public class User
     public string sesh_token = "";
     public int level = -1;
     public int coins = -1;
+    public int xp = -1;
 
     public void printDetails()
     {
@@ -18,6 +19,7 @@ public class User
         Debug.Log("sesh_token: " + sesh_token);
         Debug.Log("level: " + level);
         Debug.Log("coins: " + coins);
+        Debug.Log("xp: " + xp);
     }
 
     /*

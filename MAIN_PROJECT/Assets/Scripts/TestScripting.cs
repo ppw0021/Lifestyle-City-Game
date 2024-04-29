@@ -13,9 +13,10 @@ public class TestScripting : MonoBehaviour
         //Debug.Log("Current User is: " + InterfaceAPI.currentUser.username);
         //StartCoroutine(InterfaceAPI.GetBasePost("https://penushost.ddns.net/getbase", "{\"sesh_id\": \"" + InterfaceAPI.currentUser.sesh_token + "\", \"user_id\": " + InterfaceAPI.currentUser.user_id + "}"));
         //StartCoroutine(InterfaceAPI.currentUser.setCoins(1000));
-        InterfaceAPI.setCoins(123123);
-        InterfaceAPI.setLevel(31798);
+        //InterfaceAPI.setCoins(123123);
+        //InterfaceAPI.setLevel(31798);
         //InterfaceAPI.setUsername("d5star");
+        StartCoroutine(InterfaceAPI.PlaceBuilding(0, 5, 6));
         InterfaceAPI.printUser();
         //StartCoroutine(InterfaceAPI.setLevel(20));
         /*for (int i = 0; i < InterfaceAPI.buildingList.Count; i++)

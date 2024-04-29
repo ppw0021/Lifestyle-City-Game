@@ -32,8 +32,6 @@ public static class InterfaceAPI
 {
     public static string url = "https://penushost.ddns.net";
 
-    private static int xp = 69;
-
     public class ObjectFromJSON
     {
         public string name;
@@ -55,13 +53,10 @@ public static class InterfaceAPI
 
     public static int getXp()
     {
-        return xp;
+        return currentUser.xp;
     }
 
-    public static void setXp(int xpToSet)
-    {
-        xp = xpToSet;
-    }
+    
     public static void printUser()
     {
         currentUser.printDetails();
@@ -89,6 +84,8 @@ public static class InterfaceAPI
     {
         return currentUser.coins;
     }
+
+
     /*
     public static bool setUsername(string usernameToSet)
     {
@@ -127,6 +124,20 @@ public static class InterfaceAPI
         // Call the coroutine using the MonoBehaviour instance
         currentUser.coins = coinsToSet;
         monoBehaviourInstance.StartCoroutine(UpdateUserProperty("coins", coinsToSet.ToString()));
+        return true;
+    }
+
+    public static bool setXp(int xpToSet)
+    {
+        if (monoBehaviourInstance == null)
+        {
+            Debug.LogError("MonoBehaviour instance not set. Call Initialize() first.");
+            return false;
+        }
+
+        // Call the coroutine using the MonoBehaviour instance
+        currentUser.xp = xpToSet;
+        monoBehaviourInstance.StartCoroutine(UpdateUserProperty("xp", xpToSet.ToString()));
         return true;
     }
 
@@ -264,6 +275,7 @@ public static class InterfaceAPI
                         }
 
                         Debug.Log("Successful Login: " + InterfaceAPI.getUsername());
+                        currentUser.printDetails();
                         LoadScene("Currency");
                     }
                     else if (isResponseResponse)
@@ -498,6 +510,67 @@ public static class InterfaceAPI
     {
         string uri = url + "/updateuserproperty";
         string jsonData = ("{\"sesh_id\": \"" + currentUser.sesh_token + "\", \"user_id\": \"" + currentUser.user_id + "\", \"property_to_update\": \"" + propertyName + "\", \"new_property_value\": \"" + newValue + "\"}");
+        Response serverResponse;
+
+        //Create POST request
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
+            webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
+            yield return webRequest.SendWebRequest();                                       //Send the actual request
+            switch (webRequest.result)                                                                  //When request arrives
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+                    break;
+                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
+                    string jsonRaw = webRequest.downloadHandler.text;
+                    Debug.Log("Raw Response: " + jsonRaw);
+                    
+                    if (jsonRaw == "[]")
+                    {
+                        //Response is empty
+                        Debug.LogError("Empty SQL query recieved ([])");
+                        break;
+                    }
+
+                    //Try Covert JSON to Response
+                    try
+                    {
+                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                        if (serverResponse == null)
+                        {
+                            throw new Exception("Null serverResponse variable (Not Response type)");
+                        }
+                        //Response is a Response type
+                        Debug.Log("Successful Response Recieved");
+                        serverResponse.printResponse();
+                        
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError(e);
+                        serverResponse = null;
+                    }
+                    break;
+            }
+        }
+
+        
+    }
+
+    public static IEnumerator PlaceBuilding(int structure_id, int x_pos, int y_pos)
+    {
+        string uri = url + "/placebuilding";
+        string jsonData = "{" +
+            "\"user_id\":" + currentUser.user_id + "," +
+            "\"sesh_id\":\"" + currentUser.sesh_token + "\"," +
+            "\"structure_id\":" + structure_id + "," +
+            "\"x_pos\":" + x_pos + "," +
+            "\"y_pos\":" + y_pos +
+            "}";        
         Response serverResponse;
 
         //Create POST request
