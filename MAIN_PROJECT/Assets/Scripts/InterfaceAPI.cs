@@ -124,7 +124,7 @@ public static class InterfaceAPI
         currentUser.printDetails();
     }
 
-    private static User currentUser;
+    private static User currentUser = new User();
     
     public static int getUserID()
     {
