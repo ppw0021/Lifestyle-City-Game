@@ -32,8 +32,6 @@ public static class InterfaceAPI
 {
     public static string url = "https://penushost.ddns.net";
 
-    private static int xp = 69;
-
     public class ObjectFromJSON
     {
         public string name;
@@ -55,13 +53,10 @@ public static class InterfaceAPI
 
     public static int getXp()
     {
-        return xp;
+        return currentUser.xp;
     }
 
-    public static void setXp(int xpToSet)
-    {
-        xp = xpToSet;
-    }
+    
     public static void printUser()
     {
         currentUser.printDetails();
@@ -89,6 +84,8 @@ public static class InterfaceAPI
     {
         return currentUser.coins;
     }
+
+
     /*
     public static bool setUsername(string usernameToSet)
     {
@@ -127,6 +124,20 @@ public static class InterfaceAPI
         // Call the coroutine using the MonoBehaviour instance
         currentUser.coins = coinsToSet;
         monoBehaviourInstance.StartCoroutine(UpdateUserProperty("coins", coinsToSet.ToString()));
+        return true;
+    }
+
+    public static bool setXp(int xpToSet)
+    {
+        if (monoBehaviourInstance == null)
+        {
+            Debug.LogError("MonoBehaviour instance not set. Call Initialize() first.");
+            return false;
+        }
+
+        // Call the coroutine using the MonoBehaviour instance
+        currentUser.xp = xpToSet;
+        monoBehaviourInstance.StartCoroutine(UpdateUserProperty("xp", xpToSet.ToString()));
         return true;
     }
 
@@ -264,6 +275,7 @@ public static class InterfaceAPI
                         }
 
                         Debug.Log("Successful Login: " + InterfaceAPI.getUsername());
+                        currentUser.printDetails();
                         LoadScene("Currency");
                     }
                     else if (isResponseResponse)
