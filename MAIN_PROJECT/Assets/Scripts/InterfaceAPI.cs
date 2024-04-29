@@ -56,6 +56,40 @@ public static class InterfaceAPI
         return currentUser.xp;
     }
 
+    public static bool addXp(int xpToAdd)
+    {
+        int currentXp = getXp();
+        int targetXp = CalculateTargetExp(getLevel());
+        int newLevel = getLevel();
+        int newXp;
+        if ((currentXp + xpToAdd) >= targetXp)
+        {
+            //Level up
+            newLevel++;
+            newXp = (currentXp + xpToAdd) - targetXp;
+        }
+        else
+        {
+            newXp = currentXp + xpToAdd;
+        }
+        if (monoBehaviourInstance == null)
+        {
+            Debug.LogError("MonoBehaviour instance not set. Call Initialize() first.");
+            return false;
+        }
+
+        // Call the coroutine using the MonoBehaviour instance
+        currentUser.level = newLevel;
+        monoBehaviourInstance.StartCoroutine(UpdateUserProperty("level", newLevel.ToString()));
+        currentUser.xp = newXp;
+        monoBehaviourInstance.StartCoroutine(UpdateUserProperty("xp", newXp.ToString()));
+        return true;
+    }
+
+    private static int CalculateTargetExp(int level)
+    {
+        return 100 + (level * 50); // Adjust this formula as needed
+    }
     
     public static void printUser()
     {
@@ -84,22 +118,6 @@ public static class InterfaceAPI
     {
         return currentUser.coins;
     }
-
-
-    /*
-    public static bool setUsername(string usernameToSet)
-    {
-        if (monoBehaviourInstance == null)
-        {
-            Debug.LogError("MonoBehaviour instance not set. Call Initialize() first.");
-            return false;
-        }
-
-        // Call the coroutine using the MonoBehaviour instance
-        currentUser.username = usernameToSet;
-        monoBehaviourInstance.StartCoroutine(UpdateUserProperty("\"username\"", usernameToSet));
-        return true;
-    }*/
     public static bool setLevel(int levelToSet)
     {
         if (monoBehaviourInstance == null)

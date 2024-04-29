@@ -16,8 +16,8 @@ public class TestScripting : MonoBehaviour
         //InterfaceAPI.setCoins(123123);
         //InterfaceAPI.setLevel(31798);
         //InterfaceAPI.setUsername("d5star");
-        StartCoroutine(InterfaceAPI.PlaceBuilding(0, 5, 6));
-        InterfaceAPI.printUser();
+        //StartCoroutine(InterfaceAPI.PlaceBuilding(0, 5, 6));
+        //InterfaceAPI.printUser();
         //StartCoroutine(InterfaceAPI.setLevel(20));
         /*for (int i = 0; i < InterfaceAPI.buildingList.Count; i++)
         {
@@ -26,6 +26,10 @@ public class TestScripting : MonoBehaviour
 
     }
 
+    public void onXPAdd()
+    {
+        InterfaceAPI.addXp(28);
+    }
     // Update is called once per frame
     void Update()
     {

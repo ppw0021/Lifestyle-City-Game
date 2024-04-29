@@ -6,6 +6,45 @@ using UnityEngine.UI;
 
 public class expCtrller : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI expText;
+    [SerializeField] private TextMeshProUGUI lvlText;
+    private int level;
+    public int currentExp;
+    private int targetExp;
+    [SerializeField] private Image expProgressBar;
+
+    private void Start()
+    {
+        InterfaceAPI.Initialize(this);
+    }
+    private void Update()
+    {
+        
+        UpdateXPDisplay();
+    }
+    private void UpdateXPDisplay()
+    {
+        currentExp = InterfaceAPI.getXp();
+        level = InterfaceAPI.getLevel();
+        targetExp = CalculateTargetExp(level); // may need to adjust this method based on game's leveling system
+        expText.text = currentExp + " / " + targetExp;
+        lvlText.text = "Level: " + level.ToString();
+        
+        float currentExpFloat = currentExp;
+        float targetExpFloat = targetExp;
+        expProgressBar.fillAmount = currentExpFloat / targetExpFloat;
+    }
+
+    private int CalculateTargetExp(int level)
+    {
+        return 100 + (level * 50); // Adjust this formula as needed
+    }
+}
+
+//Kevin
+/*
+public class expCtrller : MonoBehaviour
+{
     
     [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private TextMeshProUGUI lvlText;
@@ -73,8 +112,7 @@ public class expCtrller : MonoBehaviour
     {
         return 100 + (level * 50); // Adjust this formula as needed
     }
-}
-
+}*/
 
 // before code
 
