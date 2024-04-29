@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TestScripting : MonoBehaviour
@@ -16,19 +17,23 @@ public class TestScripting : MonoBehaviour
         //InterfaceAPI.setCoins(123123);
         //InterfaceAPI.setLevel(31798);
         //InterfaceAPI.setUsername("d5star");
-        //StartCoroutine(InterfaceAPI.PlaceBuilding(0, 5, 6));
+        //InterfaceAPI.addBuilding(0, 999, 999);
         //InterfaceAPI.printUser();
         //StartCoroutine(InterfaceAPI.setLevel(20));
-        /*for (int i = 0; i < InterfaceAPI.buildingList.Count; i++)
+        for (int i = 0; i < InterfaceAPI.buildingList.Count; i++)
         {
             InterfaceAPI.buildingList[i].printDetails();
-        }*/
+        }
 
     }
 
     public void onXPAdd()
     {
-        InterfaceAPI.addXp(28);
+        //InterfaceAPI.addXp(28);
+        foreach (BuildingInstance buildInst in InterfaceAPI.buildingList)
+        {
+            buildInst.printDetails();
+        }
     }
     // Update is called once per frame
     void Update()
