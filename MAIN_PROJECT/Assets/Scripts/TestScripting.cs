@@ -29,11 +29,11 @@ public class TestScripting : MonoBehaviour
 
     public void onXPAdd()
     {
-        //InterfaceAPI.addXp(28);
-        foreach (BuildingInstance buildInst in InterfaceAPI.buildingList)
+        InterfaceAPI.addXp(28);
+        /*foreach (BuildingInstance buildInst in InterfaceAPI.buildingList)
         {
             buildInst.printDetails();
-        }
+        }*/
     }
     // Update is called once per frame
     void Update()
