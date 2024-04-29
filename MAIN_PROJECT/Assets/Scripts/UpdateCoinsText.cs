@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class UpdateCoinsText : MonoBehaviour
 {
     public TextMeshProUGUI coinsText;
     private int CoinsValue; // Local variable to store coins value
-
+    public bool triedTo = false;
     private void Start()
     {
         UpdateCoinsDisplay();
@@ -16,7 +17,18 @@ public class UpdateCoinsText : MonoBehaviour
 
     public void Update()
     {
-        UpdateCoinsDisplay();
+        try
+        {
+            UpdateCoinsDisplay();
+        }
+        catch(Exception)
+        {
+            if (!triedTo)
+            {
+                triedTo = true;
+                Debug.Log("No User Value");
+            }
+        }
     }
 
     public void UpdateCoinsDisplay()
