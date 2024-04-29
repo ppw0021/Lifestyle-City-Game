@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class expCtrller : MonoBehaviour
 {
-     [SerializeField] private TextMeshProUGUI expText;
+    
+    [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private TextMeshProUGUI lvlText;
     [SerializeField] private int level;
     public float currentExp;
@@ -46,37 +47,33 @@ public class expCtrller : MonoBehaviour
 
     private void GetXPFromAPI()
     {
-        // Get XP values from the API
-        int xpFromAPI = InterfaceAPI.getXp();
-        level = InterfaceAPI.getLevel();
-        currentExp = xpFromAPI;
-        targetExp = CalculateTargetExp(level);
+        // Simulating API call to get XP and level values
+        currentExp = 100; // Simulated XP value
+        level = 5;        // Simulated level value
+        targetExp = CalculateTargetExp(level); // may need to adjust this method based on game's leveling system
+
+        // Debug log to show simulated XP and level values
+        Debug.Log("XP from API: " + currentExp);
+        Debug.Log("Level from API: " + level);
 
         UpdateXPDisplay();
     }
 
     private void SetXPToAPI()
     {
-        // Set XP values to the API
-        InterfaceAPI.setXp((int)currentExp);
-        InterfaceAPI.setLevel(level);
-    }
+        // Simulating API call to set XP and level values
+        // Here we don't need to actually set anything since it's a simulation
 
-    private void Update()
-    {
-        // Check for spacebar input to gain XP
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GainXP(12); // Gain 12 XP when spacebar is pressed
-        }
+        // Debug log to confirm simulated XP and level values set to API
+        Debug.Log("XP set to API: " + currentExp);
+        Debug.Log("Level set to API: " + level);
     }
 
     // Placeholder method to calculate target XP based on level
     private float CalculateTargetExp(int level)
     {
-        return 100 + (level * 50); // Adjust this formula as needed for the game
+        return 100 + (level * 50); // Adjust this formula as needed
     }
-
 }
 
 
