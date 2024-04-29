@@ -6,41 +6,75 @@ using UnityEngine.UI;
 
 public class expCtrller : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI expText;
+     [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private TextMeshProUGUI lvlText;
-    [SerializeField] public int level;
-    public float CurrentExp;
-    [SerializeField] private float TargetExp;
+    [SerializeField] private int level;
+    public float currentExp;
+    [SerializeField] private float targetExp;
     [SerializeField] private Image expProgressBar;
 
-
-    public void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CurrentExp += 12;
-        }
-
-        expText.text = CurrentExp + " / " + TargetExp;
-
-        ExpController();
+        // Initialize XP values
+        GetXPFromAPI();
     }
 
-
-
-    public void ExpController()
+    public void GainXP(float amount)
     {
-        lvlText.text = "Level: " + level.ToString();
-        expProgressBar.fillAmount = CurrentExp / TargetExp;
+        currentExp += amount;
+        CheckLevelUp();
+        UpdateXPDisplay();
+        SetXPToAPI();
+    }
 
-
-
-        if (CurrentExp >= TargetExp)
+    private void CheckLevelUp()
+    {
+        if (currentExp >= targetExp)
         {
-            CurrentExp = CurrentExp - TargetExp;
+            currentExp -= targetExp;
             level++;
-            TargetExp += 50;
+            targetExp += 50;
         }
+    }
+
+    private void UpdateXPDisplay()
+    {
+        expText.text = currentExp + " / " + targetExp;
+        lvlText.text = "Level: " + level.ToString();
+        expProgressBar.fillAmount = currentExp / targetExp;
+    }
+
+    private void GetXPFromAPI()
+    {
+        // Get XP values from the API
+        int xpFromAPI = InterfaceAPI.getXp();
+        level = InterfaceAPI.getLevel();
+        currentExp = xpFromAPI;
+        targetExp = CalculateTargetExp(level);
+
+        UpdateXPDisplay();
+    }
+
+    private void SetXPToAPI()
+    {
+        // Set XP values to the API
+        InterfaceAPI.setXp((int)currentExp);
+        InterfaceAPI.setLevel(level);
+    }
+
+    private void Update()
+    {
+        // Check for spacebar input to gain XP
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GainXP(12); // Gain 12 XP when spacebar is pressed
+        }
+    }
+
+    // Placeholder method to calculate target XP based on level
+    private float CalculateTargetExp(int level)
+    {
+        return 100 + (level * 50); // Adjust this formula as needed for the game
     }
 
 }
