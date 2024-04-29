@@ -10,4 +10,6 @@ public class PlantObject : ScriptableObject
     public Sprite[] plantStages;
     public float growthTime;
     public Sprite icon;
+    public int cost;
+    public int reward;
 }

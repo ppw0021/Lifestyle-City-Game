@@ -11,19 +11,17 @@ public class UpdateCoinsText : MonoBehaviour
     private void Start()
     {
         UpdateCoinsDisplay();
+        InterfaceAPI.Initialize(this);
+    }
+
+    public void Update()
+    {
+        UpdateCoinsDisplay();
     }
 
     public void UpdateCoinsDisplay()
     {
-        // Ensure InterfaceAPI and currentUser are properly initialized
-        //if (InterfaceAPI.currentUser != null)
-        //{
-            CoinsValue = InterfaceAPI.getCoins();
-            coinsText.text = CoinsValue.ToString();
-        //}
-        //else
-        //{
-        //    Debug.LogError("Current user or InterfaceAPI is not set properly.");
-        //}
+        CoinsValue = InterfaceAPI.getCoins();
+        coinsText.text = "$" + CoinsValue.ToString();
     }
 }

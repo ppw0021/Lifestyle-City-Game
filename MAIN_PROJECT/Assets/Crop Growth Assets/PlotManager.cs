@@ -52,6 +52,10 @@ public class PlotManager : MonoBehaviour
     {
         Debug.Log("Harvested");
         isPlanted = false;
+        int coins = InterfaceAPI.getCoins();
+        coins += selectedPlant.reward;
+        InterfaceAPI.Initialize(this);
+        InterfaceAPI.setCoins(coins);
         plant.gameObject.SetActive(false);
     }
 
@@ -60,6 +64,10 @@ public class PlotManager : MonoBehaviour
         selectedPlant = newPlant;
         Debug.Log("Planted");
         isPlanted = true;
+        int coins = InterfaceAPI.getCoins();
+        coins -= selectedPlant.cost;
+        InterfaceAPI.Initialize(this);
+        InterfaceAPI.setCoins(coins);
         plantStage = 0;
         UpdatePlant();
         timer = selectedPlant.growthTime;
