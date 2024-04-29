@@ -560,6 +560,67 @@ public static class InterfaceAPI
 
         
     }
+
+    public static IEnumerator PlaceBuilding(int structure_id, int x_pos, int y_pos)
+    {
+        string uri = url + "/placebuilding";
+        string jsonData = "{" +
+            "\"user_id\":" + currentUser.user_id + "," +
+            "\"sesh_id\":\"" + currentUser.sesh_token + "\"," +
+            "\"structure_id\":" + structure_id + "," +
+            "\"x_pos\":" + x_pos + "," +
+            "\"y_pos\":" + y_pos +
+            "}";        
+        Response serverResponse;
+
+        //Create POST request
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
+            webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
+            yield return webRequest.SendWebRequest();                                       //Send the actual request
+            switch (webRequest.result)                                                                  //When request arrives
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+                    break;
+                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
+                    string jsonRaw = webRequest.downloadHandler.text;
+                    Debug.Log("Raw Response: " + jsonRaw);
+                    
+                    if (jsonRaw == "[]")
+                    {
+                        //Response is empty
+                        Debug.LogError("Empty SQL query recieved ([])");
+                        break;
+                    }
+
+                    //Try Covert JSON to Response
+                    try
+                    {
+                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                        if (serverResponse == null)
+                        {
+                            throw new Exception("Null serverResponse variable (Not Response type)");
+                        }
+                        //Response is a Response type
+                        Debug.Log("Successful Response Recieved");
+                        serverResponse.printResponse();
+                        
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError(e);
+                        serverResponse = null;
+                    }
+                    break;
+            }
+        }
+
+        
+    }
     private static string StripSquareBrackets(string input)
     {
         if (input.Length < 2)

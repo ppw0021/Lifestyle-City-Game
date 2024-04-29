@@ -114,7 +114,7 @@ app.post("/updateuser", (req, res) => {
         client.end;
     })
 })
-
+/*
 app.post("/placebuilding", (req, res) => {
     const { user_id, sesh_id, structure_id, x_pos, y_pos} = req.body;
     console.log("PLACE BUILDING REQUEST (user_id, sesh_id, structure_id, x_pos, y_pos): " + user_id + ", " + sesh_id + ", " +  structure_id + ", " + x_pos + ", " + y_pos);
@@ -124,13 +124,13 @@ app.post("/placebuilding", (req, res) => {
             if (sqlres.rowCount == 0)
             {
                 //No rows, send response
-                console.log("   update user failed (user_id): " + user_id);
+                console.log("   building place fail (user_id): " + user_id);
                 res.json({ response: "no_match"});
             }
             else
             {
                 //This can only be called ONCE
-                console.log("   update user success (user_id): " + user_id);
+                console.log("   building place success (user_id): " + user_id);
                 res.json(sqlres.rows);
             }
         } else {
@@ -141,7 +141,62 @@ app.post("/placebuilding", (req, res) => {
         }
         client.end;
     })
-})
+})*/
+
+app.post("/placebuilding", (req, res) => {
+    const { user_id, sesh_id, structure_id, x_pos, y_pos } = req.body;
+    console.log("PLACE BUILDING REQUEST (user_id, sesh_id, structure_id, x_pos, y_pos): " + user_id + ", " + sesh_id + ", " + structure_id + ", " + x_pos + ", " + y_pos);
+
+    // Start a transaction
+    client.query('BEGIN', (beginErr) => {
+        if (beginErr) {
+            console.error("Error beginning transaction:", beginErr.message);
+            return res.json({ response: "sql_error" });
+        }
+
+        // Insert building owner first
+        client.query("INSERT INTO buildings_owner (base_owner_id) VALUES ($1) RETURNING building_instance_id;",
+            [user_id], (ownerErr, ownerRes) => {
+                if (ownerErr) {
+                    console.error("Error inserting building owner:", ownerErr.message);
+                    client.query('ROLLBACK', (rollbackErr) => {
+                        if (rollbackErr) {
+                            console.error("Error rolling back transaction:", rollbackErr.message);
+                        }
+                        return res.json({ response: "sql_error" });
+                    });
+                } else {
+                    const building_instance_id = ownerRes.rows[0].building_instance_id;
+
+                    // Insert building instance
+                    client.query("INSERT INTO building_instances (structure_id, x_pos, y_pos) VALUES ($1, $2, $3) RETURNING instance_id;",
+                        [structure_id, x_pos, y_pos], (instanceErr, instanceRes) => {
+                            if (instanceErr) {
+                                console.error("Error inserting building instance:", instanceErr.message);
+                                client.query('ROLLBACK', (rollbackErr) => {
+                                    if (rollbackErr) {
+                                        console.error("Error rolling back transaction:", rollbackErr.message);
+                                    }
+                                    return res.json({ response: "sql_error" });
+                                });
+                            } else {
+                                // Commit transaction
+                                client.query('COMMIT', (commitErr) => {
+                                    if (commitErr) {
+                                        console.error("Error committing transaction:", commitErr.message);
+                                        return res.json({ response: "sql_error" });
+                                    }
+                                    console.log("Building place success (user_id): " + user_id);
+                                    return res.json({ response: "success" });
+                                });
+                            }
+                        });
+                }
+            });
+    });
+});
+
+
 app.post("/getbase", (req, res) => {
     
     const { sesh_id, user_id } = req.body;
