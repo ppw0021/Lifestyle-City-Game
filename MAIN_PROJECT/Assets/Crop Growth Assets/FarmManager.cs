@@ -6,6 +6,8 @@ public class FarmManager : MonoBehaviour
 {
     public PlantItem selectPlant;
     public bool isPlanting = false;
+    public Color buyColor = Color.green;
+    public Color cancelColor = Color.red;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +28,21 @@ public class FarmManager : MonoBehaviour
         if (selectPlant == newPlant)
         {
             Debug.Log("Deselected " + selectPlant.plant.plantName);
+            selectPlant.btnImage.color = buyColor;
+            selectPlant.btnTxt.text = "Buy";
             selectPlant = null;
             isPlanting = false;
         }
         else
         {
+            if (selectPlant != null)
+            {
+                selectPlant.btnImage.color = buyColor;
+                selectPlant.btnTxt.text = "Buy";
+            }
             selectPlant = newPlant;
+            selectPlant.btnImage.color = cancelColor;
+            selectPlant.btnTxt.text = "Cancel";
             Debug.Log("Selected " + selectPlant.plant.plantName);
             isPlanting = true;
         }
