@@ -47,9 +47,8 @@ public class expCtrller : MonoBehaviour
 
     private void GetXPFromAPI()
     {
-        // Simulating API call to get XP and level values
-        currentExp = 100; // Simulated XP value
-        level = 5;        // Simulated level value
+        currentExp = InterfaceAPI.getXp();
+        level = InterfaceAPI.getLevel();
         targetExp = CalculateTargetExp(level); // may need to adjust this method based on game's leveling system
 
         // Debug log to show simulated XP and level values
