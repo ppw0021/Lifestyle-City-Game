@@ -134,8 +134,8 @@ GameObject:
   - component: {fileID: 114588302}
   - component: {fileID: 114588304}
   - component: {fileID: 114588303}
-  m_Layer: 8
-  m_Name: Image
+  m_Layer: 5
+  m_Name: Skyscraper Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,6 +197,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114588301}
+  m_CullTransparentMesh: 1
+--- !u!1 &353904748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 353904749}
+  - component: {fileID: 353904751}
+  - component: {fileID: 353904750}
+  m_Layer: 5
+  m_Name: Shop Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &353904749
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353904748}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1001829615}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -2.5454, y: 18.551}
+  m_SizeDelta: {x: 154.9092, y: 154.91}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &353904750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353904748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 86492aa7106cae94b9fa6790566a9ef3, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &353904751
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353904748}
   m_CullTransparentMesh: 1
 --- !u!1 &385984475
 GameObject:
@@ -593,7 +668,7 @@ GameObject:
   - component: {fileID: 549289620}
   - component: {fileID: 549289622}
   - component: {fileID: 549289621}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -812,7 +887,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1001829615}
   - {fileID: 1453052959}
   - {fileID: 1760586661}
   - {fileID: 1777980179}
@@ -821,6 +895,7 @@ RectTransform:
   - {fileID: 1725215522}
   - {fileID: 1181194095}
   - {fileID: 1377782219}
+  - {fileID: 1001829615}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1166,6 +1241,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &914936987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 914936988}
+  - component: {fileID: 914936990}
+  - component: {fileID: 914936989}
+  m_Layer: 5
+  m_Name: House Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &914936988
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914936987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1001829615}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 380, y: 25.063}
+  m_SizeDelta: {x: 167.9346, y: 167.9346}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &914936989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914936987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 77b253cf75291104fbadcc39e49d6b91, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &914936990
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914936987}
+  m_CullTransparentMesh: 1
 --- !u!1 &915400126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1178,7 +1328,8 @@ GameObject:
   - component: {fileID: 915400130}
   - component: {fileID: 915400129}
   - component: {fileID: 915400128}
-  m_Layer: 8
+  - component: {fileID: 915400131}
+  m_Layer: 5
   m_Name: House
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1248,7 +1399,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 915400129}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 915400131}
+        m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
+        m_MethodName: SpawnPrefab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1001829619}
+        m_TargetAssemblyTypeName: ShopWindowManager, Assembly-CSharp
+        m_MethodName: ToggleShopWindow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &915400129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1287,6 +1462,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915400126}
   m_CullTransparentMesh: 1
+--- !u!114 &915400131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915400126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea139b2f62f60b40b615bd8677ba989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabToSpawn: {fileID: 2214077019371036548, guid: e959732206070204da5cdb3eff269313, type: 3}
+  spawnCost: 100
 --- !u!1 &923360712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,7 +1549,7 @@ GameObject:
   - component: {fileID: 970958094}
   - component: {fileID: 970958096}
   - component: {fileID: 970958095}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1748,7 +1937,7 @@ GameObject:
   - component: {fileID: 1001829618}
   - component: {fileID: 1001829617}
   - component: {fileID: 1001829619}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: ShopWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1771,11 +1960,13 @@ RectTransform:
   - {fileID: 1320877652}
   - {fileID: 915400127}
   - {fileID: 114588302}
+  - {fileID: 353904749}
+  - {fileID: 914936988}
   m_Father: {fileID: 555278497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.10266113, y: -94.369995}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1078.9509, y: 552.4906}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1001829617
@@ -2124,7 +2315,7 @@ GameObject:
   - component: {fileID: 1320877654}
   - component: {fileID: 1320877653}
   - component: {fileID: 1320877656}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Skyscraper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2209,7 +2400,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1001829619}
         m_TargetAssemblyTypeName: ShopWindowManager, Assembly-CSharp
-        m_MethodName: HideShopWindow
+        m_MethodName: ToggleShopWindow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3686,7 +3877,8 @@ GameObject:
   - component: {fileID: 1882457505}
   - component: {fileID: 1882457504}
   - component: {fileID: 1882457503}
-  m_Layer: 8
+  - component: {fileID: 1882457506}
+  m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3756,7 +3948,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1882457504}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1882457506}
+        m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
+        m_MethodName: SpawnPrefab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1001829619}
+        m_TargetAssemblyTypeName: ShopWindowManager, Assembly-CSharp
+        m_MethodName: ToggleShopWindow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1882457504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3795,6 +4011,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882457501}
   m_CullTransparentMesh: 1
+--- !u!114 &1882457506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882457501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea139b2f62f60b40b615bd8677ba989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabToSpawn: {fileID: 4998910386184115689, guid: 6dbfde462a986f940908a68f42db7ff6, type: 3}
+  spawnCost: 200
 --- !u!1 &1943046217
 GameObject:
   m_ObjectHideFlags: 0
@@ -3806,7 +4036,7 @@ GameObject:
   - component: {fileID: 1943046218}
   - component: {fileID: 1943046220}
   - component: {fileID: 1943046219}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

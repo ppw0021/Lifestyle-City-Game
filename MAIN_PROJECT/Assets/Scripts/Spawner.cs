@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject prefabToSpawn; // Assign your prefab in the Inspector
-    public int spawnCost = 300; // Cost of spawning the prefab
+    public GameObject prefabToSpawn;
+    public int spawnCost; // Cost of spawning the prefab
 
     // This function gets called when the button is clicked
     public void SpawnPrefab()
@@ -21,8 +21,8 @@ public class Spawner : MonoBehaviour
             // Instantiate the prefab
             GameObject spawnedObject = Instantiate(prefabToSpawn);
 
-            // Set the parent of the instantiated prefab (usually the Canvas)
-            Canvas canvas = FindObjectOfType<Canvas>(); // Find the Canvas in the scene
+            // Set the parent of the instantiated prefab
+            Canvas canvas = FindObjectOfType<Canvas>();
             spawnedObject.transform.SetParent(canvas.transform, false);
 
             // Ensure it follows the cursor immediately upon spawning
@@ -31,7 +31,6 @@ public class Spawner : MonoBehaviour
         else
         {
             Debug.Log("Insufficient coins to spawn the prefab!");
-            // You can display a message or take other actions here
         }
     }
 }
