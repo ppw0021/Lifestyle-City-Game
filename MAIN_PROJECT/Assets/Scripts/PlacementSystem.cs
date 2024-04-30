@@ -37,13 +37,20 @@ public class PlacementSystem : MonoBehaviour
         furnitureData = new();
         previewRenderer = cellIndicator.GetComponentInChildren<Renderer>();
         
-        for (int i = 0; i < InterfaceAPI.buildingList.Count; i++)
-        {
-            int XPOS = InterfaceAPI.buildingList[i].getXPos();
-            int YPOS = InterfaceAPI.buildingList[i].getYPos();
-            int STRUCID = InterfaceAPI.buildingList[i].getStructureId();
-            InterfaceAPI.buildingList[i].printDetails();
-        }
+        // for (int i = 0; i < InterfaceAPI.buildingList.Count; i++)
+        // {
+        //     // int XPOS = InterfaceAPI.buildingList[i].getXPos();
+        //     // int YPOS = InterfaceAPI.buildingList[i].getYPos();
+        //     // int STRUCID = InterfaceAPI.buildingList[i].getStructureId();
+        //     // InterfaceAPI.buildingList[i].printDetails();
+
+        //     PlaceObject(XPOS, YPOS, STRUCID);
+        // }
+
+        int XPOS = 0; 
+        int YPOS = 0;
+        int STRUCID = 0; 
+        PlaceObject(XPOS, YPOS, STRUCID);
     }
     private void StopPlacement()
     {
@@ -110,6 +117,8 @@ public class PlacementSystem : MonoBehaviour
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData: furnitureData;
 
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count -1 ); 
+        Debug.Log($"Grid position is: " + gridPosition); 
+        Debug.Log($"Structure ID is: " + selectedObjectIndex); 
 
     }
 
@@ -118,6 +127,37 @@ public class PlacementSystem : MonoBehaviour
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData: furnitureData; 
 
         return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size); 
+    }
+
+    private void PlaceObject(int XPOS, int YPOS, int STRUCID)
+    {
+        
+        selectedObjectIndex = STRUCID; 
+        if (selectedObjectIndex < 0)
+        {
+            return; 
+        }
+
+        // Calculate grid position based on XPOS and YPOS
+        Vector3Int gridPosition = new Vector3Int(XPOS, 0, YPOS); // Assuming Y is the vertical axis
+       
+
+        bool placementValidity = CheckPlacementValidity(gridPosition, STRUCID);
+        if (placementValidity == false)
+        {
+            return; 
+        }
+
+        GameObject newObject = Instantiate(database.objectsData[STRUCID].Prefab); 
+        newObject.transform.position = grid.CellToWorld(gridPosition);
+
+        placedGameObjects.Add(newObject);
+        GridData selectedData = database.objectsData[STRUCID].ID == 0 ? floorData : furnitureData;
+
+        selectedData.AddObjectAt(gridPosition, database.objectsData[STRUCID].Size, database.objectsData[STRUCID].ID, placedGameObjects.Count - 1); 
+
+        Debug.Log($"Grid position is: " + gridPosition); 
+        Debug.Log($"Structure ID is: " + selectedObjectIndex); 
     }
 
     
