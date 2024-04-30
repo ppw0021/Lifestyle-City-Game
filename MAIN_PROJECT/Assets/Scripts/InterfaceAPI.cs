@@ -32,6 +32,34 @@ public static class InterfaceAPI
 {
     public static string url = "https://penushost.ddns.net";
 
+    public static List<BuildingPrefab> buildingPrefabs = new List<BuildingPrefab>();
+
+    public static void LoadPrefabs()
+    {
+        buildingPrefabs.Clear();
+        buildingPrefabs.Add(new BuildingPrefab(0, "Skyscraper", 5, 5, 5));
+        buildingPrefabs.Add(new BuildingPrefab(1, "Shop", 3, 3, 1));
+        buildingPrefabs.Add(new BuildingPrefab(2, "House", 2, 2, 10));
+    }
+
+    public class BuildingPrefab 
+    {
+        public int structure_id;
+        public string building_name;
+        public int x_width;
+        public int y_width;
+        public int max_count;
+
+        public BuildingPrefab(int structure_id, string building_name, int x_width, int y_width, int max_count)
+        {
+            this.structure_id = structure_id;
+            this.building_name = building_name;
+            this.x_width = x_width;
+            this.y_width = y_width;
+            this.max_count = max_count;
+        }
+    }
+
     public class ObjectFromJSON
     {
         public string name;
@@ -96,7 +124,7 @@ public static class InterfaceAPI
         currentUser.printDetails();
     }
 
-    private static User currentUser;
+    private static User currentUser = new User();
     
     public static int getUserID()
     {
@@ -156,6 +184,24 @@ public static class InterfaceAPI
         // Call the coroutine using the MonoBehaviour instance
         currentUser.xp = xpToSet;
         monoBehaviourInstance.StartCoroutine(UpdateUserProperty("xp", xpToSet.ToString()));
+        return true;
+    }
+
+    public static bool addBuilding(int structure_id, int x_pos, int y_pos)
+    {
+        
+        if (monoBehaviourInstance == null)
+        {
+            Debug.LogError("MonoBehaviour instance not set. Call Initialize() first.");
+            return false;
+        }
+
+        // Call the coroutine using the MonoBehaviour instance
+        BuildingPrefab bPrefab = buildingPrefabs[structure_id];
+        BuildingInstance buildingInstanceToAdd = new BuildingInstance("-1", structure_id.ToString(), bPrefab.building_name, x_pos.ToString(), y_pos.ToString(), getUsername());
+        buildingList.Add(buildingInstanceToAdd);
+        monoBehaviourInstance.StartCoroutine(InterfaceAPI.PlaceBuilding(structure_id, x_pos, y_pos));
+        monoBehaviourInstance.StartCoroutine(InterfaceAPI.GetBase());
         return true;
     }
 
@@ -479,6 +525,7 @@ public static class InterfaceAPI
                         else
                         {
                             //string strippedString = StripSquareBrackets(jsonRaw);
+                            LoadPrefabs();
                             buildingList.Clear();
                             string appendedJson = "{\"name\": \"name\",\"InnerBuildingObjects\":" + jsonRaw + "}";
                             ObjectFromJSON buildingListObj = JsonUtility.FromJson<ObjectFromJSON>(appendedJson);

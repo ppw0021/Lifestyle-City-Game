@@ -9,7 +9,7 @@ public class expCtrller : MonoBehaviour
     [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private TextMeshProUGUI lvlText;
     private int level;
-    public int currentExp;
+    private int currentExp;
     private int targetExp;
     [SerializeField] private Image expProgressBar;
 

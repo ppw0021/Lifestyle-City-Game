@@ -12,9 +12,6 @@ public class FarmManager : MonoBehaviour
     void Start()
     {
         InterfaceAPI.Initialize(this);
-        InterfaceAPI.setXp(482);
-        int x = InterfaceAPI.getXp();
-        int level = InterfaceAPI.getLevel();
     }
 
     // Update is called once per frame

@@ -6,8 +6,8 @@ using UnityEngine;
 public class User
 {
     public int user_id = -1;
-    public string username = "";
-    public string sesh_token = "";
+    public string username = "UNLOADED";
+    public string sesh_token = "UNLOADED";
     public int level = -1;
     public int coins = -1;
     public int xp = -1;
