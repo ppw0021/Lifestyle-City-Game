@@ -13,6 +13,22 @@ public class BuildingInstance
     public string y_pos = "";
     public string owner_username;
 
+    public int getXPos()
+    {
+        return int.Parse(x_pos);
+    }
+
+    public int getYPos()
+    {
+        return int.Parse(y_pos);
+    }
+
+    public int getStructureId()
+    {
+        return int.Parse(structure_id);
+    }
+
+
     public BuildingInstance(string instance_id, string structure_id, string building_name, string x_pos, string y_pos, string owner_username)
     {
         this.instance_id = instance_id;

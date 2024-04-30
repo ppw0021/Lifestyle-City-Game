@@ -35,7 +35,15 @@ public class PlacementSystem : MonoBehaviour
         StopPlacement(); 
         floorData = new();
         furnitureData = new();
-        previewRenderer = cellIndicator.GetComponentInChildren<Renderer>(); 
+        previewRenderer = cellIndicator.GetComponentInChildren<Renderer>();
+        
+        for (int i = 0; i < InterfaceAPI.buildingList.Count; i++)
+        {
+            int XPOS = InterfaceAPI.buildingList[i].getXPos();
+            int YPOS = InterfaceAPI.buildingList[i].getYPos();
+            int STRUCID = InterfaceAPI.buildingList[i].getStructureId();
+            InterfaceAPI.buildingList[i].printDetails();
+        }
     }
     private void StopPlacement()
     {
@@ -77,7 +85,7 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnExit += StopPlacement; 
     }
 
-   
+
 
     private void PlaceStructure()
     {
