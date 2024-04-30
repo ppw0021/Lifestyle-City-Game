@@ -9,7 +9,7 @@ public class User
     public string username = "UNLOADED";
     public string sesh_token = "UNLOADED";
     public int level = -1;
-    public int coins = -1;
+    public int coins = 100000;
     public int xp = -1;
 
     public void printDetails()

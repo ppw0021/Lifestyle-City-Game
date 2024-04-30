@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Required for dealing with UI
+using UnityEngine.UI;
 
 public class ShopWindowManager : MonoBehaviour
 {
@@ -17,11 +17,5 @@ public class ShopWindowManager : MonoBehaviour
     public void ToggleShopWindow()
     {
         shopWindow.SetActive(!shopWindow.activeSelf);
-    }
-
-    // Method to hide the shop window
-    public void HideShopWindow()
-    {
-        shopWindow.SetActive(false);
     }
 }
