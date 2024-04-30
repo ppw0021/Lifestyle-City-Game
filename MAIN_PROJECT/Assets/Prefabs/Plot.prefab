@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3104776421861842015}
   - component: {fileID: 3846186843866718952}
   m_Layer: 0
-  m_Name: Corn1
+  m_Name: Plant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,7 +184,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plant: {fileID: 3846186843866718952}
-  selectedPlant: {fileID: 11400000, guid: 816ec7fec9574ef4eb1e1ae7b8630302, type: 2}
 --- !u!61 &5167143746910669869
 BoxCollider2D:
   m_ObjectHideFlags: 0

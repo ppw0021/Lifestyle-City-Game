@@ -155,9 +155,8 @@ app.post("/placebuilding", (req, res) => {
         }
 
         // Insert building owner first
-        //console.log("SQL1: INSERT INTO building_instances (structure_id, x_pos, y_pos) VALUES (" + structure_id + "," + x_pos + "," + y_pos + ");");
-        client.query("INSERT INTO building_instances (structure_id, x_pos, y_pos) VALUES (" + structure_id + "," + x_pos + "," + y_pos + ");",
-            (ownerErr, ownerRes) => {
+        client.query("INSERT INTO buildings_owner (base_owner_id) VALUES ($1) RETURNING building_instance_id;",
+            [user_id], (ownerErr, ownerRes) => {
                 if (ownerErr) {
                     console.error("Error inserting building owner:", ownerErr.message);
                     client.query('ROLLBACK', (rollbackErr) => {
@@ -167,13 +166,11 @@ app.post("/placebuilding", (req, res) => {
                         return res.json({ response: "sql_error" });
                     });
                 } else {
-                    console.log("   Instance insert success (user_id): " + user_id);
-                    //const bid = ownerRes.rows[0].building_instance_id;
+                    const building_instance_id = ownerRes.rows[0].building_instance_id;
 
                     // Insert building instance
-                    //console.log("SQL2: INSERT INTO buildings_owner (base_owner_id, building_instance_id) VALUES (" + user_id + ", " + bid + ");");
-                    client.query("INSERT INTO buildings_owner (base_owner_id, building_instance_id) VALUES (" + user_id + ", currval('building_instance_id_seq'));",
-                        (instanceErr, instanceRes) => {
+                    client.query("INSERT INTO building_instances (structure_id, x_pos, y_pos) VALUES ($1, $2, $3) RETURNING instance_id;",
+                        [structure_id, x_pos, y_pos], (instanceErr, instanceRes) => {
                             if (instanceErr) {
                                 console.error("Error inserting building instance:", instanceErr.message);
                                 client.query('ROLLBACK', (rollbackErr) => {
@@ -189,7 +186,7 @@ app.post("/placebuilding", (req, res) => {
                                         console.error("Error committing transaction:", commitErr.message);
                                         return res.json({ response: "sql_error" });
                                     }
-                                    console.log("   Building place success (user_id): " + user_id);
+                                    console.log("Building place success (user_id): " + user_id);
                                     return res.json({ response: "success" });
                                 });
                             }
