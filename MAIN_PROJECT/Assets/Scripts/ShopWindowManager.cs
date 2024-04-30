@@ -18,4 +18,10 @@ public class ShopWindowManager : MonoBehaviour
     {
         shopWindow.SetActive(!shopWindow.activeSelf);
     }
+
+    // Method to hide the shop window
+    public void HideShopWindow()
+    {
+        shopWindow.SetActive(false);
+    }
 }

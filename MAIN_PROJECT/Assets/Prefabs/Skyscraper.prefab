@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3898211070012903128}
   - component: {fileID: 8453155121296787023}
   m_Layer: 5
-  m_Name: SkyScraper Image
+  m_Name: Skyscraper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
