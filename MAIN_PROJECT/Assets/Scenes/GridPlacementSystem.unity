@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.24774238, g: 0.04366624, b: 0.64570534, a: 1}
+  m_IndirectSpecularColor: {r: 0.24774238, g: 0.04366624, b: 0.6457054, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1048,7 +1048,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 294276706}
+      - m_Target: {fileID: 1456698208}
         m_TargetAssemblyTypeName: ShopWindowManager, Assembly-CSharp
         m_MethodName: ToggleShopWindow
         m_Mode: 1
@@ -1407,6 +1407,7 @@ RectTransform:
   - {fileID: 1016379289}
   - {fileID: 186908090}
   - {fileID: 294276705}
+  - {fileID: 1456698204}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2375,7 +2376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7401616350368380843, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
       propertyPath: m_Name
-      value: UiButton (2)
+      value: Bed
       objectReference: {fileID: 0}
     - target: {fileID: 7897775575725484003, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -2650,6 +2651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd84fbf8a0ad474d9817399e17e8a87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xy_offset: 5
   mouseIndicator: {fileID: 60934291}
   cellIndicator: {fileID: 227801668}
   inputManager: {fileID: 1666864371}
@@ -2885,7 +2887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7401616350368380843, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
       propertyPath: m_Name
-      value: UiButton (3)
+      value: Bench
       objectReference: {fileID: 0}
     - target: {fileID: 7897775575725484003, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -3146,8 +3148,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1456698204}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3954,6 +3955,7 @@ GameObject:
   - component: {fileID: 1456698207}
   - component: {fileID: 1456698206}
   - component: {fileID: 1456698205}
+  - component: {fileID: 1456698208}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -3968,14 +3970,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1456698203}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1930150328}
   - {fileID: 1058817468}
-  m_Father: {fileID: 866711936}
+  m_Father: {fileID: 294645691}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -4046,6 +4048,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1456698203}
   m_CullTransparentMesh: 1
+--- !u!114 &1456698208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456698203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d0a7a1f5ec6ce42a7e0d3307407438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopWindow: {fileID: 1456698203}
 --- !u!1 &1534616202
 GameObject:
   m_ObjectHideFlags: 0
@@ -5130,7 +5145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7401616350368380843, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
       propertyPath: m_Name
-      value: UiButton (1)
+      value: Chair
       objectReference: {fileID: 0}
     - target: {fileID: 7897775575725484003, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -5978,7 +5993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7401616350368380843, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
       propertyPath: m_Name
-      value: UiButton
+      value: Dirt
       objectReference: {fileID: 0}
     - target: {fileID: 7897775575725484003, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

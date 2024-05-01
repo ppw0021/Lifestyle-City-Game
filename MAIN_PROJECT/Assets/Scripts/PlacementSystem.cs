@@ -34,7 +34,6 @@ public class PlacementSystem : MonoBehaviour
 
     private void Start()
     {
-
         StopPlacement(); 
         floorData = new();
         furnitureData = new();
@@ -88,7 +87,6 @@ public class PlacementSystem : MonoBehaviour
 
         mouseIndicator.transform.position = mousePosition; 
         cellIndicator.transform.position = grid.CellToWorld(gridPosition);
-
     }
 
     public void StartPlacement(int ID)
@@ -106,8 +104,6 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnExit += StopPlacement; 
     }
 
-
-
     private void PlaceStructure()
     {
         if(inputManager.IsPointerOverUI()) 
@@ -123,7 +119,6 @@ public class PlacementSystem : MonoBehaviour
             return; 
         }
 
-        
         //Place on server
         int xpos_grid_database = gridPosition.x + xy_offset;
         int ypos_grid_database = gridPosition.z + xy_offset;
@@ -151,7 +146,6 @@ public class PlacementSystem : MonoBehaviour
 
     private void PlaceObject(int XPOS, int YPOS, int STRUCID)
     {
-        
         selectedObjectIndex = STRUCID; 
         if (selectedObjectIndex < 0)
         {
@@ -162,7 +156,6 @@ public class PlacementSystem : MonoBehaviour
         // Calculate grid position based on XPOS and YPOS
         Vector3Int gridPosition = new Vector3Int(XPOS, 0, YPOS); // Assuming Y is the vertical axis
        
-
         bool placementValidity = CheckPlacementValidity(gridPosition, STRUCID);
         if (placementValidity == false)
         {
