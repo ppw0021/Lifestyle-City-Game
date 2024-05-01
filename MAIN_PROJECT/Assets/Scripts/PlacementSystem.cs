@@ -47,10 +47,20 @@ public class PlacementSystem : MonoBehaviour
         //     PlaceObject(XPOS, YPOS, STRUCID);
         // }
 
-        int XPOS = 0; 
-        int YPOS = 0;
-        int STRUCID = 0; 
-        PlaceObject(XPOS, YPOS, STRUCID);
+        //int XPOS = 0; 
+        //int YPOS = 0;
+        //int STRUCID = 0; 
+        //PlaceObject(XPOS, YPOS, STRUCID);
+
+        InterfaceAPI.Initialize(this);
+        for (int i = 0; i < InterfaceAPI.buildingList.Count; i++)
+        {
+            int XPOS = InterfaceAPI.buildingList[i].getXPos();
+            int YPOS = InterfaceAPI.buildingList[i].getYPos();
+            int STRUCID = InterfaceAPI.buildingList[i].getStructureId();
+            PlaceObject(XPOS, YPOS, STRUCID);
+            //InterfaceAPI.buildingList[i].printDetails();
+        }
     }
     private void StopPlacement()
     {
@@ -156,8 +166,9 @@ public class PlacementSystem : MonoBehaviour
 
         selectedData.AddObjectAt(gridPosition, database.objectsData[STRUCID].Size, database.objectsData[STRUCID].ID, placedGameObjects.Count - 1); 
 
-        Debug.Log($"Grid position is: " + gridPosition); 
-        Debug.Log($"Structure ID is: " + selectedObjectIndex); 
+        //Debug.Log($"Grid position is: " + gridPosition); 
+        //Debug.Log($"Structure ID is: " + selectedObjectIndex); 
+        Debug.Log("Placed Structure on Grid at " + gridPosition + "Structure ID: " + selectedObjectIndex);
     }
 
     

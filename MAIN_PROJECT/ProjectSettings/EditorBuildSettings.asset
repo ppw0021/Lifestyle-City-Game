@@ -26,7 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MiniGame.unity
     guid: bcfecec3d28bde046acf9f7c496d1072
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Shop.unity
     guid: 989728e2758a4cc488245e069f469d85
+  - enabled: 1
+    path: Assets/Scenes/GridPlacementSystem.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects: {}

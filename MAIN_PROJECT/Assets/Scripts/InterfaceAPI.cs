@@ -340,7 +340,7 @@ public static class InterfaceAPI
 
                         Debug.Log("Successful Login: " + InterfaceAPI.getUsername());
                         currentUser.printDetails();
-                        LoadScene("Currency");
+                        LoadScene("GridPlacementSystem");
                     }
                     else if (isResponseResponse)
                     {
