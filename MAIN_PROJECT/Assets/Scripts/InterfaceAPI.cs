@@ -627,9 +627,7 @@ public static class InterfaceAPI
                     }
                     break;
             }
-        }
-
-        
+        } 
     }
 
     private static IEnumerator PlaceBuilding(int structure_id, int x_pos, int y_pos)
