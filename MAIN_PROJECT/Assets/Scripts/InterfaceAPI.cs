@@ -30,7 +30,13 @@ using Unity.VisualScripting;
 
 public static class InterfaceAPI
 {
-    public static string url = "https://penushost.ddns.net";
+    private static string url = "https://penushost.ddns.net";
+    [SerializeField]
+    private static string mainMenuScene = "GridPlacementSystem";
+    public static string getMainMenuSceneName()
+    {
+        return mainMenuScene;
+    }
 
     public static List<BuildingPrefab> buildingPrefabs = new List<BuildingPrefab>();
 
@@ -340,7 +346,7 @@ public static class InterfaceAPI
 
                         Debug.Log("Successful Login: " + InterfaceAPI.getUsername());
                         currentUser.printDetails();
-                        LoadScene("GridPlacementSystem");
+                        LoadScene(mainMenuScene);
                     }
                     else if (isResponseResponse)
                     {
@@ -571,7 +577,7 @@ public static class InterfaceAPI
             }
         }
     }
-    public static IEnumerator UpdateUserProperty(string propertyName, string newValue)
+    private static IEnumerator UpdateUserProperty(string propertyName, string newValue)
     {
         string uri = url + "/updateuserproperty";
         string jsonData = ("{\"sesh_id\": \"" + currentUser.sesh_token + "\", \"user_id\": \"" + currentUser.user_id + "\", \"property_to_update\": \"" + propertyName + "\", \"new_property_value\": \"" + newValue + "\"}");
@@ -626,7 +632,7 @@ public static class InterfaceAPI
         
     }
 
-    public static IEnumerator PlaceBuilding(int structure_id, int x_pos, int y_pos)
+    private static IEnumerator PlaceBuilding(int structure_id, int x_pos, int y_pos)
     {
         string uri = url + "/placebuilding";
         string jsonData = "{" +
