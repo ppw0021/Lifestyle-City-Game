@@ -7,6 +7,6 @@ public class ToHome : MonoBehaviour
 {
     public void OnHomeButtonClick()
     {
-        SceneManager.LoadScene("Currency");
+        SceneManager.LoadScene(InterfaceAPI.getMainMenuSceneName());
     }
 }

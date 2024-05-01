@@ -7,6 +7,9 @@ using UnityEngine;
 public class PlacementSystem : MonoBehaviour
 {
     [SerializeField]
+    private int xy_offset = 5;
+    
+    [SerializeField]
     private GameObject mouseIndicator, cellIndicator; 
 
     [SerializeField]
@@ -55,8 +58,8 @@ public class PlacementSystem : MonoBehaviour
         InterfaceAPI.Initialize(this);
         for (int i = 0; i < InterfaceAPI.buildingList.Count; i++)
         {
-            int XPOS = InterfaceAPI.buildingList[i].getXPos();
-            int YPOS = InterfaceAPI.buildingList[i].getYPos();
+            int XPOS = InterfaceAPI.buildingList[i].getXPos() - xy_offset;
+            int YPOS = InterfaceAPI.buildingList[i].getYPos() - xy_offset;
             int STRUCID = InterfaceAPI.buildingList[i].getStructureId();
             PlaceObject(XPOS, YPOS, STRUCID);
             //InterfaceAPI.buildingList[i].printDetails();
@@ -120,6 +123,12 @@ public class PlacementSystem : MonoBehaviour
         }
 
         
+        //Place on server
+        int xpos_grid_database = gridPosition.x + xy_offset;
+        int ypos_grid_database = gridPosition.y + xy_offset;
+
+        InterfaceAPI.addBuilding(database.objectsData[selectedObjectIndex].ID, xpos_grid_database, ypos_grid_database);
+
         GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab); 
         newObject.transform.position = grid.CellToWorld(gridPosition);
 
@@ -127,8 +136,8 @@ public class PlacementSystem : MonoBehaviour
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData: furnitureData;
 
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count -1 ); 
-        Debug.Log($"Grid position is: " + gridPosition); 
-        Debug.Log($"Structure ID is: " + selectedObjectIndex); 
+        Debug.Log("Placed Structure (x,y): (" + gridPosition.x + ", " + gridPosition.y + ") Structure ID: " + selectedObjectIndex);
+ 
 
     }
 
@@ -168,7 +177,7 @@ public class PlacementSystem : MonoBehaviour
 
         //Debug.Log($"Grid position is: " + gridPosition); 
         //Debug.Log($"Structure ID is: " + selectedObjectIndex); 
-        Debug.Log("Placed Structure on Grid at " + gridPosition + "Structure ID: " + selectedObjectIndex);
+        Debug.Log("Loaded Structure (x,y): (" + gridPosition.x + ", " + gridPosition.y + ") Structure ID: " + selectedObjectIndex);
     }
 
     
