@@ -567,6 +567,7 @@ public static class InterfaceAPI
                     else if (isResponseResponse)
                     {
                         //Response is a Response type
+                        LoadPrefabs();
                         Debug.Log("Successful Response Recieved");
                         serverResponse.printResponse();
                     }

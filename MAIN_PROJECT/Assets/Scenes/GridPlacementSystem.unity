@@ -150,7 +150,7 @@ Transform:
   m_GameObject: {fileID: 23532894}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.12390566, z: -0, w: 0.9922941}
-  m_LocalPosition: {x: 22.34, y: -4.19, z: 10.03}
+  m_LocalPosition: {x: 43.94, y: -4.19, z: 15.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1247,11 +1247,44 @@ MonoBehaviour:
   targetRotation: {x: 46.935, y: 11.819, z: 2.663}
   shopTargetPosition: {x: 5.534, y: 0.3865, z: -1.103}
   shopTargetRotation: {x: 9.557, y: 90, z: 0}
+  gameTargetPosition: {x: -7.56, y: 1.08, z: 11.1}
+  gameTargetRotation: {x: 6.22, y: -18.46, z: 0}
   moveSpeed: 7
   shopWindow: {fileID: 1456698203}
   ShopMinigameTutUIGroup: {fileID: 757181864}
   shopWindowManager: {fileID: 1456698208}
   isMoving: 0
+--- !u!1 &331152245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 331152246}
+  m_Layer: 0
+  m_Name: OrchardCameraPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &331152246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331152245}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.05357994, y: 0.1601641, z: -0.008707554, w: -0.9855967}
+  m_LocalPosition: {x: -7.5615005, y: 1.0799637, z: 11.093529}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1871086871}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &353429176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2465,6 +2498,18 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 9abb618f8598ee24489761e7154aa8cc, type: 2}
   ID: 3
   text: {fileID: 1146170752}
+  button: {fileID: 720939592}
+--- !u!114 &720939592 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7897775575725484003, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
+  m_PrefabInstance: {fileID: 720939589}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720939590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &757181864
 GameObject:
   m_ObjectHideFlags: 0
@@ -2877,6 +2922,18 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 9abb618f8598ee24489761e7154aa8cc, type: 2}
   ID: 2
   text: {fileID: 1552934037}
+  button: {fileID: 959006607}
+--- !u!114 &959006607 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7897775575725484003, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
+  m_PrefabInstance: {fileID: 481493640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481493641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &976143637
 GameObject:
   m_ObjectHideFlags: 0
@@ -3127,9 +3184,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1016379290}
-        m_TargetAssemblyTypeName: ToMiniGame, Assembly-CSharp
-        m_MethodName: OnMiniGameButtonClick
+      - m_Target: {fileID: 330585548}
+        m_TargetAssemblyTypeName: SmoothCameraMovement, Assembly-CSharp
+        m_MethodName: MoveCamToMinigame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4904,6 +4961,7 @@ Transform:
   - {fileID: 832575519}
   - {fileID: 865723653}
   - {fileID: 261163411}
+  - {fileID: 331152246}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1873819656
@@ -5668,6 +5726,18 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 9abb618f8598ee24489761e7154aa8cc, type: 2}
   ID: 1
   text: {fileID: 1588367013}
+  button: {fileID: 1950170386}
+--- !u!114 &1950170386 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7897775575725484003, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
+  m_PrefabInstance: {fileID: 1950170383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950170384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2106725945 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7401616350368380843, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
@@ -6238,6 +6308,18 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 9abb618f8598ee24489761e7154aa8cc, type: 2}
   ID: 0
   text: {fileID: 1892569259}
+  button: {fileID: 4467489029085101848}
+--- !u!114 &4467489029085101848 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7897775575725484003, guid: 8ece0f0faf8317849a46eacc430a72b1, type: 3}
+  m_PrefabInstance: {fileID: 4467489029085101845}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4467489029085101846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

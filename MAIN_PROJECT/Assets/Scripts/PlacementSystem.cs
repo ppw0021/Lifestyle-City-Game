@@ -106,10 +106,17 @@ public class PlacementSystem : MonoBehaviour
 
     private void PlaceStructure()
     {
+        //Deduct coins
+        int coinsToSet = InterfaceAPI.getCoins();
+        coinsToSet -= database.objectsData[selectedObjectIndex].Cost;
+        InterfaceAPI.setCoins(coinsToSet);
         if(inputManager.IsPointerOverUI()) 
         {
             return; 
         }
+
+        //Add XP
+        InterfaceAPI.addXp(database.objectsData[selectedObjectIndex].XPGain);
         Vector3  mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition); 
 
@@ -133,6 +140,15 @@ public class PlacementSystem : MonoBehaviour
 
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count -1 ); 
         Debug.Log("Placed Structure (x,y): (" + gridPosition.x + ", " + gridPosition.z + ") Structure ID: " + selectedObjectIndex);
+
+        int coinCheck = InterfaceAPI.getCoins();
+        coinCheck -= database.objectsData[selectedObjectIndex].Cost;
+
+        if (coinCheck < 0)
+        {
+            StopPlacement();
+            smoothCameraMovement.PlacementCompleted();
+        }
 
         if (database.objectsData[selectedObjectIndex].AllowRepeatPlacement)
         {

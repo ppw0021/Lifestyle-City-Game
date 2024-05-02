@@ -25,4 +25,6 @@ public class ObjectData
     public int Cost { get; private set; }
     [field: SerializeField]
     public bool AllowRepeatPlacement { get; private set; }
+    [field: SerializeField]
+    public int XPGain { get; private set; }
 }
