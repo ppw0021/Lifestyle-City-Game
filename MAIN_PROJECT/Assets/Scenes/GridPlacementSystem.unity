@@ -1716,7 +1716,7 @@ MonoBehaviour:
   targetRotation: {x: 46.935, y: 11.819, z: 2.663}
   shopTargetPosition: {x: 5.534, y: 0.3865, z: -1.103}
   shopTargetRotation: {x: 9.557, y: 90, z: 0}
-  moveSpeed: 6
+  moveSpeed: 7
   isMoving: 0
 --- !u!1001 &353429176
 PrefabInstance:
