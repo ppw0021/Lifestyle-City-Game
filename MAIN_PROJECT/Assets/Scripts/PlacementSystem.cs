@@ -133,7 +133,12 @@ public class PlacementSystem : MonoBehaviour
 
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count -1 ); 
         Debug.Log("Placed Structure (x,y): (" + gridPosition.x + ", " + gridPosition.z + ") Structure ID: " + selectedObjectIndex);
- 
+
+        if (database.objectsData[selectedObjectIndex].AllowRepeatPlacement)
+        {
+            return;
+        }
+
         //Allow one building at a time
         StopPlacement();
         smoothCameraMovement.PlacementCompleted();

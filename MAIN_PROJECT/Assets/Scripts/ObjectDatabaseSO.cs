@@ -23,4 +23,6 @@ public class ObjectData
     public GameObject Prefab { get; private set; }
     [field: SerializeField]
     public int Cost { get; private set; }
+    [field: SerializeField]
+    public bool AllowRepeatPlacement { get; private set; }
 }
