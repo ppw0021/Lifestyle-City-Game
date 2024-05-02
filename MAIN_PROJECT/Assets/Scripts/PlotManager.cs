@@ -16,6 +16,8 @@ public class PlotManager : MonoBehaviour
     void Start()
     {
         fm = transform.parent.GetComponent<FarmManager>();
+        // Ensure the initial sorting order is set to 1
+        plant.sortingOrder = 1;
     }
 
     // Update is called once per frame
