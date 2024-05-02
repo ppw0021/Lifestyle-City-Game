@@ -35,6 +35,10 @@ public class PlotManager : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (selectedPlant.cost > InterfaceAPI.getCoins())
+        {
+            return;
+        }
         if (isPlanted)
         {
             if(plantStage == selectedPlant.plantStages.Length - 1)
@@ -52,6 +56,7 @@ public class PlotManager : MonoBehaviour
     {
         Debug.Log("Harvested");
         isPlanted = false;
+        InterfaceAPI.addXp(25);
         int coins = InterfaceAPI.getCoins();
         coins += selectedPlant.reward;
         InterfaceAPI.Initialize(this);

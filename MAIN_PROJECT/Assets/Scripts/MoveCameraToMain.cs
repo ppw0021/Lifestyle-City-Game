@@ -14,6 +14,9 @@ public class SmoothCameraMovement : MonoBehaviour
 
     public Vector3 gameTargetPosition;
     public Vector3 gameTargetRotation;
+
+    public Vector3 tutorialTargetPosition;
+    public Vector3 tutorialTargetRotation;
     public float moveSpeed = 3f; // The speed of camera movement
 
     public GameObject shopWindow;
@@ -103,6 +106,16 @@ public class SmoothCameraMovement : MonoBehaviour
         StartCoroutine(MoveToMinigame());
     }
 
+    public void MoveCamToTutorial()
+    {
+        if (isMoving)
+        {
+            return;
+        }
+        shopWindowManager.buttonStateInteractable(false, false, false);
+        StartCoroutine(MoveToTutorial());
+    }
+
     private IEnumerator MoveToHome(bool enableTriButtons)
     {
         
@@ -148,7 +161,7 @@ public class SmoothCameraMovement : MonoBehaviour
     private IEnumerator MoveToMinigame()
     {
         isMoving = true;
-        while (Vector3.Distance(transform.position, gameTargetPosition) > 0.05f || Quaternion.Angle(transform.rotation, Quaternion.Euler(gameTargetRotation)) > 0.05f)
+        while (Vector3.Distance(transform.position, gameTargetPosition) > 0.5f || Quaternion.Angle(transform.rotation, Quaternion.Euler(gameTargetRotation)) > 0.5f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
             transform.position = Vector3.Lerp(transform.position, gameTargetPosition, moveSpeed * Time.deltaTime);
@@ -160,6 +173,24 @@ public class SmoothCameraMovement : MonoBehaviour
         }
         isMoving = false;
         SceneManager.LoadScene("MiniGame");
+        
+    }
+
+    private IEnumerator MoveToTutorial()
+    {
+        isMoving = true;
+        while (Vector3.Distance(transform.position, tutorialTargetPosition) > 0.5f || Quaternion.Angle(transform.rotation, Quaternion.Euler(tutorialTargetRotation)) > 0.5f)
+        {
+            // Use Vector3.Lerp to smoothly move the camera towards the target position
+            transform.position = Vector3.Lerp(transform.position, tutorialTargetPosition, moveSpeed * Time.deltaTime);
+            
+            // Use Quaternion.Lerp to smoothly rotate the camera towards the target rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(tutorialTargetRotation), moveSpeed * Time.deltaTime);
+            
+            yield return null;
+        }
+        isMoving = false;
+        SceneManager.LoadScene("TutorialSection");
         
     }
 
