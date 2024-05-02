@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ToTutorial : MonoBehaviour
 {
+    //public SmoothCameraMovement moveCameraToMain;
     public void OnTutorialButtonClick()
     {
         SceneManager.LoadScene("TutorialSection");

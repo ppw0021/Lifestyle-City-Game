@@ -5,16 +5,36 @@ public class SmoothCameraMovement : MonoBehaviour
 {
     public Vector3 targetPosition; // The target position to move towards
     public Vector3 targetRotation; // The target rotation to end up with
-    public float moveSpeed = 5f; // The speed of camera movement
 
-    private bool isMoving = false;
+    public Vector3 shopTargetPosition; // The target position to move towards
+    public Vector3 shopTargetRotation; // The target rotation to end up with
+    public float moveSpeed = 3f; // The speed of camera movement
+
+    public bool isMoving = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        MoveToHome();
+    }
+
+    public void MoveToHome()
+    {
         if (targetPosition != null)
         {
             MoveCamera(targetPosition, targetRotation);
+        }
+        else
+        {
+            Debug.LogWarning("No target specified for camera movement.");
+        }
+    }
+
+    public void MoveToShop()
+    {
+        if (shopTargetPosition != null)
+        {
+            MoveCamera(shopTargetPosition, shopTargetRotation);
         }
         else
         {
@@ -39,8 +59,8 @@ public class SmoothCameraMovement : MonoBehaviour
         }
         
         // Ensure the camera is exactly at the target position and rotation
-        transform.position = newTargetPosition;
-        transform.rotation = Quaternion.Euler(newTargetRotation);
+        //transform.position = newTargetPosition;
+        //transform.rotation = Quaternion.Euler(newTargetRotation);
         isMoving = false;
     }
 

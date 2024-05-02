@@ -65,7 +65,7 @@ public class PlacementSystem : MonoBehaviour
             //InterfaceAPI.buildingList[i].printDetails();
         }
     }
-    private void StopPlacement()
+    public void StopPlacement()
     {
         selectedObjectIndex = -1; 
         gridVisualization.SetActive(false); 

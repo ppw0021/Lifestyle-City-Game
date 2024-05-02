@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ToShop : MonoBehaviour
 {
+    public SmoothCameraMovement smoothCameraMovement;
     public void OnShopButtonClick()
     {
         SceneManager.LoadScene("Shop");

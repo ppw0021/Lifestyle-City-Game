@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class ShopWindowManager : MonoBehaviour
 {
     public GameObject shopWindow; // Assign the ShopWindow panel to this in the inspector
+    [SerializeField]
+    public SmoothCameraMovement smoothCameraMovement;
 
     void Start()
     {
@@ -16,6 +18,19 @@ public class ShopWindowManager : MonoBehaviour
     // Toggle the visibility of the shop window
     public void ToggleShopWindow()
     {
+        if (smoothCameraMovement.isMoving)
+        {
+            return;
+        }
+        if (shopWindow.activeSelf)
+        {
+            smoothCameraMovement.MoveToHome();
+        }
+        else
+        {
+            smoothCameraMovement.MoveToShop();
+        }
+
         shopWindow.SetActive(!shopWindow.activeSelf);
     }
 }

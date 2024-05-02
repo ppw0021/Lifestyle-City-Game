@@ -30,6 +30,7 @@ public class PauseMenu : MonoBehaviour
         will be changed to something else (i.e. go back to the main menu etc.) */
         pauseMenu.SetActive(false);    
         //Application.Quit();
+        Time.timeScale = 1;
         SceneManager.LoadScene("LoginScene"); //now loads the login scene
         Debug.Log("Game closed");
     }
