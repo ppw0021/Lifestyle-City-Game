@@ -1385,7 +1385,7 @@ MonoBehaviour:
   shopTargetRotation: {x: 9.557, y: 90, z: 0}
   moveSpeed: 7
   shopWindow: {fileID: 1456698203}
-  ShopMinigameTutUIGroup: {fileID: 0}
+  ShopMinigameTutUIGroup: {fileID: 757181864}
   shopWindowManager: {fileID: 1456698208}
   isMoving: 0
 --- !u!1001 &353429176
@@ -2325,6 +2325,7 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 9abb618f8598ee24489761e7154aa8cc, type: 2}
   selectedObjectIndex: -1
   gridVisualization: {fileID: 532146644}
+  smoothCameraMovement: {fileID: 330585548}
 --- !u!1 &605051664
 GameObject:
   m_ObjectHideFlags: 0

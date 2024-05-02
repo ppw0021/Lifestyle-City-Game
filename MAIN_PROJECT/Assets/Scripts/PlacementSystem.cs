@@ -29,7 +29,7 @@ public class PlacementSystem : MonoBehaviour
 
     private Renderer previewRenderer; 
 
-    
+    public SmoothCameraMovement smoothCameraMovement;
     private List<GameObject> placedGameObjects = new();
 
     private void Start()
@@ -89,8 +89,6 @@ public class PlacementSystem : MonoBehaviour
         cellIndicator.transform.position = grid.CellToWorld(gridPosition);
     }
 
-    
-
     public void StartPlacement(int ID)
     {
         StopPlacement();
@@ -136,7 +134,9 @@ public class PlacementSystem : MonoBehaviour
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count -1 ); 
         Debug.Log("Placed Structure (x,y): (" + gridPosition.x + ", " + gridPosition.z + ") Structure ID: " + selectedObjectIndex);
  
-
+        //Allow one building at a time
+        StopPlacement();
+        smoothCameraMovement.PlacementCompleted();
     }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)

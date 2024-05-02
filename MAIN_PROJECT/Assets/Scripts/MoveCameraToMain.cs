@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class SmoothCameraMovement : MonoBehaviour
 {
@@ -58,6 +59,16 @@ public class SmoothCameraMovement : MonoBehaviour
         }
     }
 
+    public void PlacementCompleted()
+    {
+        if (isMoving)
+        {
+            return;
+        }
+        shopWindowManager.buttonStateInteractable(true, true, true);
+        shopWindowManager.showCancelButton(false);
+        
+    }
     public void MoveCamToBuildMode()
     {
         if (isMoving)
