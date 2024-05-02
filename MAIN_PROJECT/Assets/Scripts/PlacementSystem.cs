@@ -29,7 +29,7 @@ public class PlacementSystem : MonoBehaviour
 
     private Renderer previewRenderer; 
 
-
+    
     private List<GameObject> placedGameObjects = new();
 
     private void Start()
@@ -88,6 +88,8 @@ public class PlacementSystem : MonoBehaviour
         mouseIndicator.transform.position = mousePosition; 
         cellIndicator.transform.position = grid.CellToWorld(gridPosition);
     }
+
+    
 
     public void StartPlacement(int ID)
     {

@@ -17,15 +17,15 @@ MonoBehaviour:
     <ID>k__BackingField: 0
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 175886647813805099, guid: 6bafb9556d35ba840bebea4eea7d34c2, type: 3}
-  - <Name>k__BackingField: Chair
+  - <Name>k__BackingField: House
     <ID>k__BackingField: 1
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 4428052050468720457, guid: e033e50487fb016449143cd70d837387, type: 3}
-  - <Name>k__BackingField: BigBed
+    <Prefab>k__BackingField: {fileID: 125681691262012992, guid: 80d3ae70f7dc306428eb759a00374d44, type: 3}
+  - <Name>k__BackingField: Windmill
     <ID>k__BackingField: 2
-    <Size>k__BackingField: {x: 2, y: 2}
-    <Prefab>k__BackingField: {fileID: 3487007735555770654, guid: 4721f1b576334dc46b3c72470bf613e3, type: 3}
-  - <Name>k__BackingField: Table
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 753940253778231519, guid: 0ce8a678de73e1142a6aee19c1d23dd9, type: 3}
+  - <Name>k__BackingField: Townhall
     <ID>k__BackingField: 3
-    <Size>k__BackingField: {x: 2, y: 1}
-    <Prefab>k__BackingField: {fileID: 3493615974341626966, guid: c8183485a28237d4385a3c7ef8659faa, type: 3}
+    <Size>k__BackingField: {x: 1, y: 2}
+    <Prefab>k__BackingField: {fileID: 8438008458043988133, guid: c621c0ad764c0c7438b28efb2dd157b8, type: 3}

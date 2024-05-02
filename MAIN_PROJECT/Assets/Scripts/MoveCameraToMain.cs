@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class SmoothCameraMovement : MonoBehaviour
 {
@@ -10,36 +11,16 @@ public class SmoothCameraMovement : MonoBehaviour
     public Vector3 shopTargetRotation; // The target rotation to end up with
     public float moveSpeed = 3f; // The speed of camera movement
 
+    public GameObject shopWindow;
+    public GameObject ShopMinigameTutUIGroup;
+    public ShopWindowManager shopWindowManager;
+
     public bool isMoving = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        MoveToHome();
-    }
-
-    public void MoveToHome()
-    {
-        if (targetPosition != null)
-        {
-            MoveCamera(targetPosition, targetRotation);
-        }
-        else
-        {
-            Debug.LogWarning("No target specified for camera movement.");
-        }
-    }
-
-    public void MoveToShop()
-    {
-        if (shopTargetPosition != null)
-        {
-            MoveCamera(shopTargetPosition, shopTargetRotation);
-        }
-        else
-        {
-            Debug.LogWarning("No target specified for camera movement.");
-        }
+        StartCoroutine(MoveToHome(true));
     }
 
     // Coroutine to smoothly move the camera to the target position and rotation
@@ -57,11 +38,86 @@ public class SmoothCameraMovement : MonoBehaviour
             
             yield return null;
         }
-        
-        // Ensure the camera is exactly at the target position and rotation
-        //transform.position = newTargetPosition;
-        //transform.rotation = Quaternion.Euler(newTargetRotation);
         isMoving = false;
+    }
+
+    public void ToggleShop()
+    {
+        if (isMoving)
+        {
+            return;
+        }
+        if (shopWindow.activeSelf)
+        {
+            shopWindow.SetActive(false);
+            StartCoroutine(MoveToHome(true));
+        }
+        else
+        {
+            StartCoroutine(MoveToShop());
+        }
+    }
+
+    public void MoveCamToBuildMode()
+    {
+        if (isMoving)
+        {
+            return;
+        }
+        shopWindow.SetActive(false);
+        shopWindowManager.showCancelButton(true);
+        StartCoroutine(MoveToHome(false));
+    }
+
+    public void MoveCamBackToShop()
+    {
+        if (isMoving)
+        {
+            return;
+        }
+        StartCoroutine(MoveToShop());
+    }
+
+    private IEnumerator MoveToHome(bool enableTriButtons)
+    {
+        
+        isMoving = true;
+        
+        while (Vector3.Distance(transform.position, targetPosition) > 0.05f || Quaternion.Angle(transform.rotation, Quaternion.Euler(targetRotation)) > 0.05f)
+        {
+            // Use Vector3.Lerp to smoothly move the camera towards the target position
+            transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            
+            // Use Quaternion.Lerp to smoothly rotate the camera towards the target rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(targetRotation), moveSpeed * Time.deltaTime);
+            
+            yield return null;
+        }
+        if (enableTriButtons)
+        {
+            shopWindowManager.buttonStateInteractable(true, true, true);
+            ShopMinigameTutUIGroup.SetActive(true);
+        }
+        isMoving = false;
+    }
+
+    private IEnumerator MoveToShop()
+    {
+        isMoving = true;
+        shopWindowManager.buttonStateInteractable(true, false, false);
+        shopWindowManager.showCancelButton(false);
+        while (Vector3.Distance(transform.position, shopTargetPosition) > 0.05f || Quaternion.Angle(transform.rotation, Quaternion.Euler(shopTargetRotation)) > 0.05f)
+        {
+            // Use Vector3.Lerp to smoothly move the camera towards the target position
+            transform.position = Vector3.Lerp(transform.position, shopTargetPosition, moveSpeed * Time.deltaTime);
+            
+            // Use Quaternion.Lerp to smoothly rotate the camera towards the target rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(shopTargetRotation), moveSpeed * Time.deltaTime);
+            
+            yield return null;
+        }
+        isMoving = false;
+        shopWindow.SetActive(true);
     }
 
     // Move the camera to the specified target position and rotation

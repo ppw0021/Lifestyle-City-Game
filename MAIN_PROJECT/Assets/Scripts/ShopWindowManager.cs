@@ -6,31 +6,48 @@ using UnityEngine.UI;
 public class ShopWindowManager : MonoBehaviour
 {
     public GameObject shopWindow; // Assign the ShopWindow panel to this in the inspector
+    public GameObject ShopMinigameTutUIGroup;
+    public GameObject shopButton;
+    public GameObject tutorialButton;
+    public GameObject miniGameButton;
     [SerializeField]
     public SmoothCameraMovement smoothCameraMovement;
+    public GameObject cancelButton;
 
     void Start()
     {
         // Ensure the shop window is not visible initially
         shopWindow.SetActive(false);
+        ShopMinigameTutUIGroup.SetActive(false);
+        cancelButton.SetActive(false);
     }
 
-    // Toggle the visibility of the shop window
-    public void ToggleShopWindow()
+    public void buttonStateInteractable(bool shop, bool tutorial, bool minigame)
     {
-        if (smoothCameraMovement.isMoving)
+        shopButton.SetActive(shop);
+        tutorialButton.SetActive(tutorial);
+        miniGameButton.SetActive(minigame);
+    }
+
+    public void showCancelButton(bool show)
+    {
+        if (!show)
         {
-            return;
+            cancelButton.SetActive(false);
         }
-        if (shopWindow.activeSelf)
-        {
-            smoothCameraMovement.MoveToHome();
+        else{
+            cancelButton.SetActive(true);
         }
-        else
+    }
+/*
+    private IEnumerator WaitForMovementComplete()
+    {
+        while (smoothCameraMovement.isMoving)
         {
-            smoothCameraMovement.MoveToShop();
+            yield return null;
         }
 
         shopWindow.SetActive(!shopWindow.activeSelf);
-    }
+        isMoving = false;
+    }*/
 }

@@ -43,9 +43,10 @@ public static class InterfaceAPI
     public static void LoadPrefabs()
     {
         buildingPrefabs.Clear();
-        buildingPrefabs.Add(new BuildingPrefab(0, "Skyscraper", 5, 5, 5));
-        buildingPrefabs.Add(new BuildingPrefab(1, "Shop", 3, 3, 1));
-        buildingPrefabs.Add(new BuildingPrefab(2, "House", 2, 2, 10));
+        buildingPrefabs.Add(new BuildingPrefab(0, "Path", 1, 1, 99));
+        buildingPrefabs.Add(new BuildingPrefab(1, "House", 1, 1, 99));
+        buildingPrefabs.Add(new BuildingPrefab(2, "Windmill", 1, 1, 99));
+        buildingPrefabs.Add(new BuildingPrefab(3, "Townhall", 1, 1, 99));
     }
 
     public class BuildingPrefab 
