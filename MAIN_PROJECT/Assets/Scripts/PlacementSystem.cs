@@ -113,6 +113,16 @@ public class PlacementSystem : MonoBehaviour
 
     private void PlaceStructure()
     {
+        
+        Vector3  mousePosition = inputManager.GetSelectedMapPosition();
+        Vector3Int gridPosition = grid.WorldToCell(mousePosition); 
+
+        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
+        if(placementValidity == false)
+        {
+            return; 
+        }
+
         //Deduct coins
         int coinsToSet = InterfaceAPI.getCoins();
         coinsToSet -= database.objectsData[selectedObjectIndex].Cost;
@@ -124,14 +134,6 @@ public class PlacementSystem : MonoBehaviour
 
         //Add XP
         InterfaceAPI.addXp(database.objectsData[selectedObjectIndex].XPGain);
-        Vector3  mousePosition = inputManager.GetSelectedMapPosition();
-        Vector3Int gridPosition = grid.WorldToCell(mousePosition); 
-
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
-        if(placementValidity == false)
-        {
-            return; 
-        }
 
         //Place on server
         int xpos_grid_database = gridPosition.x + xy_offset;

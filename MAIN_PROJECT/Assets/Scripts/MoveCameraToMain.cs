@@ -17,10 +17,13 @@ public class SmoothCameraMovement : MonoBehaviour
 
     public Vector3 tutorialTargetPosition;
     public Vector3 tutorialTargetRotation;
+    public Vector3 wheelTargetPosition;
+    public Vector3 wheelTargetRotation;
     public float moveSpeed = 3f; // The speed of camera movement
 
     public GameObject shopWindow;
     public GameObject ShopMinigameTutUIGroup;
+    public GameObject slotMachine;
     public ShopWindowManager shopWindowManager;
 
     public bool isMoving = false;
@@ -66,13 +69,32 @@ public class SmoothCameraMovement : MonoBehaviour
         }
     }
 
+    public void ToggleSlotsWindow()
+    {
+        if (isMoving)
+        {
+            return;
+        }
+        if (slotMachine.activeSelf)
+        {
+            slotMachine.SetActive(false);
+            StartCoroutine(MoveToHome(true));
+        }
+        else
+        {
+            StartCoroutine(MoveToHome(true));MoveCamToWheel();
+        }
+        // Toggle the active state of the slotsWindow
+        
+    }
+
     public void PlacementCompleted()
     {
         if (isMoving)
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(true, true, true);
+        shopWindowManager.buttonStateInteractable(true, true, true, true);
         shopWindowManager.showCancelButton(false);
         
     }
@@ -102,7 +124,7 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(false, false, false);
+        shopWindowManager.buttonStateInteractable(false, false, false, false);
         StartCoroutine(MoveToMinigame());
     }
 
@@ -112,8 +134,18 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(false, false, false);
+        shopWindowManager.buttonStateInteractable(false, false, false, false);
         StartCoroutine(MoveToTutorial());
+    }
+
+    public void MoveCamToWheel()
+    {
+        if (isMoving)
+        {
+            return;
+        }
+        shopWindowManager.buttonStateInteractable(false, false, false, true);
+        StartCoroutine(MoveToWheel());
     }
 
     private IEnumerator MoveToHome(bool enableTriButtons)
@@ -133,7 +165,7 @@ public class SmoothCameraMovement : MonoBehaviour
         }
         if (enableTriButtons)
         {
-            shopWindowManager.buttonStateInteractable(true, true, true);
+            shopWindowManager.buttonStateInteractable(true, true, true, true);
             ShopMinigameTutUIGroup.SetActive(true);
         }
         isMoving = false;
@@ -142,7 +174,7 @@ public class SmoothCameraMovement : MonoBehaviour
     private IEnumerator MoveToShop()
     {
         isMoving = true;
-        shopWindowManager.buttonStateInteractable(true, false, false);
+        shopWindowManager.buttonStateInteractable(true, false, false, false);
         shopWindowManager.showCancelButton(false);
         while (Vector3.Distance(transform.position, shopTargetPosition) > 0.05f || Quaternion.Angle(transform.rotation, Quaternion.Euler(shopTargetRotation)) > 0.05f)
         {
@@ -179,7 +211,7 @@ public class SmoothCameraMovement : MonoBehaviour
     private IEnumerator MoveToTutorial()
     {
         isMoving = true;
-        while (Vector3.Distance(transform.position, tutorialTargetPosition) > 0.5f || Quaternion.Angle(transform.rotation, Quaternion.Euler(tutorialTargetRotation)) > 0.5f)
+        while (Vector3.Distance(transform.position, tutorialTargetPosition) > 0.25f || Quaternion.Angle(transform.rotation, Quaternion.Euler(tutorialTargetRotation)) > 0.25f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
             transform.position = Vector3.Lerp(transform.position, tutorialTargetPosition, moveSpeed * Time.deltaTime);
@@ -191,9 +223,27 @@ public class SmoothCameraMovement : MonoBehaviour
         }
         isMoving = false;
         SceneManager.LoadScene("TutorialSection");
-        
     }
 
+    private IEnumerator MoveToWheel()
+    {
+        isMoving = true;
+        while (Vector3.Distance(transform.position, wheelTargetPosition) > 0.05f || Quaternion.Angle(transform.rotation, Quaternion.Euler(wheelTargetRotation)) > 0.05f)
+        {
+            // Use Vector3.Lerp to smoothly move the camera towards the target position
+            transform.position = Vector3.Lerp(transform.position, wheelTargetPosition, moveSpeed * Time.deltaTime);
+            
+            // Use Quaternion.Lerp to smoothly rotate the camera towards the target rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(wheelTargetRotation), moveSpeed * Time.deltaTime);
+            
+            yield return null;
+        }
+        Quaternion rotation = Quaternion.Euler(wheelTargetRotation);
+        transform.position = wheelTargetPosition;
+        transform.rotation = rotation;
+        isMoving = false;
+        slotMachine.SetActive(true);
+    }
     // Move the camera to the specified target position and rotation
     public void MoveCamera(Vector3 newTargetPosition, Vector3 newTargetRotation)
     {

@@ -9,6 +9,7 @@ public class SlotMachine : MonoBehaviour
     public float spinTime = 1.0f; // Time for each spin
     private bool spinning;
     public GameObject slotsWindow;
+    [SerializeField]
 
     private void Start()
     {
@@ -17,11 +18,7 @@ public class SlotMachine : MonoBehaviour
         spinning = false;
     }
 
-    public void ToggleSlotsWindow()
-    {
-        // Toggle the active state of the slotsWindow
-        slotsWindow.SetActive(!slotsWindow.activeSelf);
-    }
+    
 
     public void Spin()
     {

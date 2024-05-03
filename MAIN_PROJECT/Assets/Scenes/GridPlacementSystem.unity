@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0, g: 0.34035748, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.34035754, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -903,7 +903,6 @@ RectTransform:
   - {fileID: 757181865}
   - {fileID: 157086302}
   - {fileID: 677571632}
-  - {fileID: 1550704579}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1102,9 +1101,12 @@ MonoBehaviour:
   gameTargetRotation: {x: 6.22, y: -18.46, z: 0}
   tutorialTargetPosition: {x: 1.38566, y: 0.1875, z: 5.126}
   tutorialTargetRotation: {x: 7.77, y: -6.293, z: 0}
-  moveSpeed: 7
+  wheelTargetPosition: {x: -13.4, y: 0.4511, z: 11.39}
+  wheelTargetRotation: {x: 0, y: -63.839, z: 0}
+  moveSpeed: 8
   shopWindow: {fileID: 1456698203}
   ShopMinigameTutUIGroup: {fileID: 757181864}
+  slotMachine: {fileID: 677571631}
   shopWindowManager: {fileID: 1456698208}
   isMoving: 0
 --- !u!1 &331152245
@@ -2080,6 +2082,37 @@ RectTransform:
   m_AnchoredPosition: {x: -120, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &674034272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 674034273}
+  m_Layer: 0
+  m_Name: WheelSpinCameraPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &674034273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674034272}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.52872723, z: 0, w: 0.8487918}
+  m_LocalPosition: {x: -13.394897, y: 0.45113373, z: 11.390686}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1871086871}
+  m_LocalEulerAnglesHint: {x: 0, y: -63.839, z: 0}
 --- !u!1 &677571631
 GameObject:
   m_ObjectHideFlags: 0
@@ -2098,7 +2131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &677571632
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2118,10 +2151,10 @@ RectTransform:
   - {fileID: 1585829838}
   m_Father: {fileID: 294645691}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -1444.9744, y: -951.5273}
+  m_SizeDelta: {x: 475.02563, y: 128.47272}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &677571633
 MonoBehaviour:
@@ -2158,7 +2191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2251,8 +2284,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2565,6 +2598,7 @@ RectTransform:
   - {fileID: 248381262}
   - {fileID: 1016379289}
   - {fileID: 1500644278}
+  - {fileID: 1550704579}
   m_Father: {fileID: 294645691}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
@@ -4085,6 +4119,7 @@ MonoBehaviour:
   shopButton: {fileID: 248381261}
   tutorialButton: {fileID: 1500644277}
   miniGameButton: {fileID: 1016379288}
+  wheelspinButton: {fileID: 1550704578}
   smoothCameraMovement: {fileID: 330585548}
   cancelButton: {fileID: 2106725945}
 --- !u!1 &1487496008
@@ -4606,11 +4641,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1547682897}
-  m_Father: {fileID: 294645691}
+  m_Father: {fileID: 757181865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -613, y: 50}
+  m_AnchoredPosition: {x: 297, y: -440}
   m_SizeDelta: {x: 160, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1550704580
@@ -4657,8 +4692,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 677571633}
-        m_TargetAssemblyTypeName: SlotMachine, Assembly-CSharp
+      - m_Target: {fileID: 330585548}
+        m_TargetAssemblyTypeName: SmoothCameraMovement, Assembly-CSharp
         m_MethodName: ToggleSlotsWindow
         m_Mode: 1
         m_Arguments:
@@ -4921,8 +4956,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10, y: -106}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -10, y: -122.7236}
+  m_SizeDelta: {x: 160, y: 63.4472}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1585829839
 MonoBehaviour:
@@ -4993,7 +5028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5406,6 +5441,7 @@ Transform:
   - {fileID: 261163411}
   - {fileID: 331152246}
   - {fileID: 814726918}
+  - {fileID: 674034273}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1873819656
