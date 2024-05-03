@@ -10,7 +10,7 @@ public class PlacementSystem : MonoBehaviour
     private int xy_offset = 5;
     
     [SerializeField]
-    private GameObject mouseIndicator, cellIndicator; 
+    private GameObject mouseIndicator; 
 
     [SerializeField]
     private InputManager inputManager; 
@@ -27,17 +27,20 @@ public class PlacementSystem : MonoBehaviour
 
     private GridData floorData, furnitureData; 
 
-    private Renderer previewRenderer; 
+    [SerializeField]
+    private PreviewSystem preview; 
 
     public SmoothCameraMovement smoothCameraMovement;
     private List<GameObject> placedGameObjects = new();
+
+    private Vector3Int lastDetectedPosition = Vector3Int.zero; 
 
     private void Start()
     {
         StopPlacement(); 
         floorData = new();
         furnitureData = new();
-        previewRenderer = cellIndicator.GetComponentInChildren<Renderer>();
+      
         
         // for (int i = 0; i < InterfaceAPI.buildingList.Count; i++)
         // {
@@ -69,9 +72,10 @@ public class PlacementSystem : MonoBehaviour
     {
         selectedObjectIndex = -1; 
         gridVisualization.SetActive(false); 
-        cellIndicator.SetActive(false); 
+        preview.StopShowingPreview(); 
         inputManager.OnClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement; 
+        lastDetectedPosition = Vector3Int.zero; 
     }
     private void Update()
     {
@@ -82,11 +86,14 @@ public class PlacementSystem : MonoBehaviour
         Vector3  mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition); 
 
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
-        previewRenderer.material.color = placementValidity ? Color.white : Color.red; 
-
-        mouseIndicator.transform.position = mousePosition; 
-        cellIndicator.transform.position = grid.CellToWorld(gridPosition);
+        if(lastDetectedPosition != gridPosition)
+        {
+            bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
+        
+            mouseIndicator.transform.position = mousePosition; 
+            preview.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
+            lastDetectedPosition = gridPosition; 
+        }
     }
 
     public void StartPlacement(int ID)
@@ -99,7 +106,7 @@ public class PlacementSystem : MonoBehaviour
             return; 
         }
         gridVisualization.SetActive(true); 
-        cellIndicator.SetActive(true); 
+        preview.StartShowingPlacementPreview(database.objectsData[selectedObjectIndex].Prefab, database.objectsData[selectedObjectIndex].Size);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement; 
     }
@@ -141,6 +148,8 @@ public class PlacementSystem : MonoBehaviour
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count -1 ); 
         Debug.Log("Placed Structure (x,y): (" + gridPosition.x + ", " + gridPosition.z + ") Structure ID: " + selectedObjectIndex);
 
+        preview.UpdatePosition(grid.CellToWorld(gridPosition), false); 
+
         int coinCheck = InterfaceAPI.getCoins();
         coinCheck -= database.objectsData[selectedObjectIndex].Cost;
 
@@ -158,6 +167,8 @@ public class PlacementSystem : MonoBehaviour
         //Allow one building at a time
         StopPlacement();
         smoothCameraMovement.PlacementCompleted();
+
+
     }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
