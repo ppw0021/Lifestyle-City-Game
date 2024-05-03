@@ -105,6 +105,7 @@ public class SmoothCameraMovement : MonoBehaviour
             return;
         }
         shopWindow.SetActive(false);
+        shopWindowManager.buttonStateInteractable(false, false, false, false);
         shopWindowManager.showCancelButton(true);
         StartCoroutine(MoveToHome(false));
     }

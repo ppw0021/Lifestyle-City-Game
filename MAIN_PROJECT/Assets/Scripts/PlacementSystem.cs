@@ -90,7 +90,7 @@ public class PlacementSystem : MonoBehaviour
         gridVisualization.SetActive(false); 
         // Stop showing preview and remove event listeners
         preview.StopShowingPreview(); 
-        inputManager.OnClicked -= PlaceStructure;
+        //inputManager.OnClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement; 
         lastDetectedPosition = Vector3Int.zero; 
     }
@@ -140,19 +140,15 @@ public class PlacementSystem : MonoBehaviour
 
     private void PlaceStructure()
     {
-        //Deduct coins
-        int coinsToSet = InterfaceAPI.getCoins();
-        coinsToSet -= database.objectsData[selectedObjectIndex].Cost;
-        InterfaceAPI.setCoins(coinsToSet);
+        
         // If pointer is over UI, return
         if(inputManager.IsPointerOverUI()) 
         {
             return; 
         }
 
-        //Add XP
-        InterfaceAPI.addXp(database.objectsData[selectedObjectIndex].XPGain);
-        Vector3  mousePosition = inputManager.GetSelectedMapPosition();
+        
+        Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         // Get mouse position and convert to grid position
         Vector3Int gridPosition = grid.WorldToCell(mousePosition); 
 
@@ -162,6 +158,14 @@ public class PlacementSystem : MonoBehaviour
         {
             return; 
         }
+
+        //Deduct coins
+        int coinsToSet = InterfaceAPI.getCoins();
+        coinsToSet -= database.objectsData[selectedObjectIndex].Cost;
+        InterfaceAPI.setCoins(coinsToSet);
+
+        //Add XP
+        InterfaceAPI.addXp(database.objectsData[selectedObjectIndex].XPGain);
 
         //Place on server
         int xpos_grid_database = gridPosition.x + xy_offset;
