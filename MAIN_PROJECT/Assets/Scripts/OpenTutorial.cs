@@ -7,13 +7,14 @@ public class OpenTutorial : MonoBehaviour
 {
     public string tutorialSceneName; // Name of the tutorial scene
 
-    // This method is called when the "?" button is pressed
+    // This method is called when the "tutorial" button is pressed
     public void OnTutorialButtonClick()
     {
         // Load the tutorial scene
         SceneManager.LoadScene(tutorialSceneName);
     }
 
+    // This method is called when the "back" button is pressed
      public void moveToTutorial()
     {
         SceneManager.LoadScene("TutorialSection");
