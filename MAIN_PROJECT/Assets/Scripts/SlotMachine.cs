@@ -5,10 +5,10 @@ using System.Collections;
 public class SlotMachine : MonoBehaviour
 {
     public Image[] slots;
-    public Sprite[] symbols; // Assign sprites in the inspector
+    public Sprite[] symbols;
     public float spinTime = 1.0f; // Time for each spin
     private bool spinning;
-    public GameObject slotsWindow; // Assign this in the inspector
+    public GameObject slotsWindow;
 
     private void Start()
     {
@@ -36,7 +36,6 @@ public class SlotMachine : MonoBehaviour
             else
             {
                 Debug.Log("Not enough coins to spin.");
-                // Optionally add feedback to the player here
             }
         }
     }
@@ -89,18 +88,4 @@ public class SlotMachine : MonoBehaviour
 
         return coinsWon;
     }
-
-
-    private bool CheckWinCondition()
-    {
-        if (slots.Length < 3)
-        {
-            Debug.LogError("Not enough slots to check win condition.");
-            return false;
-        }
-
-        // Check if all three slots show the same symbol
-        return slots[0].sprite == slots[1].sprite && slots[1].sprite == slots[2].sprite;
-    }
-
 }
