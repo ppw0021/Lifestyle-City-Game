@@ -82,6 +82,7 @@ public class PreviewSystem : MonoBehaviour
         Color c = validity ? Color.white : Color.red;
         
         c.a = 0.5f;
+        cellIndicatorRenderer.material.color = c; 
         previewMaterialInstance.color = c;
     }
 
