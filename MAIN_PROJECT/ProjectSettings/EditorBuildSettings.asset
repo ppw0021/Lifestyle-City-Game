@@ -32,4 +32,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GridPlacementSystem.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/Kevin test/Login (testing).unity
+    guid: ac38cb38a62e45545b9e39e8d4dd7e47
+  - enabled: 1
+    path: Assets/Kevin test/Register.unity
+    guid: 86962d2b251dc4043b5024f17f70362a
+  - enabled: 1
+    path: Assets/Kevin test/ForgotPasswordScene.unity
+    guid: b35a1a89e6fa6a3438e4a5a66b9700cc
   m_configObjects: {}
