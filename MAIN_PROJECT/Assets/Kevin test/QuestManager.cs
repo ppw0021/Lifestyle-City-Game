@@ -2,137 +2,64 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
-/*
-note from Kevin: 
-use for test:
-    press 'r' for random mission, which should be set after every login (which i did not do....)
-    press 'z', 'x', 'c' to increment mission progress for the three missions
-
-below is the api thing i did so less pain.... but not sure if it's correct or not
-also there is a delete method to delete r,z,x,c buttons
-this plant plant and spin the slots missions to increment,
- which im kinda having diffculty as not sure how that works
-cause didnt really see if the farm manager script code.... so was really confused on how to do it
-
-
-sorry for the inconvenience
-Kevin
-
-to regenerate mission i think you can:
-
-go ->script LoginManager.cs
-public class LoginManager : MonoBehaviour
-{
-    [Header("UI")]
-    public Text messageText;
-    public TMP_InputField usernameEmail;
-    public TMP_InputField passwordInput;
-    public QuestSystem questSystem; // Reference to the QuestSystem script
-
-    public void LoginButtonPressed() 
-    {
-        StartCoroutine(InterfaceAPI.LoginPost(usernameEmail.text, passwordInput.text));
-        // Call the method to regenerate missions in the QuestSystem script
-        questSystem.GenerateMissions();
-        questSystem.UpdateMissionUI(); // Update the UI after regenerating missions
-    }
-}
-and
-go -> script QuestSystem.cs
+using System.Linq;
 
 public class QuestSystem : MonoBehaviour
 {
+    // UI elements for displaying mission details
+    public TextMeshProUGUI[] missionDetailTexts; // Text elements showing mission details
+    public TextMeshProUGUI[] missionStatTexts; // Text elements showing mission stats
+    public Button[] claimButtons; // Buttons for claiming rewards
+    public Button[] shortcutButtons; // Shortcut buttons for completing missions
+    public Image[] missionBars; // Progress bars for missions
 
-      private void Start()
-    {
-        // Subscribe to the login event raised by the LoginManager script
-        LoginManager.OnLogin += OnLoginButtonPressed;
-    }
-
-    private void OnLoginButtonPressed()
-    {
-        // Regenerate missions and update UI when the login button is pressed
-        GenerateMissions();
-        UpdateMissionUI();
-    }
- private void OnDestroy()
-    {
-        // Unsubscribe from the login event to prevent memory leaks
-        LoginManager.OnLogin -= OnLoginButtonPressed;
-    }
-}
-someting like above^
-
-*/
-
-public class QuestSystem : MonoBehaviour
-{
-    // UI elements for mission details
-    public TextMeshProUGUI[] missionDetailTexts;
-    // UI elements for mission stats
-    public TextMeshProUGUI[] missionStatTexts;
-    // Buttons to claim rewards
-    public Button[] claimButtons;
-    // Buttons to shortcut to missions
-    public Button[] shortcutButtons;
-    // Progress bars for missions
-    public Image[] missionBars;
-
-    // List to store generated missions
-    private List<Mission> missions = new List<Mission>();
-    // Array of mission types
-    private string[] missionTypes = { "Login one time", "Plant corn", "Plant eggplant", "Spin the slots", "Spend $50", "Gain 5 exp" };
+    // List of missions and available mission types
+    private List<Mission> missions = new List<Mission>(); // List to store generated missions
+    private string[] missionTypes = { "Login one time", "Plant corn", "Plant eggplant", "Spin the slots", "Spend $50", "Gain 5 exp" }; // Types of missions available
 
     private void Start()
     {
-        // Generate missions and update UI on start
+        // Generate initial set of missions and update UI
         GenerateMissions();
         UpdateMissionUI();
-
-        // Assign listeners to shortcut buttons
-        for (int i = 0; i < shortcutButtons.Length; i++)
-        {
-            int index = i; // Local copy of i to avoid closure issues
-            shortcutButtons[i].onClick.AddListener(() => LoadSceneForMission(index));
-        }
     }
 
     private void Update()
     {
-        // Regenerate missions and update UI on 'R' key press
+        // Regenerate missions randomly when the 'R' key is pressed
         if (Input.GetKeyDown(KeyCode.R))
         {
             GenerateMissions();
             UpdateMissionUI();
         }
 
-        // Increment mission progress based on key presses
+        // Check for key presses to progress missions
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            Button1Pressed();
+            Button1Pressed(); // Call method for the first mission (Z key)
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-            Button2Pressed();
+            Button2Pressed(); // Call method for the second mission (X key)
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {
-            Button3Pressed();
+            Button3Pressed(); // Call method for the third mission (C key)
         }
     }
 
-    // Method to generate missions
+    // Generate a new set of missions
     private void GenerateMissions()
     {
         // Clear existing missions
         missions.Clear();
-        // Add permanent mission (login)
+
+        // Add permanent mission
         missions.Add(new Mission("Login one time", 1, true));
 
-        // Randomly select and add non-permanent missions
-        System.Random random = new System.Random();
-        HashSet<int> chosenMissions = new HashSet<int>();
+        // Add random missions
+        System.Random random = new System.Random(); // Random number generator
+        HashSet<int> chosenMissions = new HashSet<int>(); // Set to track chosen missions
 
         for (int i = 0; i < missionStatTexts.Length - 1; i++)
         {
@@ -144,19 +71,20 @@ public class QuestSystem : MonoBehaviour
 
             chosenMissions.Add(randomMissionIndex);
 
-            int randomTargetCount = random.Next(1, 4);
+            int randomTargetCount = random.Next(1, 4); // Random target count between 1 and 3
             missions.Add(new Mission(missionTypes[randomMissionIndex], randomTargetCount));
         }
     }
 
-    // Method to update mission UI
+    // Update UI elements based on mission progress
     private void UpdateMissionUI()
     {
+        // Update mission detail texts, stat texts, and mission bars
         for (int i = 0; i < missionDetailTexts.Length; i++)
         {
             if (i < missions.Count)
             {
-                // Update mission details, stats, and progress bars
+                // Update mission details
                 missionDetailTexts[i].text = missions[i].description + " " + missions[i].currentCount + "/" + missions[i].targetCount;
                 missionStatTexts[i].text = missions[i].description + " " + missions[i].currentCount + "/" + missions[i].targetCount;
                 float fillAmount = (float)missions[i].currentCount / missions[i].targetCount;
@@ -164,43 +92,36 @@ public class QuestSystem : MonoBehaviour
             }
             else
             {
-                // Clear UI elements if no missions
+                // Clear UI elements if no more missions
                 missionDetailTexts[i].text = "";
                 missionStatTexts[i].text = "";
                 missionBars[i].fillAmount = 0f;
             }
         }
 
-        // Show/hide claim and shortcut buttons based on mission completion
+        // Update claim buttons and shortcut buttons visibility
         for (int i = 0; i < claimButtons.Length; i++)
         {
             if (i < missions.Count)
             {
-                claimButtons[i].gameObject.SetActive(missions[i].IsComplete());
-
-                if (missions[i].description == "Login one time" || missions[i].description == "Gain 5 exp")
-                {
-                    shortcutButtons[i].gameObject.SetActive(false);
-                }
-                else
-                {
-                    shortcutButtons[i].gameObject.SetActive(!missions[i].IsComplete());
-                }
+                claimButtons[i].gameObject.SetActive(missions[i].IsComplete()); // Show claim button if mission is complete
+                shortcutButtons[i].gameObject.SetActive(!missions[i].IsComplete()); // Show shortcut button if mission is incomplete
             }
             else
             {
+                // Hide buttons if no more missions
                 claimButtons[i].gameObject.SetActive(false);
                 shortcutButtons[i].gameObject.SetActive(false);
             }
         }
     }
 
-    // Method to claim reward for a mission
+    // Method to handle claiming rewards
     public void ClaimReward(int index)
     {
         if (index >= 0 && index < missions.Count)
         {
-            // Reset mission progress and regenerate if permanent
+            // Reset mission progress and update UI
             missions[index].currentCount = 0;
             if (missions[index].isPermanent)
             {
@@ -210,173 +131,69 @@ public class QuestSystem : MonoBehaviour
         }
         else
         {
+            // Log error if index is out of bounds
             Debug.LogError("Invalid mission index: " + index);
         }
     }
 
-    // Methods to increment mission progress for shortcut buttons
+    // Method to handle button 1 (login mission)
     public void Button1Pressed()
     {
         if (missions.Count > 0 && !missions[0].IsComplete())
         {
-            missions[0].IncrementCount();
+            missions[0].IncrementCount(); // Increment login mission progress
             UpdateMissionUI();
         }
     }
 
+    // Method to handle button 2 (second mission)
     public void Button2Pressed()
     {
         if (missions.Count > 1 && !missions[1].IsComplete())
         {
-            missions[1].IncrementCount();
+            missions[1].IncrementCount(); // Increment second mission progress
             UpdateMissionUI();
         }
     }
 
+    // Method to handle button 3 (third mission)
     public void Button3Pressed()
     {
         if (missions.Count > 2 && !missions[2].IsComplete())
         {
-            missions[2].IncrementCount();
+            missions[2].IncrementCount(); // Increment third mission progress
             UpdateMissionUI();
         }
     }
-
-    // Method to load scene associated with a mission
-    public void LoadSceneForMission(int index)
-    {
-        Debug.Log("LoadSceneForMission called with index: " + index);
-
-        if (index >= 0 && index < missions.Count)
-        {
-            string sceneName = "";
-
-            switch (missions[index].description)
-            {
-                case "Plant corn":
-                case "Plant eggplant":
-                case "Spend $50":
-                    sceneName = "MiniGame";
-                    break;
-                case "Spin the slots":
-                    sceneName = "GridPlacementSystem";
-                    break;
-                default:
-                    Debug.LogWarning("No scene associated with mission: " + missions[index].description);
-                    return;
-            }
-
-            if (!string.IsNullOrEmpty(sceneName))
-            {
-                Debug.Log("Loading scene: " + sceneName);
-                SceneManager.LoadScene(sceneName);
-            }
-            else
-            {
-                Debug.LogWarning("Scene name is empty for mission: " + missions[index].description);
-            }
-        }
-        else
-        {
-            Debug.LogError("Invalid mission index: " + index);
-        }
-    }
-
-    // Class to represent a mission
-    [System.Serializable]
-    public class Mission
-    {
-        public string description;  // Description of the mission
-        public int currentCount;    // Current progress of the mission
-        public int targetCount;     // Target progress required to complete the mission
-        public bool isPermanent;    // Flag indicating if the mission is permanent
-
-        // Constructor to initialize mission properties
-        public Mission(string description, int targetCount, bool isPermanent = false)
-        {
-            this.description = description;
-            this.targetCount = targetCount;
-            this.isPermanent = isPermanent;
-            this.currentCount = 0;
-        }
-        // Method to increment mission progress
-        public void IncrementCount()
-        {
-            currentCount++; // Increment current progress
-        }
-
-        // Method to check if the mission is complete
-        public bool IsComplete()
-        {
-            return currentCount >= targetCount; // Return true if current progress meets or exceeds target
-        }
-
-    }
 }
 
+// Class representing a mission
+[System.Serializable]
+public class Mission
+{
+    public string description; // Description of the mission
+    public int currentCount; // Current progress of the mission
+    public int targetCount; // Target progress needed to complete the mission
+    public bool isPermanent; // Indicates if the mission is permanent
 
+    // Constructor for the mission
+    public Mission(string description, int targetCount, bool isPermanent = false)
+    {
+        this.description = description;
+        this.targetCount = targetCount;
+        this.isPermanent = isPermanent;
+        this.currentCount = 0;
+    }
 
-/*
-update method is the one to delete the r,z,x,c buttons and add the new one to claim rewards
+    // Method to increment the mission progress
+    public void IncrementCount()
+    {
+        currentCount++;
+    }
 
-
-*/
-
-
-/**/
-
-/* api     Databse part @Dec!!!!!!*/
-// // Inside UpdateCoinsText class
-// public void GainCoins(int amount)
-// {
-//     InterfaceAPI.GainCoins(amount); // Call the method from InterfaceAPI to gain coins
-// }
-
-// // Inside QuestSystem class
-// public void ClaimReward(int index)
-// {
-//     if (index >= 0 && index < missions.Count)
-//     {
-//         // Check if the mission is complete
-//         if (missions[index].IsComplete())
-//         {
-//             // Increment count for the mission
-//             missions[index].currentCount = 0;
-
-//             // If the mission is permanent, generate new missions
-//             if (missions[index].isPermanent)
-//             {
-//                 GenerateMissions();
-//             }
-
-//             // Update the UI
-//             UpdateMissionUI();
-
-//             // Gain exp and coins
-//             if (missions[index].description == "Login one time" || missions[index].description == "Gain 5 exp")
-//             {
-//                 // Assuming 5 exp and 10 coins as rewards, adjust the values as per your game design
-//                 InterfaceAPI.GainExp(5);
-//                 UpdateCoinsText updateCoinsText = FindObjectOfType<UpdateCoinsText>(); // Find the UpdateCoinsText component
-//                 if (updateCoinsText != null)
-//                 {
-//                     updateCoinsText.GainCoins(10); // Gain 10 coins
-//                 }
-//                 else
-//                 {
-//                     Debug.LogError("UpdateCoinsText component not found.");
-//                 }
-//             }
-//         }
-//         else
-//         {
-//             Debug.LogError("Mission is not complete yet.");
-//         }
-//     }
-//     else
-//     {
-//         Debug.LogError("Invalid mission index: " + index);
-//     }
-// }
-
-
+    // Method to check if the mission is complete
+    public bool IsComplete()
+    {
+        return currentCount >= targetCount;
+    }
+}
