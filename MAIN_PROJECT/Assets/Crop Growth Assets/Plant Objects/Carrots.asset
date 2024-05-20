@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b6eceed60cd404da33520bb003b4d7, type: 3}
   m_Name: Carrots
   m_EditorClassIdentifier: 
-  plantName: 
-  plantStages: []
+  plantName: Carrots
+  plantStages:
+  - {fileID: 1100632225, guid: e09d8dd35c0568e4a9468a9dcf8f7977, type: 3}
+  - {fileID: -1760158348, guid: e09d8dd35c0568e4a9468a9dcf8f7977, type: 3}
+  - {fileID: -669743010, guid: e09d8dd35c0568e4a9468a9dcf8f7977, type: 3}
+  - {fileID: 187743416, guid: e09d8dd35c0568e4a9468a9dcf8f7977, type: 3}
   growthTime: 2
   icon: {fileID: 187743416, guid: e09d8dd35c0568e4a9468a9dcf8f7977, type: 3}
   cost: 150
