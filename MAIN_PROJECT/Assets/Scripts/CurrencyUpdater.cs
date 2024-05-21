@@ -5,6 +5,7 @@ using TMPro;
 public class CurrencyUpdater : MonoBehaviour
 {
     public TextMeshProUGUI differenceText;
+    public AudioBehaviour coinSpendSFX;
     private int previousCoins;
 
     private void Start()
@@ -44,6 +45,8 @@ public class CurrencyUpdater : MonoBehaviour
         else if (difference < 0)
         {
             differenceText.color = Color.red; // Negative numbers in red
+            //GetComponent<AudioSource>().Play();
+            coinSpendSFX.GetComponent<AudioSource>().Play();
         }
         else
         {
