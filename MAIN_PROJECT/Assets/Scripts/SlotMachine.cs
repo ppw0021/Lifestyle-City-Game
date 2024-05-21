@@ -77,10 +77,10 @@ public class SlotMachine : MonoBehaviour
         {
             coinsWon += 1000; // Win condition: All three slots are the same
         }
-        // Check if two adjacent slots show the same symbol
-        else if (slots[0].sprite == slots[1].sprite || slots[1].sprite == slots[2].sprite)
+        // Check if any two slots show the same symbol
+        else if (slots[0].sprite == slots[1].sprite || slots[0].sprite == slots[2].sprite || slots[1].sprite == slots[2].sprite)
         {
-            coinsWon += 150; // Win condition: Two adjacent slots are the same
+            coinsWon += 150; // Win condition: Any two slots are the same
         }
 
         return coinsWon;
