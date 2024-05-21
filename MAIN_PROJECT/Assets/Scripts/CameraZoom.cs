@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//This script is for the minigame camera controls//
 public class CameraZoom : MonoBehaviour
 {
     // Zoom variables
