@@ -6,6 +6,7 @@ public class CurrencyUpdater : MonoBehaviour
 {
     public TextMeshProUGUI differenceText;
     public AudioBehaviour coinSpendSFX;
+    public AudioBehaviour coinRecieveSFX;
     private int previousCoins;
 
     private void Start()
@@ -41,11 +42,11 @@ public class CurrencyUpdater : MonoBehaviour
         if (difference > 0)
         {
             differenceText.color = Color.green; // Positive numbers in green
+            coinRecieveSFX.GetComponent<AudioSource>().Play();
         }
         else if (difference < 0)
         {
             differenceText.color = Color.red; // Negative numbers in red
-            //GetComponent<AudioSource>().Play();
             coinSpendSFX.GetComponent<AudioSource>().Play();
         }
         else

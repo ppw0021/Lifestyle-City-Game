@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundMusic : MonoBehaviour
+public class SFX : MonoBehaviour
 {
-    private static BackgroundMusic instance = null;
+    private static SFX instance = null;
     private AudioSource audioSource;
 
     void Awake()
@@ -12,14 +12,9 @@ public class BackgroundMusic : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
             audioSource = GetComponent<AudioSource>();
             audioSource.volume = 0.1f;  // Set initial volume to 10%
             audioSource.Play();
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 
