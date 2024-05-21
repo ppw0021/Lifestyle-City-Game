@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: -1760158348, guid: e09d8dd35c0568e4a9468a9dcf8f7977, type: 3}
   - {fileID: -669743010, guid: e09d8dd35c0568e4a9468a9dcf8f7977, type: 3}
   - {fileID: 187743416, guid: e09d8dd35c0568e4a9468a9dcf8f7977, type: 3}
-  growthTime: 2
+  growthTime: 2.5
   icon: {fileID: 187743416, guid: e09d8dd35c0568e4a9468a9dcf8f7977, type: 3}
-  cost: 150
-  reward: 250
+  cost: 120
+  reward: 260
