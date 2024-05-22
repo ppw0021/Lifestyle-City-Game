@@ -4,12 +4,12 @@
 https://nodejs.org/en/download
 express
 
-# description
+# Description
 
 This project, undertaken as part of your third year at university, follows the Scrum framework to completion. It serves as invaluable practice for future large-scale endeavors, thereby acknowledging the need for improvement in various areas moving forward.
 
 
-# about the game
+# About the game
 
 The game is a unique blend of city building and farming elements, offering players a dynamic and engaging experience.
 
