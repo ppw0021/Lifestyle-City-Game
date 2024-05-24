@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-//This script is for the minigame camera controls//
 public class CameraZoom : MonoBehaviour
 {
     // Zoom variables
@@ -38,14 +38,18 @@ public class CameraZoom : MonoBehaviour
     // Method to handle zooming in and out with the mouse scroll wheel
     private void HandleZoom()
     {
-        // Get the scroll input from the mouse
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        // Adjust the zoom level based on the scroll input and zoom multiplier
-        zoom -= scroll * zoomMultiplier;
-        // Clamp the zoom level to stay within the min and max zoom bounds
-        zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
-        // Smoothly transition the camera's orthographic size to the target zoom level
-        cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, zoom, ref velocity, smoothTime);
+        // Check if the mouse is not over a UI element
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            // Get the scroll input from the mouse
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            // Adjust the zoom level based on the scroll input and zoom multiplier
+            zoom -= scroll * zoomMultiplier;
+            // Clamp the zoom level to stay within the min and max zoom bounds
+            zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
+            // Smoothly transition the camera's orthographic size to the target zoom level
+            cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, zoom, ref velocity, smoothTime);
+        }
     }
 
     // Method to handle panning the camera by dragging with the right mouse button
