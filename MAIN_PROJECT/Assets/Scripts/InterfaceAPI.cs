@@ -30,6 +30,7 @@ using Unity.VisualScripting;
 
 public static class InterfaceAPI
 {
+    public static bool multiplayerViewStart = false;
     private static string url = "https://penushost.ddns.net";
     [SerializeField]
     private static string mainMenuScene = "GridPlacementSystem";
