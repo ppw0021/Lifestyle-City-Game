@@ -557,14 +557,12 @@ public static class InterfaceAPI
 
     public static List<Base> baseList = new List<Base>();
 
-    public static IEnumerator GetAllBases()
+    public static IEnumerator GetAllBases(string currentUserNameToCheck)
     {
-        baseList.Clear();
-        foreach (string stringUsername in usernameList)
-        {
-        
+
         string uri = url + "/getbase";
-        string jsonData = "{\"sesh_id\": \"" + currentUser.sesh_token + "\", \"user_id\": " + stringUsername + "}";
+        string jsonData = "{\"sesh_id\": \"" + currentUser.sesh_token + "\", \"user_id\": \"" + currentUserNameToCheck + "\"}";
+        Debug.Log(jsonData);
 
         Response serverResponse;
         
@@ -646,9 +644,9 @@ public static class InterfaceAPI
                             isResponseBuildingListObj = true;
                         }
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        //Debug.Log(e);
+                        Debug.Log(e);
                     }
                     
                     if (isResponseBuildingListObj)
@@ -665,7 +663,8 @@ public static class InterfaceAPI
                         //Response is a Response type
                         LoadPrefabs();
                         Debug.Log("Successful Response Recieved");
-                        serverResponse.printResponse();
+                        Debug.Log(serverResponse.response);
+                        //serverResponse.printResponse();
                     }
                     else
                     {
@@ -673,9 +672,9 @@ public static class InterfaceAPI
                     }
                     break;
             }
+        
         }
-        }
-        Debug.Log("There are: " + baseList.Count + " bases.");
+
     }
 
     public static IEnumerator GetBase()

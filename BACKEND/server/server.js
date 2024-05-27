@@ -254,6 +254,7 @@ app.post("/getbase", (req, res) => {
         } else {
             console.log("   sql_error for (user_id): " + user_id);
             res.json({ response: "sql_error"});
+            console.log(sqlerr.message);
             //res.json(sqlerr.message);
         }
         client.end;

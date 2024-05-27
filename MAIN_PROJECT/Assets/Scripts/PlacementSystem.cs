@@ -81,6 +81,13 @@ public class PlacementSystem : MonoBehaviour
             PlaceObject(XPOS, YPOS, STRUCID);
             //InterfaceAPI.buildingList[i].printDetails();
         }
+        foreach (string username in InterfaceAPI.usernameList)
+        {
+            Debug.Log("Attempting to load " + username);
+            StartCoroutine(InterfaceAPI.GetAllBases(username));
+        }
+        Debug.Log("Bases loaded into memory: " + InterfaceAPI.baseList.Count);
+        
     }
     // Method to stop object placement
     public void StopPlacement()
