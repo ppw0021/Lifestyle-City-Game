@@ -75,15 +75,15 @@ public static class InterfaceAPI
         public BuildingInstance[] InnerBuildingObjects;
     }
     [System.Serializable]
-    public class UsernameInstance
+    public class UseridInstance
     {
-        public string username;
+        public string user_id;
     }
 
-    public class ListOfUsernamesFromJSON
+    public class ListOfUseridsFromJSON
     {
         public string name;
-        public UsernameInstance[] InnerUsernameObjects;
+        public UseridInstance[] InnerUseridObjects;
     }
 
     //Proceed to next scene, this needs to moved out of here, InterfaceAPI should not be the controller of the game, instead its methods should return if the operation was a success or not
@@ -226,7 +226,7 @@ public static class InterfaceAPI
     }
 
     public static List<BuildingInstance> buildingList = new List<BuildingInstance>();
-    public static List<string> usernameList = new List<string>();
+    public static List<int> useridList = new List<int>();
 
     public static IEnumerator LoginPost(string usernameArg, string passwordArg)    //This function sends a POST request to a specified URI with a JSON payload (FUTURE, JSON should be created in thisfnuction)
     {
@@ -440,9 +440,9 @@ public static class InterfaceAPI
         }
     }
 
-    public static IEnumerator GetUsernameList()
+    public static IEnumerator GetUseridList()
     {
-        string uri = url + "/getallusernames";
+        string uri = url + "/getalluserids";
         string jsonData = "{\"user_id\": " + currentUser.user_id + "}";
 
         Response serverResponse;
@@ -465,7 +465,7 @@ public static class InterfaceAPI
                     //Debug.Log("JSON");
                     //Debug.Log(jsonRaw);
                     
-                    bool isResponseUsernamelist = false;
+                    bool isResponseUseridlist = false;
                     bool isResponseResponse = false;
                     
                     if (jsonRaw == "[]")
@@ -504,24 +504,24 @@ public static class InterfaceAPI
                         {
                             //string strippedString = StripSquareBrackets(jsonRaw);
                             LoadPrefabs();
-                            usernameList.Clear();
-                            string appendedJson = "{\"name\": \"name\",\"InnerUsernameObjects\":" + jsonRaw + "}";
-                            Debug.Log("Username List: " + appendedJson);
-                            ListOfUsernamesFromJSON usernameListOBJ = JsonUtility.FromJson<ListOfUsernamesFromJSON>(appendedJson);
+                            useridList.Clear();
+                            string appendedJson = "{\"name\": \"name\",\"InnerUseridObjects\":" + jsonRaw + "}";
+                            Debug.Log("Userid List: " + appendedJson);
+                            ListOfUseridsFromJSON useridListOBJ = JsonUtility.FromJson<ListOfUseridsFromJSON>(appendedJson);
 
-                            for (int i = 0; i < usernameListOBJ.InnerUsernameObjects.Length; i++)
+                            for (int i = 0; i < useridListOBJ.InnerUseridObjects.Length; i++)
                             {
-                                usernameList.Add(usernameListOBJ.InnerUsernameObjects[i].username);
+                                useridList.Add(int.Parse(useridListOBJ.InnerUseridObjects[i].user_id));
                             }
 
-                            if (usernameListOBJ == null)
+                            if (useridListOBJ == null)
                             {
                                 throw new Exception("Null usernameListOBJ variable (Not User Type)");
                             }
 
-                            Debug.Log("Count: " + usernameListOBJ.InnerUsernameObjects.Length);
-                            Debug.Log(usernameList.Count);
-                            isResponseUsernamelist = true;
+                            //Debug.Log("Count: " + useridListOBJ.InnerUseridObjects.Length);
+                            //Debug.Log(useridList.Count);
+                            isResponseUseridlist = true;
                         }
                     }
                     catch (Exception e)
@@ -529,7 +529,7 @@ public static class InterfaceAPI
                         Debug.Log(e);
                     }
                     
-                    if (isResponseUsernamelist)
+                    if (isResponseUseridlist)
                     {
                         //Response is username list
                         Debug.Log("Username List Recieved Successfully");
@@ -557,12 +557,12 @@ public static class InterfaceAPI
 
     public static List<Base> baseList = new List<Base>();
 
-    public static IEnumerator GetAllBases(string currentUserNameToCheck)
+    public static IEnumerator GetAllBases(int currentUserNameToCheck)
     {
 
         string uri = url + "/getbase";
-        string jsonData = "{\"sesh_id\": \"" + currentUser.sesh_token + "\", \"user_id\": \"" + currentUserNameToCheck + "\"}";
-        Debug.Log(jsonData);
+        string jsonData = "{\"sesh_id\": \"" + currentUser.sesh_token + "\", \"user_id\": " + currentUserNameToCheck + "}";
+        //Debug.Log(jsonData);
 
         Response serverResponse;
         
@@ -652,7 +652,7 @@ public static class InterfaceAPI
                     if (isResponseBuildingListObj)
                     {
                         //Response is building list obj
-                        Debug.Log("Building List Recieved Successfully");
+                        //Debug.Log("Building List Recieved Successfully");
                         foreach (BuildingInstance buildInst in buildingList)
                         {
                             //buildInst.printDetails();
@@ -662,7 +662,7 @@ public static class InterfaceAPI
                     {
                         //Response is a Response type
                         LoadPrefabs();
-                        Debug.Log("Successful Response Recieved");
+                        //Debug.Log("Successful Response Recieved");
                         Debug.Log(serverResponse.response);
                         //serverResponse.printResponse();
                     }

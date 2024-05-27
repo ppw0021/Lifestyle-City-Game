@@ -199,10 +199,10 @@ app.post("/placebuilding", (req, res) => {
     });
 });
 
-app.post("/getallusernames", (req, res) => {
+app.post("/getalluserids", (req, res) => {
     const { user_id } = req.body;
-    const query = "SELECT username FROM users;"
-    console.log("GET USERNAME LIST REQUEST");
+    const query = "SELECT user_id FROM users;"
+    console.log("GET USER_ID LIST REQUEST");
     client.query(query, (sqlerr, sqlres) => {
 
         if(!sqlerr){
