@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Runtime.Serialization;
 using Unity.VisualScripting;
+using System.Linq;
 
 public static class InterfaceAPI
 {
@@ -72,6 +73,17 @@ public static class InterfaceAPI
     {
         public string name;
         public BuildingInstance[] InnerBuildingObjects;
+    }
+    [System.Serializable]
+    public class UsernameInstance
+    {
+        public string username;
+    }
+
+    public class ListOfUsernamesFromJSON
+    {
+        public string name;
+        public UsernameInstance[] InnerUsernameObjects;
     }
 
     //Proceed to next scene, this needs to moved out of here, InterfaceAPI should not be the controller of the game, instead its methods should return if the operation was a success or not
@@ -214,51 +226,7 @@ public static class InterfaceAPI
     }
 
     public static List<BuildingInstance> buildingList = new List<BuildingInstance>();
-
-
-    //private static User userReceived;
-    //private Response serverResponse;
-    /*void Start()
-    {
-        //Retired
-        //StartCoroutine(GetRequest("https://penushost.ddns.net/api"));       //Test example
-        
-        //Active
-        //StartCoroutine(LoginPost("https://penushost.ddns.net/login", "{\"username\": \"dec5star\"}"));
-        //StartCoroutine(GetBasePost("https://penushost.ddns.net/getbase",  "{\"sesh_id\": \"abcdefg\", \"user_id\": 0}"));
-    }*/
-
-
-
-    //Needs to be re written for generic get reqs
-    /*IEnumerator GetRequest(string uri)      //This function tests the connection using a get request and converts the results to an obect
-    {
-        //Create GET request
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
-        {
-            
-            yield return webRequest.SendWebRequest();                                                   //Send the get request
-            switch (webRequest.result)                                                                  //When request arrives
-            {
-                case UnityWebRequest.Result.ConnectionError:
-                case UnityWebRequest.Result.DataProcessingError:
-                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
-                    break;
-                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
-                    string jsonRaw = webRequest.downloadHandler.text;                                   //Get RAW JSON
-                    string strippedString = StripSquareBrackets(jsonRaw);                               //Strip [] array brackets as it is sent as an array
-                    //DataPacket data = JsonUtility.FromJson<DataPacket>(strippedString);                 //Deserialize JSON string into a DataPacket object      
-                    Debug.Log("ID: " + data.id);                                                        //Now you can access the properties of the DataPacket object
-                    Debug.Log("First Name: " + data.first_name);
-                    Debug.Log("Last Name: " + data.last_name);
-                    Debug.Log("Role: " + data.role);
-                    //text.text = data.first_name;
-                    break;
-            }
-        }
-    }*/
-
-    //Getters and Setters for currentUser
+    public static List<string> usernameList = new List<string>();
 
     public static IEnumerator LoginPost(string usernameArg, string passwordArg)    //This function sends a POST request to a specified URI with a JSON payload (FUTURE, JSON should be created in thisfnuction)
     {
@@ -366,6 +334,7 @@ public static class InterfaceAPI
             
         }
     }
+
     public static IEnumerator UpdateUser()
     {
         string uri = url + "/updateuser";
@@ -470,6 +439,245 @@ public static class InterfaceAPI
             
         }
     }
+
+    public static IEnumerator GetUsernameList()
+    {
+        string uri = url + "/getallusernames";
+        string jsonData = "{\"user_id\": " + currentUser.user_id + "}";
+
+        Response serverResponse;
+        
+        //Create POST request
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
+            webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
+            yield return webRequest.SendWebRequest();                                       //Send the actual request
+            switch (webRequest.result)                                                                  //When request arrives
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+                    break;
+                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
+                    string jsonRaw = webRequest.downloadHandler.text;
+                    //Debug.Log("JSON");
+                    //Debug.Log(jsonRaw);
+                    
+                    bool isResponseUsernamelist = false;
+                    bool isResponseResponse = false;
+                    
+                    if (jsonRaw == "[]")
+                    {
+                        //Response is empty
+                        Debug.LogError("Empty SQL query recieved ([])");
+                        break;
+                    }
+
+                    //Try Covert JSON to Response
+                    try
+                    {
+                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                        if (serverResponse == null)
+                        {
+                            throw new Exception("Null serverResponse variable (Not Response type)");
+                        }
+                        isResponseResponse = true;
+                        
+                    }
+                    catch (Exception)
+                    {
+                        
+                        //Debug.Log(e);
+                        serverResponse = null;
+                    }
+                    
+                    //Try Convert JSON to User
+                    try
+                    {
+                        if (isResponseResponse)
+                        {
+
+                        }
+                        else
+                        {
+                            //string strippedString = StripSquareBrackets(jsonRaw);
+                            LoadPrefabs();
+                            usernameList.Clear();
+                            string appendedJson = "{\"name\": \"name\",\"InnerUsernameObjects\":" + jsonRaw + "}";
+                            Debug.Log("Username List: " + appendedJson);
+                            ListOfUsernamesFromJSON usernameListOBJ = JsonUtility.FromJson<ListOfUsernamesFromJSON>(appendedJson);
+
+                            for (int i = 0; i < usernameListOBJ.InnerUsernameObjects.Length; i++)
+                            {
+                                usernameList.Add(usernameListOBJ.InnerUsernameObjects[i].username);
+                            }
+
+                            if (usernameListOBJ == null)
+                            {
+                                throw new Exception("Null usernameListOBJ variable (Not User Type)");
+                            }
+
+                            Debug.Log("Count: " + usernameListOBJ.InnerUsernameObjects.Length);
+                            Debug.Log(usernameList.Count);
+                            isResponseUsernamelist = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e);
+                    }
+                    
+                    if (isResponseUsernamelist)
+                    {
+                        //Response is username list
+                        Debug.Log("Username List Recieved Successfully");
+                    }
+                    else if (isResponseResponse)
+                    {
+                        //Response is a Response type
+                        LoadPrefabs();
+                        Debug.Log("Successful Response Recieved");
+                        serverResponse.printResponse();
+                    }
+                    else
+                    {
+                        //Response is not Response type or User Type
+                    }
+                    break;
+            }
+        }
+    }
+
+    public class Base
+    {
+        public List<BuildingInstance> buildingList = new List<BuildingInstance>();
+    }
+
+    public static List<Base> baseList = new List<Base>();
+
+    public static IEnumerator GetAllBases()
+    {
+        baseList.Clear();
+        foreach (string stringUsername in usernameList)
+        {
+        
+        string uri = url + "/getbase";
+        string jsonData = "{\"sesh_id\": \"" + currentUser.sesh_token + "\", \"user_id\": " + stringUsername + "}";
+
+        Response serverResponse;
+        
+        //Create POST request
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
+            webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
+            yield return webRequest.SendWebRequest();                                       //Send the actual request
+            switch (webRequest.result)                                                                  //When request arrives
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+                    break;
+                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
+                    string jsonRaw = webRequest.downloadHandler.text;
+                    //Debug.Log("JSON");
+                    //Debug.Log(jsonRaw);
+                    
+                    bool isResponseBuildingListObj = false;
+                    bool isResponseResponse = false;
+                    
+                    if (jsonRaw == "[]")
+                    {
+                        //Response is empty
+                        Debug.LogError("Empty SQL query recieved ([])");
+                        break;
+                    }
+
+                    //Try Covert JSON to Response
+                    try
+                    {
+                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                        if (serverResponse == null)
+                        {
+                            throw new Exception("Null serverResponse variable (Not Response type)");
+                        }
+                        isResponseResponse = true;
+                        
+                    }
+                    catch (Exception)
+                    {
+                        
+                        //Debug.Log(e);
+                        serverResponse = null;
+                    }
+                    
+                    //Try Convert JSON to User
+                    try
+                    {
+                        if (isResponseResponse)
+                        {
+
+                        }
+                        else
+                        {
+                            //string strippedString = StripSquareBrackets(jsonRaw);
+                            LoadPrefabs();
+                            buildingList.Clear();
+                            string appendedJson = "{\"name\": \"name\",\"InnerBuildingObjects\":" + jsonRaw + "}";
+                            
+                            ObjectFromJSON buildingListObj = JsonUtility.FromJson<ObjectFromJSON>(appendedJson);
+
+                            Debug.Log("Building Count: " + buildingListObj.InnerBuildingObjects.Length);
+                            baseList.Add(new Base());
+                            int currentIndex = baseList.Count - 1;
+                            for (int i = 0; i < buildingListObj.InnerBuildingObjects.Length; i++)
+                            {
+                                baseList[currentIndex].buildingList.Add(buildingListObj.InnerBuildingObjects[i]);
+
+                            }
+
+                            if (buildingListObj == null)
+                            {
+                                throw new Exception("Null buildingListObj variable (Not User Type)");
+                            }
+                            isResponseBuildingListObj = true;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        //Debug.Log(e);
+                    }
+                    
+                    if (isResponseBuildingListObj)
+                    {
+                        //Response is building list obj
+                        Debug.Log("Building List Recieved Successfully");
+                        foreach (BuildingInstance buildInst in buildingList)
+                        {
+                            //buildInst.printDetails();
+                        }
+                    }
+                    else if (isResponseResponse)
+                    {
+                        //Response is a Response type
+                        LoadPrefabs();
+                        Debug.Log("Successful Response Recieved");
+                        serverResponse.printResponse();
+                    }
+                    else
+                    {
+                        //Response is not Response type or User Type
+                    }
+                    break;
+            }
+        }
+        }
+        Debug.Log("There are: " + baseList.Count + " bases.");
+    }
+
     public static IEnumerator GetBase()
     {
         string uri = url + "/getbase";
@@ -536,6 +744,7 @@ public static class InterfaceAPI
                             LoadPrefabs();
                             buildingList.Clear();
                             string appendedJson = "{\"name\": \"name\",\"InnerBuildingObjects\":" + jsonRaw + "}";
+                            Debug.Log("Building List: " + appendedJson);
                             ObjectFromJSON buildingListObj = JsonUtility.FromJson<ObjectFromJSON>(appendedJson);
 
                             Debug.Log("Building Count: " + buildingListObj.InnerBuildingObjects.Length);

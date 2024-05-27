@@ -290,6 +290,7 @@ public class SmoothCameraMovement : MonoBehaviour
         transform.position = multiTargetPosition;
         transform.rotation = rotation;
         isMoving = false;
+        //InterfaceAPI.loadUsernameList();
         SceneManager.LoadScene("MultiplayerMap");
         //slotMachine.SetActive(true);
     }
