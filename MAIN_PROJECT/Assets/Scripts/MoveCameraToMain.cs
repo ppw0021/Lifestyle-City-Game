@@ -290,6 +290,7 @@ public class SmoothCameraMovement : MonoBehaviour
         transform.position = multiTargetPosition;
         transform.rotation = rotation;
         isMoving = false;
+        Debug.Log("Bases loaded into memory: " + InterfaceAPI.baseList.Count);
         //InterfaceAPI.loadUsernameList();
         SceneManager.LoadScene("MultiplayerMap");
         //slotMachine.SetActive(true);
