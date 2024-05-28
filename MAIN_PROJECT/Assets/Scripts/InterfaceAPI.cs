@@ -315,7 +315,7 @@ public static class InterfaceAPI
                         }
 
                         Debug.Log("Successful Login: " + InterfaceAPI.getUsername());
-                        currentUser.printDetails();
+                        //currentUser.printDetails();
                         LoadScene(mainMenuScene);
                     }
                     else if (isResponseResponse)
@@ -628,7 +628,7 @@ public static class InterfaceAPI
                             
                             ObjectFromJSON buildingListObj = JsonUtility.FromJson<ObjectFromJSON>(appendedJson);
 
-                            Debug.Log("Building Count: " + buildingListObj.InnerBuildingObjects.Length);
+                            //Debug.Log("Building Count: " + buildingListObj.InnerBuildingObjects.Length);
                             baseList.Add(new Base());
                             int currentIndex = baseList.Count - 1;
                             for (int i = 0; i < buildingListObj.InnerBuildingObjects.Length; i++)
@@ -663,7 +663,7 @@ public static class InterfaceAPI
                         //Response is a Response type
                         LoadPrefabs();
                         //Debug.Log("Successful Response Recieved");
-                        Debug.Log(serverResponse.response);
+                        //Debug.Log(serverResponse.response);
                         //serverResponse.printResponse();
                     }
                     else
@@ -746,7 +746,7 @@ public static class InterfaceAPI
                             Debug.Log("Building List: " + appendedJson);
                             ObjectFromJSON buildingListObj = JsonUtility.FromJson<ObjectFromJSON>(appendedJson);
 
-                            Debug.Log("Building Count: " + buildingListObj.InnerBuildingObjects.Length);
+                            //Debug.Log("Building Count: " + buildingListObj.InnerBuildingObjects.Length);
                             for (int i = 0; i < buildingListObj.InnerBuildingObjects.Length; i++)
                             {
                                 buildingList.Add(buildingListObj.InnerBuildingObjects[i]);
@@ -767,7 +767,7 @@ public static class InterfaceAPI
                     if (isResponseBuildingListObj)
                     {
                         //Response is building list obj
-                        Debug.Log("Building List Recieved Successfully");
+                        //Debug.Log("Building List Recieved Successfully");
                         foreach (BuildingInstance buildInst in buildingList)
                         {
                             //buildInst.printDetails();
