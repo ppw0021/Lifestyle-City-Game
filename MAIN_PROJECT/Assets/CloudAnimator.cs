@@ -4,6 +4,7 @@ using System.Collections;
 public class CloudAnimator : MonoBehaviour
 {
     // Start is called before the first frame update
+    
     public GameObject leftClouds;
     public GameObject rightClouds;
     public bool isMoving = false;

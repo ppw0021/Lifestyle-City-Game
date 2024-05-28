@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class IslandLoaderScript : MonoBehaviour
 {
+    //Parent
+    public Canvas canvas;
     public GameObject islandPrefab;
     // Start is called before the first frame update
     private List<int> possibleXPosList = new List<int>();
@@ -48,7 +50,8 @@ public class IslandLoaderScript : MonoBehaviour
         {
             Vector3 spawnPosition = new Vector3(possibleXPosList[startingIndex], 0, possibleZPosList[startingIndex]);
             startingIndex++;
-            GameObject spawnedPrefab = Instantiate (islandPrefab, spawnPosition, Quaternion.identity);
+            GameObject spawnedPrefab = Instantiate(islandPrefab, spawnPosition, Quaternion.identity, canvas.transform);
+            spawnedPrefab.GetComponent<ViewCity>().init(baseInstance.user_id_element);
         }
     }
 

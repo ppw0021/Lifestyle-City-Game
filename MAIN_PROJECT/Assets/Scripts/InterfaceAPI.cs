@@ -39,9 +39,7 @@ public static class InterfaceAPI
     {
         return mainMenuScene;
     }
-
     public static List<BuildingPrefab> buildingPrefabs = new List<BuildingPrefab>();
-
     public static void LoadPrefabs()
     {
         buildingPrefabs.Clear();
@@ -50,7 +48,6 @@ public static class InterfaceAPI
         buildingPrefabs.Add(new BuildingPrefab(2, "Windmill", 1, 1, 99));
         buildingPrefabs.Add(new BuildingPrefab(3, "Townhall", 1, 1, 99));
     }
-
     public class BuildingPrefab 
     {
         public int structure_id;
@@ -68,7 +65,6 @@ public static class InterfaceAPI
             this.max_count = max_count;
         }
     }
-
     public class ObjectFromJSON
     {
         public string name;
@@ -79,31 +75,25 @@ public static class InterfaceAPI
     {
         public string user_id;
     }
-
     public class ListOfUseridsFromJSON
     {
         public string name;
         public UseridInstance[] InnerUseridObjects;
     }
-
     //Proceed to next scene, this needs to moved out of here, InterfaceAPI should not be the controller of the game, instead its methods should return if the operation was a success or not
     private static void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
-
     private static MonoBehaviour monoBehaviourInstance;
-
     public static void Initialize(MonoBehaviour monoBehaviour)
     {
         monoBehaviourInstance = monoBehaviour;
     }
-
     public static int getXp()
     {
         return currentUser.xp;
     }
-
     public static bool addXp(int xpToAdd)
     {
         int currentXp = getXp();
@@ -133,19 +123,18 @@ public static class InterfaceAPI
         monoBehaviourInstance.StartCoroutine(UpdateUserProperty("xp", newXp.ToString()));
         return true;
     }
-
     private static int CalculateTargetExp(int level)
     {
         return 100 + (level * 50); // Adjust this formula as needed
     }
-    
     public static void printUser()
     {
         currentUser.printDetails();
     }
-
     private static User currentUser = new User();
-    
+    public static List<BuildingInstance> buildingList = new List<BuildingInstance>();
+    public static List<int> useridList = new List<int>();
+    public static List<Base> baseList = new List<Base>();
     public static int getUserID()
     {
         return currentUser.user_id;
@@ -192,7 +181,6 @@ public static class InterfaceAPI
         monoBehaviourInstance.StartCoroutine(UpdateUserProperty("coins", coinsToSet.ToString()));
         return true;
     }
-
     public static bool setXp(int xpToSet)
     {
         if (monoBehaviourInstance == null)
@@ -206,7 +194,6 @@ public static class InterfaceAPI
         monoBehaviourInstance.StartCoroutine(UpdateUserProperty("xp", xpToSet.ToString()));
         return true;
     }
-
     public static bool addBuilding(int structure_id, int x_pos, int y_pos)
     {
         
@@ -224,10 +211,6 @@ public static class InterfaceAPI
         monoBehaviourInstance.StartCoroutine(InterfaceAPI.GetBase());
         return true;
     }
-
-    public static List<BuildingInstance> buildingList = new List<BuildingInstance>();
-    public static List<int> useridList = new List<int>();
-
     public static IEnumerator LoginPost(string usernameArg, string passwordArg)    //This function sends a POST request to a specified URI with a JSON payload (FUTURE, JSON should be created in thisfnuction)
     {
         string uri = url + "/login";
@@ -334,7 +317,6 @@ public static class InterfaceAPI
             
         }
     }
-
     public static IEnumerator UpdateUser()
     {
         string uri = url + "/updateuser";
@@ -439,7 +421,6 @@ public static class InterfaceAPI
             
         }
     }
-
     public static IEnumerator GetUseridList()
     {
         string uri = url + "/getalluserids";
@@ -549,11 +530,6 @@ public static class InterfaceAPI
             }
         }
     }
-
-    
-
-    public static List<Base> baseList = new List<Base>();
-
     public static IEnumerator GetAllBases(int currentUserNameToCheck)
     {
 
@@ -626,7 +602,7 @@ public static class InterfaceAPI
                             ObjectFromJSON buildingListObj = JsonUtility.FromJson<ObjectFromJSON>(appendedJson);
 
                             //Debug.Log("Building Count: " + buildingListObj.InnerBuildingObjects.Length);
-                            baseList.Add(new Base());
+                            baseList.Add(new Base(currentUserNameToCheck));
                             int currentIndex = baseList.Count - 1;
                             for (int i = 0; i < buildingListObj.InnerBuildingObjects.Length; i++)
                             {
@@ -673,7 +649,6 @@ public static class InterfaceAPI
         }
 
     }
-
     public static IEnumerator GetBase()
     {
         string uri = url + "/getbase";
@@ -837,7 +812,6 @@ public static class InterfaceAPI
             }
         } 
     }
-
     private static IEnumerator PlaceBuilding(int structure_id, int x_pos, int y_pos)
     {
         string uri = url + "/placebuilding";
