@@ -550,10 +550,7 @@ public static class InterfaceAPI
         }
     }
 
-    public class Base
-    {
-        public List<BuildingInstance> buildingList = new List<BuildingInstance>();
-    }
+    
 
     public static List<Base> baseList = new List<Base>();
 
