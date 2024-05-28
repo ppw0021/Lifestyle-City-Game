@@ -77,10 +77,11 @@ public class PlacementSystem : MonoBehaviour
             int XPOS = InterfaceAPI.buildingList[i].getXPos() - xy_offset;
             int YPOS = InterfaceAPI.buildingList[i].getYPos() - xy_offset;
             int STRUCID = InterfaceAPI.buildingList[i].getStructureId();
-            //Debug.Log("Attempting to Place: " + i);
+            Debug.Log("Attempting to Place: " + i);
             PlaceObject(XPOS, YPOS, STRUCID);
             //InterfaceAPI.buildingList[i].printDetails();
         }
+        InterfaceAPI.baseList.Clear();
         foreach (int useridfor in InterfaceAPI.useridList)
         {
             //Debug.Log("Attempting to load " + useridfor);

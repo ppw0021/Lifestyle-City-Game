@@ -620,7 +620,7 @@ public static class InterfaceAPI
                         {
                             //string strippedString = StripSquareBrackets(jsonRaw);
                             LoadPrefabs();
-                            buildingList.Clear();
+                            //buildingList.Clear();
                             string appendedJson = "{\"name\": \"name\",\"InnerBuildingObjects\":" + jsonRaw + "}";
                             
                             ObjectFromJSON buildingListObj = JsonUtility.FromJson<ObjectFromJSON>(appendedJson);
