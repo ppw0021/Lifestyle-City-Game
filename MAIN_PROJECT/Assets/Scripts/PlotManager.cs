@@ -11,6 +11,7 @@ public class PlotManager : MonoBehaviour
     float timer;                            // Timer for tracking plant growth intervals
     PlantObject selectedPlant;              // Reference to the currently selected plant type
     FarmManager fm;                         // Reference to the FarmManager script for managing planting
+    public SoundEffectsManager soundEffectsManager;
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +45,7 @@ public class PlotManager : MonoBehaviour
             // If the plant has reached its final stage, harvest it
             if (plantStage == selectedPlant.plantStages.Length - 1)
             {
-                Harvest();
+                Harvest();              
             }
         }
         else if (fm.isPlanting) // If FarmManager is in planting mode

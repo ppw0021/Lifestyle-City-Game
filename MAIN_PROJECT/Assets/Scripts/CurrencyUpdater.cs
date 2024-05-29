@@ -4,20 +4,12 @@ using TMPro;
 
 public class CurrencyUpdater : MonoBehaviour
 {
+    public SoundEffectsManager soundEffectsManager;
     public TextMeshProUGUI differenceText;
-    public AudioSource coinSpendSFX;
-    public AudioSource coinRecieveSFX;
     private int previousCoins;
 
     private void Start()
     {
-        // Check if the required AudioSource components are assigned in the Inspector
-        if (coinSpendSFX == null || coinRecieveSFX == null)
-        {
-            Debug.LogError("AudioSource components are not assigned in the Inspector.");
-            return;
-        }
-
         // Initialize previousCoins with the initial coins value
         previousCoins = InterfaceAPI.getCoins();
 
@@ -56,25 +48,21 @@ public class CurrencyUpdater : MonoBehaviour
             if (difference > 0)
             {
                 differenceText.color = Color.green; // Positive numbers in green
-                if (coinRecieveSFX != null)
+                if (soundEffectsManager != null)
                 {
-                    coinRecieveSFX.Play();
+                    soundEffectsManager.PlayAudioClip(0);
                 }
                 else
                 {
-                    Debug.LogError("coinRecieveSFX is not assigned.");
+                    Debug.LogError("soundEffectsManager is not assigned.");
                 }
             }
             else if (difference < 0)
             {
                 differenceText.color = Color.red; // Negative numbers in red
-                if (coinSpendSFX != null)
+                if (soundEffectsManager != null)
                 {
-                    coinSpendSFX.Play();
-                }
-                else
-                {
-                    Debug.LogError("coinSpendSFX is not assigned.");
+                    soundEffectsManager.PlayAudioClip(1);
                 }
             }
             else
