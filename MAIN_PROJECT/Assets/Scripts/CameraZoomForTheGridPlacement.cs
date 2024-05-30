@@ -6,13 +6,9 @@ using UnityEngine.EventSystems;
 public class CameraZoomForTheGridPlacement : MonoBehaviour
 {
     // Zoom variables
-    [SerializeField] private float zoomMultiplier = 4f; // Zoom multiplier adjustable in the inspector
-    [SerializeField] private float minZoom = 15f; // Minimum field of view adjustable in the inspector
-    [SerializeField] private float maxZoom = 60f; // Maximum field of view adjustable in the inspector
-    [SerializeField] private float smoothTime = 0.25f; // Smooth time for zoom transition adjustable in the inspector
-
-    private float targetFOV; // Target field of view
-    private float velocity = 0f; // Velocity reference for SmoothDamp
+    [SerializeField] private float zoomSpeed = 10f; // Speed of zooming adjustable in the inspector
+    [SerializeField] private float minZoomDistance = 5f; // Minimum zoom distance adjustable in the inspector
+    [SerializeField] private float maxZoomDistance = 30f; // Maximum zoom distance adjustable in the inspector
 
     // Pan variables
     [SerializeField] private float panSpeed = 0.3f; // Speed of panning adjustable in the inspector
@@ -22,11 +18,33 @@ public class CameraZoomForTheGridPlacement : MonoBehaviour
     // Reference to the Camera component
     [SerializeField] private Camera cam;
 
+    // Default camera position and rotation
+    private Vector3 defaultPosition;
+    private Quaternion defaultRotation;
+
     // Start is called before the first frame update
     void Start()
     {
-        // Initialize the target FOV with the camera's current field of view
-        targetFOV = cam.fieldOfView;
+        // Ensure the camera component is assigned
+        if (cam == null)
+        {
+            cam = GetComponent<Camera>();
+        }
+
+        // Store the default position and rotation of the camera
+        defaultPosition = cam.transform.position;
+        defaultRotation = cam.transform.rotation;
+    }
+
+    // Called when the object becomes enabled and active
+    void OnEnable()
+    {
+        // Reset the camera to its default position and rotation
+        if (cam != null)
+        {
+            cam.transform.position = defaultPosition;
+            cam.transform.rotation = defaultRotation;
+        }
     }
 
     // Update is called once per frame
@@ -44,12 +62,18 @@ public class CameraZoomForTheGridPlacement : MonoBehaviour
         {
             // Get the scroll input from the mouse
             float scroll = Input.GetAxis("Mouse ScrollWheel");
-            // Adjust the target field of view based on the scroll input and zoom multiplier
-            targetFOV -= scroll * zoomMultiplier;
-            // Clamp the target field of view to stay within the min and max zoom bounds
-            targetFOV = Mathf.Clamp(targetFOV, minZoom, maxZoom);
-            // Smoothly transition the camera's field of view to the target FOV
-            cam.fieldOfView = Mathf.SmoothDamp(cam.fieldOfView, targetFOV, ref velocity, smoothTime);
+            // Calculate the new camera position based on the scroll input and zoom speed
+            Vector3 direction = cam.transform.forward * scroll * zoomSpeed;
+            Vector3 newPosition = cam.transform.position + direction;
+
+            // Calculate the distance from the new position to the origin
+            float distance = Vector3.Distance(newPosition, Vector3.zero);
+            // Clamp the distance to stay within the min and max zoom bounds
+            if (distance >= minZoomDistance && distance <= maxZoomDistance)
+            {
+                // Apply the new position to the camera
+                cam.transform.position = newPosition;
+            }
         }
     }
 
