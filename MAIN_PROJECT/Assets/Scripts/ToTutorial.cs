@@ -6,10 +6,42 @@ using UnityEngine.SceneManagement;
 
 public class ToTutorial : MonoBehaviour
 {
-    //public SmoothCameraMovement moveCameraToMain;
-    public void OnTutorialButtonClick()
+    // //public SmoothCameraMovement moveCameraToMain;
+    // public void OnTutorialButtonClick()
+    // {
+    //     SceneManager.LoadScene("TutorialSection");
+    // }
+
+ public GameObject tutorialPanel;  // Assign your tutorial panel in the Inspector
+    public Button tutorialButton;     // Assign your button in the Inspector
+
+    void Start()
     {
-        SceneManager.LoadScene("TutorialSection");
+        // Ensure tutorialPanel and tutorialButton are assigned
+        if (tutorialPanel == null)
+        {
+            Debug.LogError("Tutorial panel is not assigned in the Inspector");
+            return;
+        }
+        
+        if (tutorialButton == null)
+        {
+            Debug.LogError("Tutorial button is not assigned in the Inspector");
+            return;
+        }
+
+        // Ensure the tutorial panel is hidden initially
+        tutorialPanel.SetActive(false);
+
+        // Add a listener to the button to call OnTutorialButtonClick when clicked
+        tutorialButton.onClick.AddListener(OnTutorialButtonClick);
+    }
+
+    // This method is called when the tutorial button is clicked
+    void OnTutorialButtonClick()
+    {
+        // Toggle the active state of the tutorial panel
+        tutorialPanel.SetActive(!tutorialPanel.activeSelf);
     }
 }
 
