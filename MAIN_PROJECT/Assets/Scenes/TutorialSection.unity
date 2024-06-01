@@ -648,7 +648,6 @@ GameObject:
   - component: {fileID: 170721304}
   - component: {fileID: 170721303}
   - component: {fileID: 170721302}
-  - component: {fileID: 170721305}
   - component: {fileID: 170721306}
   m_Layer: 0
   m_Name: Canvas
@@ -740,19 +739,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &170721305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 170721300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3690f4e841c3f43978306d30558889, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainMenuSceneName: MainScene
 --- !u!114 &170721306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,11 +746,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170721300}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd28a7a0307c9fa4484085c3a1526c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialPanel: {fileID: 0}
   leftArrowButton: {fileID: 1837238468}
   rightArrowButton: {fileID: 362430865}
   hollowCircles:

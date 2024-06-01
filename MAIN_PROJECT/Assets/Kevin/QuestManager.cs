@@ -67,8 +67,7 @@ someting like above^
 */
 
 public class QuestSystem : MonoBehaviour
-{
-    // UI elements for mission details
+{   // UI elements for mission details
     public TextMeshProUGUI[] missionDetailTexts;
     // UI elements for mission stats
     public TextMeshProUGUI[] missionStatTexts;

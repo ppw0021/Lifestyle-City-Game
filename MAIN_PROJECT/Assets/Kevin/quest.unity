@@ -3327,7 +3327,7 @@ GameObject:
   - component: {fileID: 1770969080}
   - component: {fileID: 1770969083}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: Quest Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

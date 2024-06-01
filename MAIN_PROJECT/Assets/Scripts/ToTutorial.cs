@@ -12,8 +12,8 @@ public class ToTutorial : MonoBehaviour
     //     SceneManager.LoadScene("TutorialSection");
     // }
 
- public GameObject tutorialPanel;  // Assign your tutorial panel in the Inspector
-    public Button tutorialButton;     // Assign your button in the Inspector
+    public GameObject tutorialPanel;  // Assign  tutorial panel in the Inspector public GameObject tutorialPanel;
+    public Button tutorialButton;     // Assign  button in the Inspector
 
     void Start()
     {
@@ -23,11 +23,19 @@ public class ToTutorial : MonoBehaviour
             Debug.LogError("Tutorial panel is not assigned in the Inspector");
             return;
         }
-        
+        else
+        {
+            Debug.Log("Tutorial panel is assigned correctly");
+        }
+
         if (tutorialButton == null)
         {
             Debug.LogError("Tutorial button is not assigned in the Inspector");
             return;
+        }
+        else
+        {
+            Debug.Log("Tutorial button is assigned correctly");
         }
 
         // Ensure the tutorial panel is hidden initially
