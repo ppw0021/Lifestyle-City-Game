@@ -879,7 +879,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 907, y: 546.1983}
+  m_AnchoredPosition: {x: 909, y: 455.857}
   m_SizeDelta: {x: 160, y: 93.715}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &141229229
@@ -5363,7 +5363,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 5c715dbe8224e9143a1d4d39c0e3cb36, type: 3}
+  m_Texture: {fileID: 2800000, guid: 6c41c44cc11b42f4fa9e61544e4da5aa, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -7302,7 +7302,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -908, y: 561.3413}
+  m_AnchoredPosition: {x: -906, y: 471}
   m_SizeDelta: {x: 160, y: 93.715}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1034903898
@@ -9135,7 +9135,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 71ca2c133c4fb7748a8314acf7721c7d, type: 3}
+  m_Texture: {fileID: 2800000, guid: e667a4c365f63584b8ce6d07b31f3af8, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -12306,7 +12306,7 @@ GameObject:
   - component: {fileID: 1895491537}
   - component: {fileID: 1895491536}
   m_Layer: 0
-  m_Name: MiniGame2
+  m_Name: Quest1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12351,7 +12351,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: ec495431a19529e42b0b42b98a9c8c6b, type: 3}
+  m_Texture: {fileID: 2800000, guid: cd1df8fc988d98c4b8281222f3fc5f57, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
