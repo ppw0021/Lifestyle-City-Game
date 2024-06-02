@@ -29,8 +29,6 @@ To run the game:
     Open Unity and load the project.
     Press the play button in Unity to start the game.
 
-# Screenshots
-
 # Architecture
 The game follows a client-server architecture:
   
