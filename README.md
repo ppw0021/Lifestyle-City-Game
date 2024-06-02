@@ -40,11 +40,8 @@ The game follows a client-server architecture:
 
 # Roadmap
 
- Sprint one:
-    added tutorial feature for guidance, login, slot for rolling and gain coins, mini game for casual experience, camera movements, level and coin system and shop for placing  
-    buildings.
- 
- Sprint two: under development.....
+![Roadmap (1)](https://github.com/ppw0021/2024-sta/assets/123932560/6ce9beb2-8729-4195-a88c-b48bc0df06de)
+
 
 # License
 
