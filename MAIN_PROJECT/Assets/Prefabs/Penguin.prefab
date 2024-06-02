@@ -176,9 +176,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4936587561821370}
   - component: {fileID: 95485790526497962}
-  - component: {fileID: 114046883305083430}
   - component: {fileID: 65712882847760486}
   - component: {fileID: 54786317403076396}
+  - component: {fileID: 5257438572440087526}
   m_Layer: 0
   m_Name: Penguin
   m_TagString: Untagged
@@ -212,7 +212,7 @@ Animator:
   m_GameObject: {fileID: 1755646104177140}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7051da3a23832c84a8a2cebba41c6433, type: 2}
+  m_Controller: {fileID: 9100000, guid: b0fe5509e5112834683382b3f0ceb04f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -223,21 +223,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &114046883305083430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1755646104177140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40079260bda69f14c80332a04d1632a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 3
-  jumpForce: 300
-  timeBeforeNextJump: 1.2
 --- !u!65 &65712882847760486
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -286,6 +271,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5257438572440087526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755646104177140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a73bf89e8477c82449670506c6ebbf8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minWalkDuration: 2
+  maxWalkDuration: 5
+  minIdleDuration: 1
+  maxIdleDuration: 3
+  walkSpeed: 2
 --- !u!1 &1855729412434242
 GameObject:
   m_ObjectHideFlags: 0
