@@ -13,6 +13,10 @@ This project, undertaken as part of your third year at university, follows the S
 
 The game is a unique blend of city building and farming elements, offering players a dynamic and engaging experience.
 
+The vision for this game is to have an island city builder where users can creatively customise.​
+Each user will have an account unique to them so that their progress can be saved​
+The user's data is stored on a server so that the data can accessed anywhere and climates the risk of local data loss
+
 # Languages and Technologies
 
 The project employs the PENUS stack:
