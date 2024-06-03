@@ -7,6 +7,7 @@ public class User
 {
     public int user_id = -1;
     public string username = "UNLOADED";
+    public string answer = "UNLOADED";
     public string sesh_token = "UNLOADED";
     public int level = -1;
     public int coins = 99999;
@@ -16,6 +17,7 @@ public class User
     {
         Debug.Log("user_id: " + user_id);
         Debug.Log("username: " + username);
+        Debug.Log("answer: " + answer);
         Debug.Log("sesh_token: " + sesh_token);
         Debug.Log("level: " + level);
         Debug.Log("coins: " + coins);

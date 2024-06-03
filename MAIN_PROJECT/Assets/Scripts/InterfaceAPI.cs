@@ -214,49 +214,6 @@ public static class InterfaceAPI
 
     public static List<BuildingInstance> buildingList = new List<BuildingInstance>();
 
-
-    //private static User userReceived;
-    //private Response serverResponse;
-    /*void Start()
-    {
-        //Retired
-        //StartCoroutine(GetRequest("https://penushost.ddns.net/api"));       //Test example
-        
-        //Active
-        //StartCoroutine(LoginPost("https://penushost.ddns.net/login", "{\"username\": \"dec5star\"}"));
-        //StartCoroutine(GetBasePost("https://penushost.ddns.net/getbase",  "{\"sesh_id\": \"abcdefg\", \"user_id\": 0}"));
-    }*/
-
-
-
-    //Needs to be re written for generic get reqs
-    /*IEnumerator GetRequest(string uri)      //This function tests the connection using a get request and converts the results to an obect
-    {
-        //Create GET request
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
-        {
-            
-            yield return webRequest.SendWebRequest();                                                   //Send the get request
-            switch (webRequest.result)                                                                  //When request arrives
-            {
-                case UnityWebRequest.Result.ConnectionError:
-                case UnityWebRequest.Result.DataProcessingError:
-                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
-                    break;
-                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
-                    string jsonRaw = webRequest.downloadHandler.text;                                   //Get RAW JSON
-                    string strippedString = StripSquareBrackets(jsonRaw);                               //Strip [] array brackets as it is sent as an array
-                    //DataPacket data = JsonUtility.FromJson<DataPacket>(strippedString);                 //Deserialize JSON string into a DataPacket object      
-                    Debug.Log("ID: " + data.id);                                                        //Now you can access the properties of the DataPacket object
-                    Debug.Log("First Name: " + data.first_name);
-                    Debug.Log("Last Name: " + data.last_name);
-                    Debug.Log("Role: " + data.role);
-                    //text.text = data.first_name;
-                    break;
-            }
-        }
-    }*/
-
     //Getters and Setters for currentUser
 
     public static IEnumerator LoginPost(string usernameArg, string passwordArg)    //This function sends a POST request to a specified URI with a JSON payload (FUTURE, JSON should be created in thisfnuction)
@@ -348,6 +305,113 @@ public static class InterfaceAPI
                         Debug.Log("Successful Login: " + InterfaceAPI.getUsername());
                         currentUser.printDetails();
                         LoadScene(mainMenuScene);
+                    }
+                    else if (isResponseResponse)
+                    {
+                        //Response is a Response type
+                        Debug.Log("Successful Response Recieved");
+                        serverResponse.printResponse();
+                    }
+                    else
+                    {
+                        //Response is not Response type or User Type
+                    }
+                    break;
+            }
+            
+            
+        }
+    }
+
+    public static IEnumerator GetUserNoPassword(string usernameArg)    //This function sends a POST request to a specified URI with a JSON payload (FUTURE, JSON should be created in thisfnuction)
+    {
+        string uri = url + "/login";
+        string jsonData = ("{\"username\": \"" + usernameArg + "\"}");
+        Response serverResponse;
+        User userReceived = new User();
+        //Create POST request
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
+            webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
+            yield return webRequest.SendWebRequest();                                       //Send the actual request
+            switch (webRequest.result)                                                                  //When request arrives
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+                    break;
+                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
+                    string jsonRaw = webRequest.downloadHandler.text;
+                    //Debug.Log("Raw Response: " + jsonRaw);
+                    bool isResponseUser = false;
+                    bool isResponseResponse = false;
+                    
+                    if (jsonRaw == "[]")
+                    {
+                        //Response is empty
+                        Debug.LogError("Empty SQL query recieved ([])");
+                        break;
+                    }
+
+                    //Try Covert JSON to Response
+                    try
+                    {
+                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                        if (serverResponse == null)
+                        {
+                            throw new Exception("Null serverResponse variable (Not Response type)");
+                        }
+                        isResponseResponse = true;
+                        
+                    }
+                    catch (Exception)
+                    {
+                        //Debug.Log(e);
+                        serverResponse = null;
+                    }
+                    
+                    //Try Convert JSON to User
+                    
+                    try
+                    {
+                        if (isResponseResponse)
+                        {
+
+                        }
+                        else
+                        {
+                            string strippedString = StripSquareBrackets(jsonRaw);
+                            
+                            userReceived = JsonUtility.FromJson<User>(strippedString);
+                            if (userReceived == null)
+                            {
+                                throw new Exception("Null userReceived variable (Not User Type)");
+                            }
+                            isResponseUser = true;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        //Debug.Log(e);
+                    }
+                    
+                    if (isResponseUser)
+                    {
+                        //Response is User type
+                        
+                        //userReceived.printDetails();
+                        currentUser = userReceived;
+                        IEnumerator getBaseMethod = GetBase();
+                        while (getBaseMethod.MoveNext())
+                        {
+                            yield return getBaseMethod.Current;
+                        }
+
+                        Debug.Log("Successful User Retreival: " + InterfaceAPI.getUsername());
+                        currentUser.printDetails();
+                        //LoadScene(mainMenuScene);
                     }
                     else if (isResponseResponse)
                     {
@@ -631,7 +695,6 @@ public static class InterfaceAPI
             }
         } 
     }
-
     private static IEnumerator PlaceBuilding(int structure_id, int x_pos, int y_pos)
     {
         string uri = url + "/placebuilding";

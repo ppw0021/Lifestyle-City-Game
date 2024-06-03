@@ -63,7 +63,7 @@ app.use(bodyParser.json());
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
     console.log("LOGIN REQUEST (username): " + username);
-    client.query('SELECT user_id, username, sesh_token, level, coins, xp FROM users WHERE username = \'' + username + '\' AND password = \'' + password + '\'', (sqlerr, sqlres) => {
+    client.query('SELECT user_id, username, answer, sesh_token, level, coins, xp FROM users WHERE username = \'' + username + '\' AND password = \'' + password + '\'', (sqlerr, sqlres) => {
         if(!sqlerr){
             //console.log(sqlres);
             if (sqlres.rowCount == 0)
@@ -90,7 +90,7 @@ app.post("/login", (req, res) => {
 app.post("/updateuser", (req, res) => {
     const { user_id, sesh_id } = req.body;
     console.log("UPDATE USER REQUEST (user_id, sesh_id): " + user_id + ", " + sesh_id);
-    client.query('SELECT user_id, username, sesh_token, level, coins, xp FROM users WHERE user_id = \'' + user_id + '\'', (sqlerr, sqlres) => {
+    client.query('SELECT user_id, username, answer, sesh_token, level, coins, xp FROM users WHERE user_id = \'' + user_id + '\'', (sqlerr, sqlres) => {
         if(!sqlerr){
             //console.log(sqlres);
             if (sqlres.rowCount == 0)
@@ -289,7 +289,7 @@ app.post("/updateuserproperty", (req, res) => {
 
 app.get("/api", (req, res) => {
     //res.json({ "users": ["userOne", "userTwo", "userThree"] })
-    client.query('SELECT * FROM CLIENTS', (sqlerr, sqlres) => {
+    client.query('SELECT * FROM USERS', (sqlerr, sqlres) => {
         if(!sqlerr){
             
             res.json(sqlres.rows);
