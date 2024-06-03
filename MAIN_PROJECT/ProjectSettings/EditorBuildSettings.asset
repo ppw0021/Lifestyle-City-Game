@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/LoginScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: 75894bd1776086143bde336f03b6ddf3
   - enabled: 0
     path: Assets/Scenes/MainMenuScene.unity
     guid: fa24c134c8d590943be92c8b5349b24a
@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GridPlacementSystem.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/ForgotPasswordScene.unity
+    guid: 2e797deaab7526f4894a045697a62c3c
   m_configObjects: {}
