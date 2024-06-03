@@ -1460,7 +1460,11 @@ MonoBehaviour:
   zoomSpeed: 10
   minZoomDistance: 5
   maxZoomDistance: 30
-  panSpeed: 10
+  panSpeed: 12
+  boundaryPoint1: {x: -6.0261292, y: 12.885683, z: -32.59351}
+  boundaryPoint2: {x: -25.126244, y: 12.885683, z: -10.93065}
+  boundaryPoint3: {x: 24.799356, y: 12.885683, z: -19.001585}
+  boundaryPoint4: {x: -2.8867068, y: 12.885683, z: 9.986515}
   cam: {fileID: 330585545}
 --- !u!1 &331152245
 GameObject:
