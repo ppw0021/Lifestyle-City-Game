@@ -22,6 +22,15 @@ The project employs the PENUS stack:
     Node.js: Backend server
     Unity: Game development platform
 
+# Screenshot
+
+![image (6)](https://github.com/ppw0021/2024-sta/assets/123932560/c019f5c8-7e67-4299-a677-8037afb534ca)
+![image (2)](https://github.com/ppw0021/2024-sta/assets/123932560/7af3397a-f53f-443c-87d6-2153ea25df50)
+![image (3)](https://github.com/ppw0021/2024-sta/assets/123932560/963565b9-da58-4cd6-b4c3-1f9a319a003d)
+![image (4)](https://github.com/ppw0021/2024-sta/assets/123932560/d41a1ab0-31b1-4653-96b1-59e23ae18bd7)
+![image (5)](https://github.com/ppw0021/2024-sta/assets/123932560/8a92fb64-ab05-4d04-83c3-282fc2c76adf)
+
+
 # Usage
 
 To run the game:
