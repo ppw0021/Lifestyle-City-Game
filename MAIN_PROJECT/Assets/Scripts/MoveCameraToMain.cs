@@ -296,7 +296,7 @@ public class SmoothCameraMovement : MonoBehaviour
     private IEnumerator MoveToMulti()
     {
         isMoving = true;
-        while (Vector3.Distance(transform.position, multiTargetPosition) > 20f || Quaternion.Angle(transform.rotation, Quaternion.Euler(multiTargetRotation)) > 20f)
+        while (Vector3.Distance(transform.position, multiTargetPosition) > 50f || Quaternion.Angle(transform.rotation, Quaternion.Euler(multiTargetRotation)) > 50f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
             transform.position = Vector3.Lerp(transform.position, multiTargetPosition, moveSpeed * Time.deltaTime);
@@ -310,7 +310,6 @@ public class SmoothCameraMovement : MonoBehaviour
         transform.position = multiTargetPosition;
         transform.rotation = rotation;
         isMoving = false;
-        Debug.Log("Bases loaded into memory: " + InterfaceAPI.baseList.Count);
         //InterfaceAPI.loadUsernameList();
         SceneManager.LoadScene("MultiplayerMap");
         //slotMachine.SetActive(true);

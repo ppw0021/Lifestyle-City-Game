@@ -24,7 +24,7 @@ public class ViewCity : MonoBehaviour
             if (userCheck.user_id == user_id_arg)
             {
                 usernameText.text = userCheck.username;
-                levelText.text = userCheck.level.ToString();
+                levelText.text = "Level: " + userCheck.level.ToString();
             }
         }
     }

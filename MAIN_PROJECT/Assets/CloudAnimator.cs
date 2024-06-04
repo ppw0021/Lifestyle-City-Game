@@ -36,45 +36,45 @@ public class CloudAnimator : MonoBehaviour
     private IEnumerator Open()
     {
         isMoving = true;
-        while (Vector3.Distance(leftClouds.transform.localPosition, LopenPosition) > 0.5f)
+        while (Vector3.Distance(leftClouds.transform.localPosition, LopenPosition) > 1f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
             leftClouds.transform.localPosition = Vector3.Lerp(leftClouds.transform.localPosition, LopenPosition, moveSpeed * Time.deltaTime);
             rightClouds.transform.localPosition = Vector3.Lerp(rightClouds.transform.localPosition, RopenPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        leftClouds.transform.localPosition = LopenPosition;
-        rightClouds.transform.localPosition = RopenPosition;
+        //leftClouds.transform.localPosition = LopenPosition;
+        //rightClouds.transform.localPosition = RopenPosition;
         isMoving = false;
     }
 
     private IEnumerator Close()
     {
         isMoving = true;
-        while (Vector3.Distance(leftClouds.transform.localPosition, LclosedPosition) > 0.5f)
+        while (Vector3.Distance(leftClouds.transform.localPosition, LclosedPosition) > 1f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
             leftClouds.transform.localPosition = Vector3.Lerp(leftClouds.transform.localPosition, LclosedPosition, moveSpeed * Time.deltaTime);
             rightClouds.transform.localPosition = Vector3.Lerp(rightClouds.transform.localPosition, RclosedPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        leftClouds.transform.localPosition = LclosedPosition;
-        rightClouds.transform.localPosition = RclosedPosition;
+        //leftClouds.transform.localPosition = LclosedPosition;
+        //rightClouds.transform.localPosition = RclosedPosition;
         isMoving = false;
     }
 
     private IEnumerator CloseHome()
     {
         isMoving = true;
-        while (Vector3.Distance(leftClouds.transform.localPosition, LclosedPosition) > 0.5f)
+        while (Vector3.Distance(leftClouds.transform.localPosition, LclosedPosition) > 1f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
             leftClouds.transform.localPosition = Vector3.Lerp(leftClouds.transform.localPosition, LclosedPosition, moveSpeed * Time.deltaTime);
             rightClouds.transform.localPosition = Vector3.Lerp(rightClouds.transform.localPosition, RclosedPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        leftClouds.transform.localPosition = LclosedPosition;
-        rightClouds.transform.localPosition = RclosedPosition;
+        //leftClouds.transform.localPosition = LclosedPosition;
+        //rightClouds.transform.localPosition = RclosedPosition;
         isMoving = false;
         SceneManager.LoadScene("GridPlacementSystem");
     }
