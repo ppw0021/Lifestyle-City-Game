@@ -3381,7 +3381,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2015873736}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CreateUser, Assembly-CSharp
         m_MethodName: onProceedButtonClick
         m_Mode: 1
@@ -6906,10 +6906,7 @@ GameObject:
   - component: {fileID: 1526524252}
   - component: {fileID: 1526524256}
   - component: {fileID: 1526524257}
-  - component: {fileID: 1526524260}
-  - component: {fileID: 1526524261}
   - component: {fileID: 1526524263}
-  - component: {fileID: 1526524262}
   m_Layer: 5
   m_Name: GUI (Canvas)
   m_TagString: Untagged
@@ -7031,43 +7028,6 @@ MonoBehaviour:
   messageText: {fileID: 0}
   usernameEmail: {fileID: 1884310618}
   passwordInput: {fileID: 341079045}
---- !u!114 &1526524260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526524251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2fdc1028a9beea43b985cae831de98f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1526524261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526524251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 482912de5cc3a714783ef160715275e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1526524262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526524251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46a3e787efbbc2a4794fe559a417bdf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  securityQuestionDropdown: {fileID: 1031575980}
 --- !u!114 &1526524263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8642,7 +8602,6 @@ GameObject:
   - component: {fileID: 1658515402}
   - component: {fileID: 1658515405}
   - component: {fileID: 1658515404}
-  - component: {fileID: 1658515403}
   m_Layer: 5
   m_Name: ForgotFrame
   m_TagString: Untagged
@@ -8669,18 +8628,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 15}
   m_SizeDelta: {x: 350, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1658515403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658515401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f5ac5eb4fa6d0d468c3942f2c12dca3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1658515404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10579,13 +10526,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2015873734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e6052c527210246b4f6e531a10e659, type: 3}
+  m_Script: {fileID: 11500000, guid: 46a3e787efbbc2a4794fe559a417bdf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newUsername: {fileID: 1782437283}
-  answer: {fileID: 102667512}
-  newPassword: {fileID: 525074379}
-  verifyPassword: {fileID: 1597795628}
+  securityQuestionDropdown: {fileID: 2062044937}
 --- !u!1 &2045306232
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ public class TutorialManager : MonoBehaviour
     void Start()
     {
         // Ensure the tutorial panel is hidden initially
-        tutorialPanel.SetActive(false);
+        //tutorialPanel.SetActive(false);
         
         // Call UpdateVisuals to set up the UI based on the initial imageIndex
         UpdateVisuals();
