@@ -40,6 +40,9 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private PreviewSystem preview;
 
+    [SerializeField]
+    private bool destroyMode = false; 
+
     public SmoothCameraMovement smoothCameraMovement;
     private List<GameObject> placedGameObjects = new();
 
@@ -115,6 +118,11 @@ public class PlacementSystem : MonoBehaviour
             preview.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
             lastDetectedPosition = gridPosition; 
         }
+
+        if (destroyMode && Input.GetMouseButtonDown(0))
+        {
+            destroyObject(lastDetectedPosition); 
+        }
     }
 
      // Method to start object placement
@@ -122,8 +130,10 @@ public class PlacementSystem : MonoBehaviour
     {
         // Stop any ongoing placement
         StopPlacement();
+        
          // Find the index of the selected object in the database
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID); 
+
          // If object index is not found, log an error and return
         if (selectedObjectIndex < 0 )
         {
@@ -176,11 +186,14 @@ public class PlacementSystem : MonoBehaviour
         // Instantiate and position the object
         GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab); 
         newObject.transform.position = grid.CellToWorld(gridPosition);
+        
 
         // Add the object to the list of placed objects
         placedGameObjects.Add(newObject);
         // Determine the appropriate grid data based on the object type
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData: furnitureData;
+
+        selectedData.objectInCell = newObject; 
 
         // Add object data to the grid data
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count -1 ); 
@@ -221,6 +234,7 @@ public class PlacementSystem : MonoBehaviour
         // Check if the object can be placed at the given grid position
         return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size); 
     }
+
     // Method to place an object from the building list
     private void PlaceObject(int XPOS, int YPOS, int STRUCID)
     {
@@ -262,5 +276,63 @@ public class PlacementSystem : MonoBehaviour
         Debug.Log("Loaded Structure (x,y): (" + gridPosition.x + ", " + gridPosition.z + ") Structure ID: " + selectedObjectIndex);
     }
 
+    private GameObject getObjectInCell(Vector3Int gridPosition)
+    {
+        // Determine the appropriate grid data based on the object type
+        GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData: furnitureData; 
+
+        
+        GameObject objectToDestroy = selectedData.objectInCell; 
+        // Check if the object can be placed at the given grid position
+
+        if (objectToDestroy != null)
+        {
+            return objectToDestroy;  
+
+        }
+        else
+        {
+            return null; 
+        }
+    }
+
+    private void destroyObject(Vector3Int gridPosition)
+    {
+        
+        StopPlacement(); 
+
+        GameObject objectToDestroy = getObjectInCell(gridPosition);
+
+        if (objectToDestroy != null)
+        {
+            Destroy(objectToDestroy);
+        }
+    }
+
+    public void startDesctruction()
+    {
+        gridVisualization.SetActive(true); 
+            
+            if (Input.GetMouseButtonDown(0))
+            {
+                 destroyObject(lastDetectedPosition); 
+            }
+    }
+
+    public void toggleDestroyMode()
+    {
+        
+
+        destroyMode = !destroyMode;
+        if(destroyMode)
+        {
+            gridVisualization.SetActive(true); 
+        }
+        else
+        {
+            gridVisualization.SetActive(false); 
+        }
+ 
+    }
     
 }

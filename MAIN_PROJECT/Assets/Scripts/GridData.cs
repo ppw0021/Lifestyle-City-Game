@@ -9,6 +9,8 @@ public class GridData
     // Dictionary to store placed objects' data with their positions
     Dictionary<Vector3Int, PlacementData> placedObjects = new();
 
+    public GameObject objectInCell;
+
     // Method to add an object to the grid at a specific position
     public void AddObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int ID, int placedObjectIndex)
     {
