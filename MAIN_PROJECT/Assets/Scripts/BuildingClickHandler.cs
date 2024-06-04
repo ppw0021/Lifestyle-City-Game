@@ -7,6 +7,7 @@ public class BuildingClickHandler : MonoBehaviour
     private BuildingInformation buildingInfo;
     private Renderer objectRenderer;
     private bool isTransparent = false;
+    private bool isClickedOnce = false; // Flag to track the first click
 
     public Material transparentMaterial; // Assign this in the Inspector
     private Material originalMaterial;
@@ -31,18 +32,27 @@ public class BuildingClickHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (buildingInfo != null)
+        if (isClickedOnce)
         {
-            Debug.Log($"Building Information: X Position: {buildingInfo.GetXPOS()}, Y Position: {buildingInfo.GetYPOS()}, Structure ID: {buildingInfo.GetSTRUCID()}, Instance ID: {buildingInfo.GetINSTID()}");
+            Destroy(gameObject); // Destroy the game object on the second click
         }
         else
         {
-            Debug.LogError("BuildingInformation component not found on parent object!");
-        }
+            if (buildingInfo != null)
+            {
+                Debug.Log($"Building Information: X Position: {buildingInfo.GetXPOS()}, Y Position: {buildingInfo.GetYPOS()}, Structure ID: {buildingInfo.GetSTRUCID()}, Instance ID: {buildingInfo.GetINSTID()}");
+            }
+            else
+            {
+                Debug.LogError("BuildingInformation component not found on parent object!");
+            }
 
-        if (objectRenderer != null)
-        {
-            ToggleTransparency();
+            if (objectRenderer != null)
+            {
+                ToggleTransparency();
+            }
+
+            isClickedOnce = true; // Set the flag to true after the first click
         }
     }
 
