@@ -102,7 +102,7 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(true, true, true, true, true);
+        shopWindowManager.buttonStateInteractable(true, true, true, true, true, true);
         shopWindowManager.showCancelButton(false);
         
     }
@@ -113,7 +113,7 @@ public class SmoothCameraMovement : MonoBehaviour
             return;
         }
         shopWindow.SetActive(false);
-        shopWindowManager.buttonStateInteractable(false, false, false, false, false);
+        shopWindowManager.buttonStateInteractable(false, false, false, false, false, false);
         shopWindowManager.showCancelButton(true);
         StartCoroutine(MoveToHome(false));
     }
@@ -133,7 +133,7 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(false, false, false, false, false);
+        shopWindowManager.buttonStateInteractable(false, false, false, false, false, false);
         StartCoroutine(MoveToMinigame());
     }
 
@@ -143,7 +143,7 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(false, false, false, false, false);
+        shopWindowManager.buttonStateInteractable(false, false, false, false, false, false);
         StartCoroutine(MoveToTutorial());
     }
 
@@ -153,7 +153,7 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(false, false, false, true, false);
+        shopWindowManager.buttonStateInteractable(false, false, false, true, false, false);
         StartCoroutine(MoveToWheel());
     }
 
@@ -163,7 +163,7 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(false, false, false, false, false);
+        shopWindowManager.buttonStateInteractable(false, false, false, false, false, false);
         StartCoroutine(MoveToMulti());
     }
 
@@ -184,7 +184,7 @@ public class SmoothCameraMovement : MonoBehaviour
         }
         if (enableTriButtons)
         {
-            shopWindowManager.buttonStateInteractable(true, true, true, true, true);
+            shopWindowManager.buttonStateInteractable(true, true, true, true, true, true);
             ShopMinigameTutUIGroup.SetActive(true);
         }
         isMoving = false;
@@ -193,7 +193,7 @@ public class SmoothCameraMovement : MonoBehaviour
     private IEnumerator MoveToShop()
     {
         isMoving = true;
-        shopWindowManager.buttonStateInteractable(true, false, false, false, false);
+        shopWindowManager.buttonStateInteractable(true, false, false, false, false, false);
         shopWindowManager.showCancelButton(false);
         while (Vector3.Distance(transform.position, shopTargetPosition) > 0.05f || Quaternion.Angle(transform.rotation, Quaternion.Euler(shopTargetRotation)) > 0.05f)
         {
