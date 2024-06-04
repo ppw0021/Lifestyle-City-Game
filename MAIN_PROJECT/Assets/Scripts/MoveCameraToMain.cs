@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using Unity.VisualScripting.Antlr3.Runtime;
-    using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class SmoothCameraMovement : MonoBehaviour
 {

@@ -209,7 +209,7 @@ public static class InterfaceAPI
         BuildingInstance buildingInstanceToAdd = new BuildingInstance("-1", structure_id.ToString(), bPrefab.building_name, x_pos.ToString(), y_pos.ToString(), getUsername());
         buildingList.Add(buildingInstanceToAdd);
         monoBehaviourInstance.StartCoroutine(InterfaceAPI.PlaceBuilding(structure_id, x_pos, y_pos));
-        monoBehaviourInstance.StartCoroutine(InterfaceAPI.GetBase());
+        monoBehaviourInstance.StartCoroutine(InterfaceAPI.GetBase(currentUser.user_id));
         return true;
     }
     public static IEnumerator LoginPost(string usernameArg, string passwordArg)    //This function sends a POST request to a specified URI with a JSON payload (FUTURE, JSON should be created in thisfnuction)
@@ -292,7 +292,7 @@ public static class InterfaceAPI
                         
                         //userReceived.printDetails();
                         currentUser = userReceived;
-                        IEnumerator getBaseMethod = GetBase();
+                        IEnumerator getBaseMethod = GetBase(currentUser.user_id);
                         while (getBaseMethod.MoveNext())
                         {
                             yield return getBaseMethod.Current;
@@ -742,10 +742,10 @@ public static class InterfaceAPI
         }
 
     }
-    public static IEnumerator GetBase()
+    public static IEnumerator GetBase(int userIdBaseToLoad)
     {
         string uri = url + "/getbase";
-        string jsonData = "{\"sesh_id\": \"" + currentUser.sesh_token + "\", \"user_id\": " + currentUser.user_id + "}";
+        string jsonData = "{\"user_id\": " + userIdBaseToLoad + "}";
 
         Response serverResponse;
         

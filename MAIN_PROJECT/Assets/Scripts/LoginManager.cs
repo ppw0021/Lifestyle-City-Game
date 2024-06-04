@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class LoginManager : MonoBehaviour
 {
-    private static string mainMenuScene = "GridPlacementSystem";
+
 
     [Header("UI")]
     public Text messageText;
