@@ -8,6 +8,9 @@ public class CurrencyUpdater : MonoBehaviour
     public TextMeshProUGUI differenceText;
     private int previousCoins;
 
+    private const string StringFormat = "+#;-#;0";
+    private const float DisplayDuration = 3f;
+
     private void Start()
     {
         // Initialize previousCoins with the initial coins value
@@ -36,6 +39,7 @@ public class CurrencyUpdater : MonoBehaviour
         }
     }
 
+    // Method to update the difference text
     private void UpdateDifferenceText()
     {
         int currentCoins = InterfaceAPI.getCoins();
@@ -45,41 +49,57 @@ public class CurrencyUpdater : MonoBehaviour
         if (differenceText != null)
         {
             // Set text color based on the sign of the difference
-            if (difference > 0)
-            {
-                differenceText.color = Color.green; // Positive numbers in green
-                if (soundEffectsManager != null)
-                {
-                    soundEffectsManager.PlayAudioClip(0);
-                }
-                else
-                {
-                    Debug.LogError("soundEffectsManager is not assigned.");
-                }
-            }
-            else if (difference < 0)
-            {
-                differenceText.color = Color.red; // Negative numbers in red
-                if (soundEffectsManager != null)
-                {
-                    soundEffectsManager.PlayAudioClip(1);
-                }
-            }
-            else
-            {
-                differenceText.color = Color.white; // Zero can have a default color
-            }
+            SetDifferenceTextColor(difference);
+
+            // Play sound based on the coin difference
+            PlaySoundEffect(difference);
 
             // Update the text to display the difference
-            differenceText.text = difference != 0 ? difference.ToString("+#;-#;0") : "";
+            differenceText.text = difference != 0 ? difference.ToString(StringFormat) : "";
 
             // Start coroutine to clear the text after a specified delay
-            float displayDuration = 3f; // Adjust this value as needed (in seconds)
-            StartCoroutine(ClearTextAfterDelay(displayDuration));
+            StartCoroutine(ClearTextAfterDelay(DisplayDuration));
         }
         else
         {
             Debug.LogError("differenceText is not assigned.");
+        }
+    }
+
+    // Method to set the color of the difference text
+    private void SetDifferenceTextColor(int difference)
+    {
+        if (difference > 0)
+        {
+            differenceText.color = Color.green; // Positive numbers in green
+        }
+        else if (difference < 0)
+        {
+            differenceText.color = Color.red; // Negative numbers in red
+        }
+        else
+        {
+            differenceText.color = Color.white; // Zero can have a default color
+        }
+    }
+
+    // Method to play sound effects based on the coin difference
+    private void PlaySoundEffect(int difference)
+    {
+        if (soundEffectsManager != null)
+        {
+            if (difference > 0)
+            {
+                soundEffectsManager.PlayAudioClip(0); // Play sound for positive difference
+            }
+            else if (difference < 0)
+            {
+                soundEffectsManager.PlayAudioClip(1); // Play sound for negative difference
+            }
+        }
+        else
+        {
+            Debug.LogError("soundEffectsManager is not assigned.");
         }
     }
 
