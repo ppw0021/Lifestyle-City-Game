@@ -16,8 +16,6 @@ public class LoginManager : MonoBehaviour
 
     public void LoginButtonPressed() {
         //Debug.Log(usernameEmail.text);
-        StartCoroutine(InterfaceAPI.GetUseridList());
-        //StartCoroutine(InterfaceAPI.GetAllBases());
         StartCoroutine(InterfaceAPI.LoginPost(usernameEmail.text, passwordInput.text));
     }
 }

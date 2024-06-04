@@ -467,10 +467,10 @@ public static class InterfaceAPI
                         isResponseResponse = true;
                         
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         
-                        //Debug.Log(e);
+                        Debug.Log(e);
                         serverResponse = null;
                     }
                     

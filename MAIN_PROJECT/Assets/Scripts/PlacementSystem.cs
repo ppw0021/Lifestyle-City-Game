@@ -84,7 +84,7 @@ public class PlacementSystem : MonoBehaviour
         InterfaceAPI.baseList.Clear();
         foreach (int useridfor in InterfaceAPI.useridList)
         {
-            //Debug.Log("Attempting to load " + useridfor);
+            Debug.Log("Attempting to load " + useridfor);
             StartCoroutine(InterfaceAPI.GetAllBases(useridfor));
         }
         
