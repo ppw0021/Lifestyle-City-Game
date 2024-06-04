@@ -81,6 +81,13 @@ public class PlacementSystem : MonoBehaviour
             PlaceObject(XPOS, YPOS, STRUCID);
             //InterfaceAPI.buildingList[i].printDetails();
         }
+        InterfaceAPI.baseList.Clear();
+        foreach (int useridfor in InterfaceAPI.useridList)
+        {
+            //Debug.Log("Attempting to load " + useridfor);
+            StartCoroutine(InterfaceAPI.GetAllBases(useridfor));
+        }
+        
     }
     // Method to stop object placement
     public void StopPlacement()
@@ -184,7 +191,7 @@ public class PlacementSystem : MonoBehaviour
 
         // Add object data to the grid data
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, placedGameObjects.Count -1 ); 
-        Debug.Log("Placed Structure (x,y): (" + gridPosition.x + ", " + gridPosition.z + ") Structure ID: " + selectedObjectIndex);
+        //Debug.Log("Placed Structure (x,y): (" + gridPosition.x + ", " + gridPosition.z + ") Structure ID: " + selectedObjectIndex);
 
         // Update preview position and appearance
         preview.UpdatePosition(grid.CellToWorld(gridPosition), false); 
@@ -259,7 +266,7 @@ public class PlacementSystem : MonoBehaviour
         //Debug.Log($"Structure ID is: " + selectedObjectIndex); 
 
         // Log the loaded structure details
-        Debug.Log("Loaded Structure (x,y): (" + gridPosition.x + ", " + gridPosition.z + ") Structure ID: " + selectedObjectIndex);
+        //Debug.Log("Loaded Structure (x,y): (" + gridPosition.x + ", " + gridPosition.z + ") Structure ID: " + selectedObjectIndex);
     }
 
     

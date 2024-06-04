@@ -1162,6 +1162,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aesthetics
       objectReference: {fileID: 0}
+    - target: {fileID: 8051898988396641842, guid: 1eeb10b3fd16f6f4eace6735de2ec250, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

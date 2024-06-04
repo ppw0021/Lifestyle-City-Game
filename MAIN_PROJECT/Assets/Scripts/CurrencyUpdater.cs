@@ -24,7 +24,7 @@ public class CurrencyUpdater : MonoBehaviour
         }
         else
         {
-            Debug.LogError("differenceText is not assigned in the Inspector.");
+            //Debug.LogError("differenceText is not assigned in the Inspector.");
         }
     }
 

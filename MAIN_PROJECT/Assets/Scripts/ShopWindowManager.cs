@@ -11,6 +11,7 @@ public class ShopWindowManager : MonoBehaviour
     public GameObject tutorialButton;
     public GameObject miniGameButton;
     public GameObject wheelspinButton;
+    public GameObject multiplayerButton;
     [SerializeField]
     public SmoothCameraMovement smoothCameraMovement;
     public GameObject cancelButton;
@@ -23,12 +24,13 @@ public class ShopWindowManager : MonoBehaviour
         cancelButton.SetActive(false);
     }
 
-    public void buttonStateInteractable(bool shop, bool tutorial, bool minigame, bool wheelspin)
+    public void buttonStateInteractable(bool shop, bool tutorial, bool minigame, bool wheelspin, bool multiplayer)
     {
         shopButton.SetActive(shop);
         tutorialButton.SetActive(tutorial);
         miniGameButton.SetActive(minigame);
         wheelspinButton.SetActive(wheelspin);
+        multiplayerButton.SetActive(multiplayer);
     }
 
     public void showCancelButton(bool show)

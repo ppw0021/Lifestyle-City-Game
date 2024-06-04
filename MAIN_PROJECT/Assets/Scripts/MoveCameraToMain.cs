@@ -19,6 +19,8 @@ public class SmoothCameraMovement : MonoBehaviour
     public Vector3 tutorialTargetRotation;
     public Vector3 wheelTargetPosition;
     public Vector3 wheelTargetRotation;
+    public Vector3 multiTargetPosition;
+    public Vector3 multiTargetRotation;
     public float moveSpeed = 3f; // The speed of camera movement
 
     public GameObject shopWindow;
@@ -31,6 +33,12 @@ public class SmoothCameraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (InterfaceAPI.multiplayerViewStart)
+        {
+            InterfaceAPI.multiplayerViewStart = false;
+            transform.position = multiTargetPosition;
+            transform.rotation = Quaternion.Euler(multiTargetRotation);   
+        }
         StartCoroutine(MoveToHome(true));
     }
 
@@ -94,7 +102,7 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(true, true, true, true);
+        shopWindowManager.buttonStateInteractable(true, true, true, true, true);
         shopWindowManager.showCancelButton(false);
         
     }
@@ -105,7 +113,7 @@ public class SmoothCameraMovement : MonoBehaviour
             return;
         }
         shopWindow.SetActive(false);
-        shopWindowManager.buttonStateInteractable(false, false, false, false);
+        shopWindowManager.buttonStateInteractable(false, false, false, false, false);
         shopWindowManager.showCancelButton(true);
         StartCoroutine(MoveToHome(false));
     }
@@ -125,7 +133,7 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(false, false, false, false);
+        shopWindowManager.buttonStateInteractable(false, false, false, false, false);
         StartCoroutine(MoveToMinigame());
     }
 
@@ -135,7 +143,7 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(false, false, false, false);
+        shopWindowManager.buttonStateInteractable(false, false, false, false, false);
         StartCoroutine(MoveToTutorial());
     }
 
@@ -145,8 +153,18 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             return;
         }
-        shopWindowManager.buttonStateInteractable(false, false, false, true);
+        shopWindowManager.buttonStateInteractable(false, false, false, true, false);
         StartCoroutine(MoveToWheel());
+    }
+
+    public void MoveCamToMultiplayer()
+    {
+        if (isMoving)
+        {
+            return;
+        }
+        shopWindowManager.buttonStateInteractable(false, false, false, false, false);
+        StartCoroutine(MoveToMulti());
     }
 
     private IEnumerator MoveToHome(bool enableTriButtons)
@@ -166,7 +184,7 @@ public class SmoothCameraMovement : MonoBehaviour
         }
         if (enableTriButtons)
         {
-            shopWindowManager.buttonStateInteractable(true, true, true, true);
+            shopWindowManager.buttonStateInteractable(true, true, true, true, true);
             ShopMinigameTutUIGroup.SetActive(true);
         }
         isMoving = false;
@@ -175,7 +193,7 @@ public class SmoothCameraMovement : MonoBehaviour
     private IEnumerator MoveToShop()
     {
         isMoving = true;
-        shopWindowManager.buttonStateInteractable(true, false, false, false);
+        shopWindowManager.buttonStateInteractable(true, false, false, false, false);
         shopWindowManager.showCancelButton(false);
         while (Vector3.Distance(transform.position, shopTargetPosition) > 0.05f || Quaternion.Angle(transform.rotation, Quaternion.Euler(shopTargetRotation)) > 0.05f)
         {
@@ -225,6 +243,7 @@ public class SmoothCameraMovement : MonoBehaviour
         isMoving = false;
         SceneManager.LoadScene("TutorialSection");
     }
+    
 
     private IEnumerator MoveToWheel()
     {
@@ -252,6 +271,29 @@ public class SmoothCameraMovement : MonoBehaviour
         {
             StartCoroutine(MoveToTarget(newTargetPosition, newTargetRotation));
         }
+    }
+
+    private IEnumerator MoveToMulti()
+    {
+        isMoving = true;
+        while (Vector3.Distance(transform.position, multiTargetPosition) > 20f || Quaternion.Angle(transform.rotation, Quaternion.Euler(multiTargetRotation)) > 20f)
+        {
+            // Use Vector3.Lerp to smoothly move the camera towards the target position
+            transform.position = Vector3.Lerp(transform.position, multiTargetPosition, moveSpeed * Time.deltaTime);
+            
+            // Use Quaternion.Lerp to smoothly rotate the camera towards the target rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(multiTargetRotation), moveSpeed * Time.deltaTime);
+            
+            yield return null;
+        }
+        Quaternion rotation = Quaternion.Euler(multiTargetRotation);
+        transform.position = multiTargetPosition;
+        transform.rotation = rotation;
+        isMoving = false;
+        Debug.Log("Bases loaded into memory: " + InterfaceAPI.baseList.Count);
+        //InterfaceAPI.loadUsernameList();
+        SceneManager.LoadScene("MultiplayerMap");
+        //slotMachine.SetActive(true);
     }
 
     // Method to set the target position and rotation

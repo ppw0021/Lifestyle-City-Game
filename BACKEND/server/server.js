@@ -26,7 +26,7 @@ psql -h localhost -U postgres -d test_erp
 
 
 
-const express = require('express');
+const express = require('express')
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
@@ -199,6 +199,35 @@ app.post("/placebuilding", (req, res) => {
     });
 });
 
+app.post("/getalluserids", (req, res) => {
+    const { user_id } = req.body;
+    const query = "SELECT user_id FROM users;"
+    console.log("GET USER_ID LIST REQUEST");
+    client.query(query, (sqlerr, sqlres) => {
+
+        if(!sqlerr){
+            //console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                console.log("   no usernames (user_id): " + user_id);
+                res.json({ response: "no_usernames"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                console.log("   usernames found for (user_id): " + user_id);
+                console.log(sqlres.rows);
+                res.json(sqlres.rows);
+            }
+        } else {
+            console.log("   sql_error for (user_id): " + user_id);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
+        }
+        client.end;
+    })   
+})
 
 app.post("/getbase", (req, res) => {
     
@@ -225,6 +254,7 @@ app.post("/getbase", (req, res) => {
         } else {
             console.log("   sql_error for (user_id): " + user_id);
             res.json({ response: "sql_error"});
+            console.log(sqlerr.message);
             //res.json(sqlerr.message);
         }
         client.end;
