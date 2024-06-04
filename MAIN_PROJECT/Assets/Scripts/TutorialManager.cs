@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class TutorialManager : MonoBehaviour
 {
    
+    public GameObject tutorialPanel;  // Assign your tutorial panel in the Inspector
+
     // References to the arrow buttons in the UI
     public GameObject leftArrowButton;
     public GameObject rightArrowButton;
@@ -22,6 +24,9 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Ensure the tutorial panel is hidden initially
+        tutorialPanel.SetActive(false);
+        
         // Call UpdateVisuals to set up the UI based on the initial imageIndex
         UpdateVisuals();
         
