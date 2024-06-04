@@ -16,18 +16,30 @@ public class CloudAnimator : MonoBehaviour
     public float moveSpeed = 7f;
     public void openClouds()
     {
+        if (isMoving)
+        {
+            return;
+        }
         StartCoroutine(Open());
     }
     public void closeClouds()
     {
+        if (isMoving)
+        {
+            return;
+        }
         StartCoroutine(Close());
     }
 
     public void closeCloudsReturnHome()
     {
+        if (isMoving)
+        {
+            return;
+        }
         StartCoroutine(CloseHome());
     }
-
+    
     public void Start()
     {
         StartCoroutine(Open());
@@ -43,8 +55,8 @@ public class CloudAnimator : MonoBehaviour
             rightClouds.transform.localPosition = Vector3.Lerp(rightClouds.transform.localPosition, RopenPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        //leftClouds.transform.localPosition = LopenPosition;
-        //rightClouds.transform.localPosition = RopenPosition;
+        leftClouds.transform.localPosition = LopenPosition;
+        rightClouds.transform.localPosition = RopenPosition;
         isMoving = false;
     }
 
@@ -58,8 +70,8 @@ public class CloudAnimator : MonoBehaviour
             rightClouds.transform.localPosition = Vector3.Lerp(rightClouds.transform.localPosition, RclosedPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        //leftClouds.transform.localPosition = LclosedPosition;
-        //rightClouds.transform.localPosition = RclosedPosition;
+        leftClouds.transform.localPosition = LclosedPosition;
+        rightClouds.transform.localPosition = RclosedPosition;
         isMoving = false;
     }
 
@@ -73,8 +85,8 @@ public class CloudAnimator : MonoBehaviour
             rightClouds.transform.localPosition = Vector3.Lerp(rightClouds.transform.localPosition, RclosedPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        //leftClouds.transform.localPosition = LclosedPosition;
-        //rightClouds.transform.localPosition = RclosedPosition;
+        leftClouds.transform.localPosition = LclosedPosition;
+        rightClouds.transform.localPosition = RclosedPosition;
         isMoving = false;
         SceneManager.LoadScene("GridPlacementSystem");
     }

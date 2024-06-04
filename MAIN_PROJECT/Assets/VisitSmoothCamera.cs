@@ -11,6 +11,8 @@ public class VisitSmoothCamera : MonoBehaviour
 
     public bool isMoving = false;
 
+    public GameObject backButton;
+
     void Start()
     {
     }
@@ -27,6 +29,7 @@ public class VisitSmoothCamera : MonoBehaviour
 
     private IEnumerator MoveToMulti()
     {
+        backButton.SetActive(false);
         isMoving = true;
         while (Vector3.Distance(transform.position, multiTargetPosition) > 0.5f || Quaternion.Angle(transform.rotation, Quaternion.Euler(multiTargetRotation)) > 0.5f)
         {

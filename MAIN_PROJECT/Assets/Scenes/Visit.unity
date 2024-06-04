@@ -960,6 +960,7 @@ MonoBehaviour:
   multiTargetRotation: {x: 90, y: 0, z: 0}
   moveSpeed: 8
   isMoving: 0
+  backButton: {fileID: 1875526344}
 --- !u!114 &330585549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -975,6 +976,7 @@ MonoBehaviour:
   cloudControl: {fileID: 1233054840}
   targetPosition: {x: -4.11, y: 14.38, z: -12.88}
   targetRotation: {x: 49.953, y: 11.819, z: 2.633}
+  backButton: {fileID: 1875526344}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
