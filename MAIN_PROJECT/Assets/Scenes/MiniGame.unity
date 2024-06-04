@@ -10383,9 +10383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe35aa5eacaad764fbb1ca3a29a79aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffectsManager: {fileID: 0}
   differenceText: {fileID: 556996544}
-  coinSpendSFX: {fileID: 0}
-  coinRecieveSFX: {fileID: 0}
 --- !u!114 &556996544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24184,7 +24183,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1943683471}
   m_Direction: 2
   m_Value: 0.9999998
-  m_Size: 0.49351552
+  m_Size: 0.2467579
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -34041,6 +34040,8 @@ MonoBehaviour:
   maxZoom: 8
   smoothTime: 0.25
   cam: {fileID: 1911058284}
+  panLimitsMin: {x: -0.25, y: -0.25}
+  panLimitsMax: {x: 0.25, y: 0.25}
 --- !u!1001 &1912101340
 PrefabInstance:
   m_ObjectHideFlags: 0
