@@ -77,8 +77,9 @@ public class PlacementSystem : MonoBehaviour
             int XPOS = InterfaceAPI.buildingList[i].getXPos() - xy_offset;
             int YPOS = InterfaceAPI.buildingList[i].getYPos() - xy_offset;
             int STRUCID = InterfaceAPI.buildingList[i].getStructureId();
+            int INSTID = InterfaceAPI.buildingList[i].getInstanceId();
             Debug.Log("Attempting to Place: " + i);
-            PlaceObject(XPOS, YPOS, STRUCID);
+            PlaceObject(XPOS, YPOS, STRUCID, INSTID);
             //InterfaceAPI.buildingList[i].printDetails();
         }
         InterfaceAPI.baseList.Clear();
@@ -229,7 +230,7 @@ public class PlacementSystem : MonoBehaviour
         return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size); 
     }
     // Method to place an object from the building list
-    private void PlaceObject(int XPOS, int YPOS, int STRUCID)
+    private void PlaceObject(int XPOS, int YPOS, int STRUCID, int INSTID)
     {
         selectedObjectIndex = STRUCID; 
         // Check if the selected object index is valid
@@ -252,6 +253,8 @@ public class PlacementSystem : MonoBehaviour
         }
         // Instantiate the object from the database prefab
         GameObject newObject = Instantiate(database.objectsData[STRUCID].Prefab); 
+        newObject.GetComponent<BuildingInformation>().init(XPOS, YPOS, STRUCID, INSTID);
+        
         // Position the object at the calculated grid position
         newObject.transform.position = grid.CellToWorld(gridPosition);
 

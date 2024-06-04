@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 687013583058302812}
+  - component: {fileID: 6670046026068331651}
   m_Layer: 0
   m_Name: TOWNHALL
   m_TagString: Untagged
@@ -38,6 +39,18 @@ Transform:
   - {fileID: 87798834837421831}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6670046026068331651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8438008458043988133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3fdcf48285d664bb77b5dcf799ac0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &88211068476156363
 PrefabInstance:
   m_ObjectHideFlags: 0

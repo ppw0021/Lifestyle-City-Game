@@ -27,6 +27,11 @@ public class BuildingInstance
     {
         return int.Parse(structure_id);
     }
+    
+    public int getInstanceId()
+    {
+        return int.Parse(instance_id);
+    }
 
 
     public BuildingInstance(string instance_id, string structure_id, string building_name, string x_pos, string y_pos, string owner_username)
