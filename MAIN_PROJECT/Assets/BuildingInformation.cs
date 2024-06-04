@@ -4,16 +4,40 @@ using UnityEngine;
 
 public class BuildingInformation : MonoBehaviour
 {
-    int XPOS;
-    int YPOS;
-    int STRUCID;
-    int INSTID;
+    private int xpos;
+    private int ypos;
+    private int strucId;
+    private int instId;
 
-    public void init(int xpos, int ypos, int strucid, int instid)
+    // Getter methods for each variable
+    public int GetXPOS()
     {
-        XPOS = xpos;
-        YPOS = ypos;
-        STRUCID = strucid;
-        INSTID = instid;
+        return xpos;
     }
+
+    public int GetYPOS()
+    {
+        return ypos;
+    }
+
+    public int GetSTRUCID()
+    {
+        return strucId;
+    }
+
+    public int GetINSTID()
+    {
+        return instId;
+    }
+
+    // Method to initialize the variables
+    public void init(int xpos, int ypos, int strucId, int instId)
+    {
+        this.xpos = xpos;
+        this.ypos = ypos;
+        this.strucId = strucId;
+        this.instId = instId;
+    }
+
+
 }
