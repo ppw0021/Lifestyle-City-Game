@@ -52,32 +52,43 @@ public class CameraZoom : MonoBehaviour
         }
     }
 
-    // Method to handle panning the camera by dragging with the right mouse button
-    private void HandlePan()
+    [SerializeField] private Vector2 panLimitsMin = new Vector2(-10f, -10f); // Minimum panning limits adjustable in the inspector
+[SerializeField] private Vector2 panLimitsMax = new Vector2(10f, 10f); // Maximum panning limits adjustable in the inspector
+
+// Method to handle panning the camera by dragging with the right mouse button
+private void HandlePan()
+{
+    // Check if the right mouse button is pressed down
+    if (Input.GetMouseButtonDown(1)) // Right mouse button pressed
     {
-        // Check if the right mouse button is pressed down
-        if (Input.GetMouseButtonDown(1)) // Right mouse button pressed
-        {
-            // Capture the initial position where panning starts
-            dragOrigin = cam.ScreenToWorldPoint(Input.mousePosition);
-            // Set the flag to indicate that panning has started
-            isDragging = true;
-        }
-
-        // Check if the right mouse button is released
-        if (Input.GetMouseButtonUp(1)) // Right mouse button released
-        {
-            // Set the flag to indicate that panning has stopped
-            isDragging = false;
-        }
-
-        // If panning is in progress
-        if (isDragging) // While panning
-        {
-            // Calculate the difference between the initial and current mouse positions
-            Vector3 difference = dragOrigin - cam.ScreenToWorldPoint(Input.mousePosition);
-            // Move the camera by the calculated difference
-            cam.transform.position += difference;
-        }
+        // Capture the initial position where panning starts
+        dragOrigin = cam.ScreenToWorldPoint(Input.mousePosition);
+        // Set the flag to indicate that panning has started
+        isDragging = true;
     }
+
+    // Check if the right mouse button is released
+    if (Input.GetMouseButtonUp(1)) // Right mouse button released
+    {
+        // Set the flag to indicate that panning has stopped
+        isDragging = false;
+    }
+
+    // If panning is in progress
+    if (isDragging) // While panning
+    {
+        // Calculate the difference between the initial and current mouse positions
+        Vector3 difference = dragOrigin - cam.ScreenToWorldPoint(Input.mousePosition);
+        // Move the camera by the calculated difference
+        Vector3 newPosition = cam.transform.position + difference;
+
+        // Clamp the camera's position within the defined panning limits
+        newPosition.x = Mathf.Clamp(newPosition.x, panLimitsMin.x, panLimitsMax.x);
+        newPosition.y = Mathf.Clamp(newPosition.y, panLimitsMin.y, panLimitsMax.y);
+
+        // Apply the clamped position to the camera
+        cam.transform.position = newPosition;
+    }
+}
+
 }
