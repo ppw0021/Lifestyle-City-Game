@@ -90,7 +90,7 @@ public class SmoothCameraMovement : MonoBehaviour
         }
         else
         {
-            StartCoroutine(MoveToHome(true));MoveCamToWheel();
+            MoveCamToWheel();
         }
         // Toggle the active state of the slotsWindow
         

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ReturnToBase : MonoBehaviour
 {
-    private bool isMoving = false;
+    //private bool isMoving = false;
     public Vector3 targetPosition; // The target position to move towards
     public Vector3 targetRotation; // The target rotation to end up with
     public float moveSpeed = 3f; // The speed of camera movement
@@ -16,7 +16,7 @@ public class ReturnToBase : MonoBehaviour
 
     private IEnumerator MoveToBasePriv()
     {
-        isMoving = true;
+        //isMoving = true;
         while (Vector3.Distance(transform.position, targetPosition) > 0.05f || Quaternion.Angle(transform.rotation, Quaternion.Euler(targetRotation)) > 0.05f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
@@ -29,6 +29,6 @@ public class ReturnToBase : MonoBehaviour
             InterfaceAPI.multiplayerViewStart = true;
             SceneManager.LoadScene("GridPlacementSystem");
         }
-        isMoving = false;
+        //isMoving = false;
     }
 }
