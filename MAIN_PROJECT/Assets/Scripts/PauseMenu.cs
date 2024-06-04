@@ -29,7 +29,7 @@ public class PauseMenu : MonoBehaviour
     // Exit the game or go back to the main menu
     public void Exit()
     {
-        InterfaceAPI.buildingList=null;
+        InterfaceAPI.buildingList.Clear();
         /* This method currently exits the application when pressed
         will be changed to something else (i.e. go back to the main menu etc.) */
         pauseMenu.SetActive(false);       // Deactivate the pause menu

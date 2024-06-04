@@ -16,18 +16,30 @@ public class CloudAnimator : MonoBehaviour
     public float moveSpeed = 7f;
     public void openClouds()
     {
+        if (isMoving)
+        {
+            return;
+        }
         StartCoroutine(Open());
     }
     public void closeClouds()
     {
+        if (isMoving)
+        {
+            return;
+        }
         StartCoroutine(Close());
     }
 
     public void closeCloudsReturnHome()
     {
+        if (isMoving)
+        {
+            return;
+        }
         StartCoroutine(CloseHome());
     }
-
+    
     public void Start()
     {
         StartCoroutine(Open());
@@ -36,7 +48,7 @@ public class CloudAnimator : MonoBehaviour
     private IEnumerator Open()
     {
         isMoving = true;
-        while (Vector3.Distance(leftClouds.transform.localPosition, LopenPosition) > 0.5f)
+        while (Vector3.Distance(leftClouds.transform.localPosition, LopenPosition) > 1f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
             leftClouds.transform.localPosition = Vector3.Lerp(leftClouds.transform.localPosition, LopenPosition, moveSpeed * Time.deltaTime);
@@ -51,7 +63,7 @@ public class CloudAnimator : MonoBehaviour
     private IEnumerator Close()
     {
         isMoving = true;
-        while (Vector3.Distance(leftClouds.transform.localPosition, LclosedPosition) > 0.5f)
+        while (Vector3.Distance(leftClouds.transform.localPosition, LclosedPosition) > 1f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
             leftClouds.transform.localPosition = Vector3.Lerp(leftClouds.transform.localPosition, LclosedPosition, moveSpeed * Time.deltaTime);
@@ -66,7 +78,7 @@ public class CloudAnimator : MonoBehaviour
     private IEnumerator CloseHome()
     {
         isMoving = true;
-        while (Vector3.Distance(leftClouds.transform.localPosition, LclosedPosition) > 0.5f)
+        while (Vector3.Distance(leftClouds.transform.localPosition, LclosedPosition) > 1f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
             leftClouds.transform.localPosition = Vector3.Lerp(leftClouds.transform.localPosition, LclosedPosition, moveSpeed * Time.deltaTime);
