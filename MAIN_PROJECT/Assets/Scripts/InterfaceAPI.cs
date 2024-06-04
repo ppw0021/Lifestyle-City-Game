@@ -567,7 +567,7 @@ public static class InterfaceAPI
                         
                         //userReceived.printDetails();
                         currentUser = userReceived;
-                        IEnumerator getBaseMethod = GetBase();
+                        IEnumerator getBaseMethod = GetBase(currentUser.user_id);
                         while (getBaseMethod.MoveNext())
                         {
                             yield return getBaseMethod.Current;
