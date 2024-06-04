@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class CameraZoomForTheGridPlacement : MonoBehaviour
 {
@@ -53,6 +54,17 @@ public class CameraZoomForTheGridPlacement : MonoBehaviour
         }
     }
 
+    // Called when a new scene is loaded
+    void OnDisable()
+    {
+        // Reset the camera to its default position and rotation
+        if (cam != null)
+        {
+            cam.transform.position = defaultPosition;
+            cam.transform.rotation = defaultRotation;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -79,9 +91,6 @@ public class CameraZoomForTheGridPlacement : MonoBehaviour
             {
                 // Apply the new position to the camera
                 cam.transform.position = newPosition;
-
-                // Restrict the camera to the defined boundaries
-                cam.transform.position = RestrictToBoundary(cam.transform.position);
             }
         }
     }
@@ -118,23 +127,6 @@ public class CameraZoomForTheGridPlacement : MonoBehaviour
 
             // Update dragOrigin for the next frame
             dragOrigin = currentMousePos;
-
-            // Restrict the camera to the defined boundaries
-            cam.transform.position = RestrictToBoundary(cam.transform.position);
         }
-    }
-
-    // Method to restrict the camera position to within the boundaries
-    private Vector3 RestrictToBoundary(Vector3 position)
-    {
-        float minX = Mathf.Min(boundaryPoint1.x, boundaryPoint2.x, boundaryPoint3.x, boundaryPoint4.x);
-        float maxX = Mathf.Max(boundaryPoint1.x, boundaryPoint2.x, boundaryPoint3.x, boundaryPoint4.x);
-        float minZ = Mathf.Min(boundaryPoint1.z, boundaryPoint2.z, boundaryPoint3.z, boundaryPoint4.z);
-        float maxZ = Mathf.Max(boundaryPoint1.z, boundaryPoint2.z, boundaryPoint3.z, boundaryPoint4.z);
-
-        position.x = Mathf.Clamp(position.x, minX, maxX);
-        position.z = Mathf.Clamp(position.z, minZ, maxZ);
-
-        return position;
     }
 }
