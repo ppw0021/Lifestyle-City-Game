@@ -12,7 +12,7 @@ public class LoginManager : MonoBehaviour
 
 
     [Header("UI")]
-    public Text messageText;
+    public TextMeshProUGUI messageText;
     public TMP_InputField usernameEmail;
     public TMP_InputField passwordInput;
     //public InterfaceAPI interfaceAPIObject;

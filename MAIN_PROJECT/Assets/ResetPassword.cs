@@ -1,19 +1,19 @@
-using System.Collections;
 using UnityEngine;
 using TMPro;
-using System;
+using System.Collections;
 
-
-public class CreateUser : MonoBehaviour
+public class ResetPassword : MonoBehaviour
 {
     public TMP_InputField newUsername;
     public TMP_InputField answer;
     public TMP_InputField newPassword;
     public TMP_InputField verifyPassword;
     public TextMeshProUGUI error;
-    public void onProceedButtonClick()
+    // Start is called before the first frame update
+    public void onClick()
     {
         Debug.Log(newUsername.text + " " + answer.text + " " + newPassword.text + " " + verifyPassword.text);
+
         if (newUsername.text == "")
         {
             //Fucked up
@@ -32,12 +32,12 @@ public class CreateUser : MonoBehaviour
             error.text = ""; 
             StartCoroutine(Login());
         }
-        
     }
 
     private IEnumerator Login()
     {
-        yield return StartCoroutine(InterfaceAPI.AddUser(newUsername.text, newPassword.text, answer.text));
+        Debug.Log("Reached LOGIN");
+        yield return StartCoroutine(InterfaceAPI.UpdatePassword("password", newPassword.text, newUsername.text));
         yield return StartCoroutine(InterfaceAPI.LoginPost(newUsername.text, newPassword.text));
         error.text = "records do not match"; 
     }

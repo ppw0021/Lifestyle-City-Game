@@ -373,6 +373,36 @@ app.post("/updateuserproperty", (req, res) => {
     client.end;
 })
 
+app.post("/updateuserpassword", (req, res) => {
+    const { username, property_to_update, new_property_value } = req.body;
+
+    // Assuming property_to_update is always 'password'
+    const sqlStatement = (username, newPassword) => {
+        return 'UPDATE "users" SET "password" = \'' + newPassword + '\' WHERE "username" = \'' + username + '\'';
+    };
+
+    console.log("UPDATE USER PROP (username, property_to_update, new_property_value): " + username + ", " + property_to_update + ", " + new_property_value);
+
+    // Using property_to_update as 'password'
+    client.query(sqlStatement(username, new_property_value), (sqlerr, sqlres) => {
+        if (!sqlerr) {
+            if (sqlres.rowCount === 0) {
+                console.log("   failed (username): " + username);
+                res.json({ response: "set_sql_failed" });
+            } else {
+                console.log("   updated password for user: " + username);
+                res.json({ response: "password_updated" });
+            }
+        } else {
+            console.log("   sql_error for: " + username);
+            res.json({ response: "sql_error" });
+            console.log(sqlerr.message);
+        }
+        // Properly close the database connection
+    });
+});
+
+
 app.get("/api", (req, res) => {
     //res.json({ "users": ["userOne", "userTwo", "userThree"] })
     client.query('SELECT * FROM CLIENTS', (sqlerr, sqlres) => {
