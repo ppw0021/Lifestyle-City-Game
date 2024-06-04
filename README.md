@@ -70,7 +70,3 @@ This project is licensed under the MIT License.
 # Team members
 
 ppw0021, Nicolas-Kotze, ansonautuni, K3v123, hallowseph
-
-# Contact Information
-
-For any inquiries or feedback, please contact......
