@@ -197,3 +197,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transparentMaterial: {fileID: 2100000, guid: 8ceba338a50e1774299260c4fb771698, type: 2}
+  buildingPanelHandler: {fileID: 7575448436394085136, guid: 39e11668489f04244b974b408e325af8, type: 3}

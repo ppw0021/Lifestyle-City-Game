@@ -10,6 +10,7 @@ public class BuildingClickHandler : MonoBehaviour
 
     public Material transparentMaterial; // Assign this in the Inspector
     private Material originalMaterial;
+    public BuildingPanelHandler buildingPanelHandler; // Assign the UIPanelHandler in the Inspector
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class BuildingClickHandler : MonoBehaviour
         {
             originalMaterial = objectRenderer.material;
         }
+ 
     }
 
     private void OnMouseDown()
@@ -44,6 +46,11 @@ public class BuildingClickHandler : MonoBehaviour
         {
             ToggleTransparency();
         }
+
+        if (buildingPanelHandler != null)
+        {
+            buildingPanelHandler.TogglePanel();
+        }
     }
 
     private void ToggleTransparency()
@@ -59,4 +66,6 @@ public class BuildingClickHandler : MonoBehaviour
 
         isTransparent = !isTransparent;
     }
+
+     
 }
