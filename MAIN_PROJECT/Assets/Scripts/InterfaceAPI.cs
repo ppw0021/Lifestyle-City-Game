@@ -424,6 +424,176 @@ public static class InterfaceAPI
         }
     }
 
+    public static IEnumerator AddUser(string usernameArg, string passwordArg, string answerArg)    //This function sends a POST request to a specified URI with a JSON payload (FUTURE, JSON should be created in thisfnuction)
+    {
+        string uri = url + "/adduser";
+        string jsonData = "{\"username\": \"" + usernameArg + "\", \"password\": \"" + passwordArg + "\", \"sesh_token\": \"ABCDEFG\", \"coins\": 1000}";
+        Response serverResponse;
+        User userReceived = new User();
+        //Create POST request
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
+            webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
+            yield return webRequest.SendWebRequest();                                       //Send the actual request
+            switch (webRequest.result)                                                                  //When request arrives
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+                    break;
+                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
+                    string jsonRaw = webRequest.downloadHandler.text;
+                    //Debug.Log("Raw Response: " + jsonRaw);
+                    bool isResponseResponse = false;
+                    
+                    if (jsonRaw == "[]")
+                    {
+                        //Response is empty
+                        Debug.LogError("Empty SQL query recieved ([])");
+                        break;
+                    }
+
+                    //Try Covert JSON to Response
+                    try
+                    {
+                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                        if (serverResponse == null)
+                        {
+                            throw new Exception("Null serverResponse variable (Not Response type)");
+                        }
+                        isResponseResponse = true;
+                        
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e);
+                        serverResponse = null;
+                    }
+                    
+                    if (isResponseResponse)
+                    {
+                        //Response is a Response type
+                        Debug.Log("Successful Response Recieved");
+                        serverResponse.printResponse();
+                        if (serverResponse.response == "success")
+                        {
+                            Debug.Log("Added Successfully");
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    public static IEnumerator GetUserNoPassword(string usernameArg)    //This function sends a POST request to a specified URI with a JSON payload (FUTURE, JSON should be created in thisfnuction)
+    {
+        string uri = url + "/login";
+        string jsonData = ("{\"username\": \"" + usernameArg + "\"}");
+        Response serverResponse;
+        User userReceived = new User();
+        //Create POST request
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
+            webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
+            yield return webRequest.SendWebRequest();                                       //Send the actual request
+            switch (webRequest.result)                                                                  //When request arrives
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+                    break;
+                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
+                    string jsonRaw = webRequest.downloadHandler.text;
+                    //Debug.Log("Raw Response: " + jsonRaw);
+                    bool isResponseUser = false;
+                    bool isResponseResponse = false;
+                    
+                    if (jsonRaw == "[]")
+                    {
+                        //Response is empty
+                        Debug.LogError("Empty SQL query recieved ([])");
+                        break;
+                    }
+
+                    //Try Covert JSON to Response
+                    try
+                    {
+                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                        if (serverResponse == null)
+                        {
+                            throw new Exception("Null serverResponse variable (Not Response type)");
+                        }
+                        isResponseResponse = true;
+                        
+                    }
+                    catch (Exception)
+                    {
+                        //Debug.Log(e);
+                        serverResponse = null;
+                    }
+                    
+                    //Try Convert JSON to User
+                    
+                    try
+                    {
+                        if (isResponseResponse)
+                        {
+
+                        }
+                        else
+                        {
+                            string strippedString = StripSquareBrackets(jsonRaw);
+                            
+                            userReceived = JsonUtility.FromJson<User>(strippedString);
+                            if (userReceived == null)
+                            {
+                                throw new Exception("Null userReceived variable (Not User Type)");
+                            }
+                            isResponseUser = true;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        //Debug.Log(e);
+                    }
+                    
+                    if (isResponseUser)
+                    {
+                        //Response is User type
+                        
+                        //userReceived.printDetails();
+                        currentUser = userReceived;
+                        IEnumerator getBaseMethod = GetBase();
+                        while (getBaseMethod.MoveNext())
+                        {
+                            yield return getBaseMethod.Current;
+                        }
+
+                        Debug.Log("Successful User Retreival: " + InterfaceAPI.getUsername());
+                        currentUser.printDetails();
+                        //LoadScene(mainMenuScene);
+                    }
+                    else if (isResponseResponse)
+                    {
+                        //Response is a Response type
+                        Debug.Log("Successful Response Recieved");
+                        serverResponse.printResponse();
+                    }
+                    else
+                    {
+                        //Response is not Response type or User Type
+                    }
+                    break;
+            }
+            
+            
+        }
+    }
+
     public static IEnumerator UpdateUser()
     {
         string uri = url + "/updateuser";

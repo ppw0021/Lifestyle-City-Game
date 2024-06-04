@@ -117,7 +117,7 @@ app.post("/getuser", (req, res) => {
 app.post("/updateuser", (req, res) => {
     const { user_id, sesh_id } = req.body;
     console.log("UPDATE USER REQUEST (user_id, sesh_id): " + user_id + ", " + sesh_id);
-    client.query('SELECT user_id, username, sesh_token, level, coins, xp FROM users WHERE user_id = \'' + user_id + '\'', (sqlerr, sqlres) => {
+    client.query('SELECT user_id, username, answer, sesh_token, level, coins, xp FROM users WHERE user_id = \'' + user_id + '\'', (sqlerr, sqlres) => {
         if(!sqlerr){
             //console.log(sqlres);
             if (sqlres.rowCount == 0)
@@ -254,6 +254,35 @@ app.get("/getalluserids", (req, res) => {
         }
         client.end;
     })   
+})
+
+app.post("/adduser", (req, res) => {
+    const {username, password, answer, sesh_token, coins} = req.body;
+    const setQuery = "insert into users (username, password, answer, sesh_token, level, coins, xp) values ('" + username + "', '" + password + "', '" + answer + "', '" + sesh_token + "', 0, " + coins + ", 0);";
+    console.log("ADD USER REQUEST: ('" + username + "', '" + password + "', '" + answer + "', '" + sesh_token + "', 0, " + coins + ", 0);");
+    client.query(setQuery, (sqlerr, sqlres) => {
+        if(!sqlerr){
+            //console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                console.log("   add user failed (username): " + username);
+                res.json({ response: "no_match"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                console.log("   add user success (username): " + username);
+                res.json({ response: "success"});
+            }
+        } else {
+            console.log("   sql_error for (username): " + username);
+            console.log(sqlerr.message);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
+        }
+        client.end;
+    })
 })
 
 app.post("/getbase", (req, res) => {
