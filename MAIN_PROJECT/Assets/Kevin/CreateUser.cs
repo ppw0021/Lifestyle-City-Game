@@ -10,21 +10,26 @@ public class CreateUser : MonoBehaviour
     public TMP_InputField answer;
     public TMP_InputField newPassword;
     public TMP_InputField verifyPassword;
-    public Button proceedButton;
     
     void Start()
     {
-        proceedButton.onClick.AddListener(onProceedButtonClick);
     }
 
-    // Update is called once per frame
+    // Update is called once per frame 
     void Update()
     {
         
     }
 
-    void onProceedButtonClick()
+    public void onProceedButtonClick()
     {
-        Debug.Log(newUsername + " " + answer + " " + newPassword + " " + verifyPassword);
+        Debug.Log(newUsername.text + " " + answer.text + " " + newPassword.text + " " + verifyPassword.text);
+        StartCoroutine(Login());
+    }
+
+    private IEnumerator Login()
+    {
+        yield return StartCoroutine(InterfaceAPI.AddUser(newUsername.text, newPassword.text, answer.text));
+        yield return StartCoroutine(InterfaceAPI.LoginPost(newUsername.text, newPassword.text));
     }
 }
