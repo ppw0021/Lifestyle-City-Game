@@ -422,114 +422,102 @@ public static class InterfaceAPI
         }
     }
     public static IEnumerator GetUseridList()
+{
+    string uri = url + "/getalluserids";
+    Response serverResponse;
+    
+    // Create GET request
+    using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
     {
-        string uri = url + "/getalluserids";
-        string jsonData = "{\"user_id\": " + currentUser.user_id + "}";
-
-        Response serverResponse;
-        
-        //Create POST request
-        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(uri, "application/json"))
+        webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
+        yield return webRequest.SendWebRequest();                                       // Send the actual request
+        switch (webRequest.result)                                                      // When request arrives
         {
-            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);          //Convert JSON to byte array
-            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);                    //Attach JSON to request
-            webRequest.SetRequestHeader("Content-Type", "application/json");                // Set the content type
-            yield return webRequest.SendWebRequest();                                       //Send the actual request
-            switch (webRequest.result)                                                                  //When request arrives
-            {
-                case UnityWebRequest.Result.ConnectionError:
-                case UnityWebRequest.Result.DataProcessingError:
-                    Debug.LogError(string.Format("Something went wrong: {0}", webRequest.error));
+            case UnityWebRequest.Result.ConnectionError:
+            case UnityWebRequest.Result.DataProcessingError:
+                Debug.LogError(string.Format("Error: {0}", webRequest.error));
+                break;
+            case UnityWebRequest.Result.Success:                                        // Information received successfully 
+                string jsonRaw = webRequest.downloadHandler.text;
+                
+                bool isResponseUseridlist = false;
+                bool isResponseResponse = false;
+                
+                if (jsonRaw == "[]")
+                {
+                    // Response is empty
+                    Debug.LogError("Empty SQL query received ([])");
                     break;
-                case UnityWebRequest.Result.Success:                                                    //Information recieved successfully 
-                    string jsonRaw = webRequest.downloadHandler.text;
-                    //Debug.Log("JSON");
-                    //Debug.Log(jsonRaw);
-                    
-                    bool isResponseUseridlist = false;
-                    bool isResponseResponse = false;
-                    
-                    if (jsonRaw == "[]")
-                    {
-                        //Response is empty
-                        Debug.LogError("Empty SQL query recieved ([])");
-                        break;
-                    }
+                }
 
-                    //Try Covert JSON to Response
-                    try
+                // Try Convert JSON to Response
+                try
+                {
+                    serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
+                    if (serverResponse == null)
                     {
-                        serverResponse = JsonUtility.FromJson<Response>(jsonRaw);
-                        if (serverResponse == null)
-                        {
-                            throw new Exception("Null serverResponse variable (Not Response type)");
-                        }
-                        isResponseResponse = true;
-                        
+                        throw new Exception("Null serverResponse variable (Not Response type)");
                     }
-                    catch (Exception)
+                    isResponseResponse = true;
+                }
+                catch (Exception)
+                {
+                    serverResponse = null;
+                }
+                
+                // Try Convert JSON to User
+                try
+                {
+                    if (isResponseResponse)
                     {
-                        
-                        //Debug.Log(e);
-                        serverResponse = null;
-                    }
-                    
-                    //Try Convert JSON to User
-                    try
-                    {
-                        if (isResponseResponse)
-                        {
 
-                        }
-                        else
-                        {
-                            //string strippedString = StripSquareBrackets(jsonRaw);
-                            LoadPrefabs();
-                            useridList.Clear();
-                            string appendedJson = "{\"name\": \"name\",\"InnerUseridObjects\":" + jsonRaw + "}";
-                            Debug.Log("Userid List: " + appendedJson);
-                            ListOfUseridsFromJSON useridListOBJ = JsonUtility.FromJson<ListOfUseridsFromJSON>(appendedJson);
-
-                            for (int i = 0; i < useridListOBJ.InnerUseridObjects.Length; i++)
-                            {
-                                useridList.Add(int.Parse(useridListOBJ.InnerUseridObjects[i].user_id));
-                            }
-
-                            if (useridListOBJ == null)
-                            {
-                                throw new Exception("Null usernameListOBJ variable (Not User Type)");
-                            }
-
-                            //Debug.Log("Count: " + useridListOBJ.InnerUseridObjects.Length);
-                            //Debug.Log(useridList.Count);
-                            isResponseUseridlist = true;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.Log(e);
-                    }
-                    
-                    if (isResponseUseridlist)
-                    {
-                        //Response is username list
-                        Debug.Log("Username List Recieved Successfully");
-                    }
-                    else if (isResponseResponse)
-                    {
-                        //Response is a Response type
-                        LoadPrefabs();
-                        Debug.Log("Successful Response Recieved");
-                        serverResponse.printResponse();
                     }
                     else
                     {
-                        //Response is not Response type or User Type
+                        LoadPrefabs();
+                        useridList.Clear();
+                        string appendedJson = "{\"name\": \"name\",\"InnerUseridObjects\":" + jsonRaw + "}";
+                        Debug.Log("Userid List: " + appendedJson);
+                        ListOfUseridsFromJSON useridListOBJ = JsonUtility.FromJson<ListOfUseridsFromJSON>(appendedJson);
+
+                        for (int i = 0; i < useridListOBJ.InnerUseridObjects.Length; i++)
+                        {
+                            useridList.Add(int.Parse(useridListOBJ.InnerUseridObjects[i].user_id));
+                        }
+
+                        if (useridListOBJ == null)
+                        {
+                            throw new Exception("Null usernameListOBJ variable (Not User Type)");
+                        }
+                        isResponseUseridlist = true;
                     }
-                    break;
-            }
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+                
+                if (isResponseUseridlist)
+                {
+                    // Response is username list
+                    Debug.Log("Username List Received Successfully");
+                }
+                else if (isResponseResponse)
+                {
+                    // Response is a Response type
+                    LoadPrefabs();
+                    Debug.Log("Successful Response Received");
+                    serverResponse.printResponse();
+                }
+                else
+                {
+                    // Response is not Response type or User Type
+                }
+                break;
         }
     }
+}
+
     public static IEnumerator GetAllBases(int currentUserNameToCheck)
     {
 

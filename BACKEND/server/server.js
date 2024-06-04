@@ -199,8 +199,8 @@ app.post("/placebuilding", (req, res) => {
     });
 });
 
-app.post("/getalluserids", (req, res) => {
-    const { user_id } = req.body;
+app.get("/getalluserids", (req, res) => {
+    //const { user_id } = req.body;
     const query = "SELECT user_id FROM users;"
     console.log("GET USER_ID LIST REQUEST");
     client.query(query, (sqlerr, sqlres) => {
@@ -210,18 +210,18 @@ app.post("/getalluserids", (req, res) => {
             if (sqlres.rowCount == 0)
             {
                 //No rows, send response
-                console.log("   no usernames (user_id): " + user_id);
+                console.log("   no usernames (user_id): ");
                 res.json({ response: "no_usernames"});
             }
             else
             {
                 //This can only be called ONCE
-                console.log("   usernames found for (user_id): " + user_id);
+                console.log("   usernames found for (user_id): ");
                 console.log(sqlres.rows);
                 res.json(sqlres.rows);
             }
         } else {
-            console.log("   sql_error for (user_id): " + user_id);
+            console.log("   sql_error for (user_id): ");
             res.json({ response: "sql_error"});
             //res.json(sqlerr.message);
         }
