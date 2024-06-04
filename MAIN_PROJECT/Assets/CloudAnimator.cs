@@ -50,9 +50,10 @@ public class CloudAnimator : MonoBehaviour
         isMoving = true;
         while (Vector3.Distance(leftClouds.transform.localPosition, LopenPosition) > 1f)
         {
+            Debug.Log(leftClouds.transform.localPosition.x);
             // Use Vector3.Lerp to smoothly move the camera towards the target position
-            leftClouds.transform.localPosition = Vector3.Lerp(leftClouds.transform.localPosition, LopenPosition, moveSpeed * Time.deltaTime);
-            rightClouds.transform.localPosition = Vector3.Lerp(rightClouds.transform.localPosition, RopenPosition, moveSpeed * Time.deltaTime);
+            leftClouds.transform.localPosition = Vector3.MoveTowards(leftClouds.transform.localPosition, LopenPosition, moveSpeed * Time.deltaTime);
+            rightClouds.transform.localPosition = Vector3.MoveTowards(rightClouds.transform.localPosition, RopenPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
         leftClouds.transform.localPosition = LopenPosition;
@@ -66,8 +67,8 @@ public class CloudAnimator : MonoBehaviour
         while (Vector3.Distance(leftClouds.transform.localPosition, LclosedPosition) > 1f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
-            leftClouds.transform.localPosition = Vector3.Lerp(leftClouds.transform.localPosition, LclosedPosition, moveSpeed * Time.deltaTime);
-            rightClouds.transform.localPosition = Vector3.Lerp(rightClouds.transform.localPosition, RclosedPosition, moveSpeed * Time.deltaTime);
+            leftClouds.transform.localPosition = Vector3.MoveTowards(leftClouds.transform.localPosition, LclosedPosition, moveSpeed * Time.deltaTime);
+            rightClouds.transform.localPosition = Vector3.MoveTowards(rightClouds.transform.localPosition, RclosedPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
         leftClouds.transform.localPosition = LclosedPosition;
@@ -81,8 +82,8 @@ public class CloudAnimator : MonoBehaviour
         while (Vector3.Distance(leftClouds.transform.localPosition, LclosedPosition) > 1f)
         {
             // Use Vector3.Lerp to smoothly move the camera towards the target position
-            leftClouds.transform.localPosition = Vector3.Lerp(leftClouds.transform.localPosition, LclosedPosition, moveSpeed * Time.deltaTime);
-            rightClouds.transform.localPosition = Vector3.Lerp(rightClouds.transform.localPosition, RclosedPosition, moveSpeed * Time.deltaTime);
+            leftClouds.transform.localPosition = Vector3.MoveTowards(leftClouds.transform.localPosition, LclosedPosition, moveSpeed * Time.deltaTime);
+            rightClouds.transform.localPosition = Vector3.MoveTowards(rightClouds.transform.localPosition, RclosedPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
         leftClouds.transform.localPosition = LclosedPosition;

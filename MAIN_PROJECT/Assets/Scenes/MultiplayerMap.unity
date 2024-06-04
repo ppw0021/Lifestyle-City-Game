@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0, g: 0.34035748, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.34035754, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1130,6 +1130,7 @@ MonoBehaviour:
   multiTargetRotation: {x: 0, y: 0, z: 0}
   moveSpeed: 3
   isMoving: 0
+  backButton: {fileID: 0}
 --- !u!1 &331152245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1945,6 +1946,10 @@ PrefabInstance:
     - target: {fileID: 150260748288388991, guid: d660dbc45ce3c9041b76ad915dd8cfda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266227764671348819, guid: d660dbc45ce3c9041b76ad915dd8cfda, type: 3}
+      propertyPath: moveSpeed
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2266227764671348819, guid: d660dbc45ce3c9041b76ad915dd8cfda, type: 3}
       propertyPath: LclosedPosition.x

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0, g: 0.34035748, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.34035754, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2730,11 +2730,6 @@ PrefabInstance:
 --- !u!224 &568810304 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 214262498164565363, guid: 35a41af3b53969e4faf8da7b4f93eba8, type: 3}
-  m_PrefabInstance: {fileID: 568810303}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &568810305 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1169262123825736963, guid: 35a41af3b53969e4faf8da7b4f93eba8, type: 3}
   m_PrefabInstance: {fileID: 568810303}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &570713060 stripped
@@ -6459,8 +6454,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a58b5f28e0bfe24e9da9d4280ced8f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialPanel: {fileID: 568810305}
-  tutorialButton: {fileID: 1500644280}
 --- !u!1 &1500973071
 GameObject:
   m_ObjectHideFlags: 0
@@ -9568,6 +9561,10 @@ PrefabInstance:
     - target: {fileID: 150260748288388991, guid: d660dbc45ce3c9041b76ad915dd8cfda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266227764671348819, guid: d660dbc45ce3c9041b76ad915dd8cfda, type: 3}
+      propertyPath: moveSpeed
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2266227764671348819, guid: d660dbc45ce3c9041b76ad915dd8cfda, type: 3}
       propertyPath: LclosedPosition.x
