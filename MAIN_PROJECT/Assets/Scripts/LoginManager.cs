@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 
 public class LoginManager : MonoBehaviour
 {
+    private static string mainMenuScene = "GridPlacementSystem";
+
     [Header("UI")]
     public Text messageText;
     public TMP_InputField usernameEmail;
@@ -16,6 +20,11 @@ public class LoginManager : MonoBehaviour
 
     public void LoginButtonPressed() {
         //Debug.Log(usernameEmail.text);
-        StartCoroutine(InterfaceAPI.LoginPost(usernameEmail.text, passwordInput.text));
+        StartCoroutine(WaitForLoginAndUserList());
+    }
+
+    private IEnumerator WaitForLoginAndUserList() {
+        yield return StartCoroutine(InterfaceAPI.GetUseridList());
+        yield return StartCoroutine(InterfaceAPI.LoginPost(usernameEmail.text, passwordInput.text));
     }
 }

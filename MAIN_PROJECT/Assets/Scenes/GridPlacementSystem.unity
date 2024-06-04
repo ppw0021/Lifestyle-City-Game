@@ -1442,6 +1442,8 @@ MonoBehaviour:
   wheelTargetRotation: {x: 0, y: -63.839, z: 0}
   multiTargetPosition: {x: 0, y: 600, z: 0}
   multiTargetRotation: {x: 90, y: 0, z: 0}
+  animalPosition: {x: 0, y: 600, z: 0}
+  animalRotation: {x: 90, y: 0, z: 0}
   moveSpeed: 6
   shopWindow: {fileID: 1456698203}
   ShopMinigameTutUIGroup: {fileID: 757181864}
@@ -4919,7 +4921,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 330585548}
         m_TargetAssemblyTypeName: SmoothCameraMovement, Assembly-CSharp
-        m_MethodName: MoveCamToMultiplayer
+        m_MethodName: MoveCamToAnimal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

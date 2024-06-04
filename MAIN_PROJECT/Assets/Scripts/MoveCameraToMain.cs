@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using Unity.VisualScripting.Antlr3.Runtime;
-using UnityEngine.SceneManagement;
+    using UnityEngine.SceneManagement;
 
 public class SmoothCameraMovement : MonoBehaviour
 {
@@ -21,6 +21,8 @@ public class SmoothCameraMovement : MonoBehaviour
     public Vector3 wheelTargetRotation;
     public Vector3 multiTargetPosition;
     public Vector3 multiTargetRotation;
+    public Vector3 animalPosition;
+    public Vector3 animalRotation;
     public float moveSpeed = 3f; // The speed of camera movement
 
     public GameObject shopWindow;
@@ -40,6 +42,12 @@ public class SmoothCameraMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(multiTargetRotation);   
         }
         StartCoroutine(MoveToHome(true));
+
+        foreach (int id in InterfaceAPI.useridList)
+        {
+            StartCoroutine(InterfaceAPI.GetAndAddUserToList(id));
+        }
+        
     }
 
     // Coroutine to smoothly move the camera to the target position and rotation
@@ -62,6 +70,7 @@ public class SmoothCameraMovement : MonoBehaviour
 
     public void ToggleShop()
     {
+        //Debug.Log("Users loaded into memory: " + InterfaceAPI.userList.Count);
         if (isMoving)
         {
             return;
@@ -165,6 +174,17 @@ public class SmoothCameraMovement : MonoBehaviour
         }
         shopWindowManager.buttonStateInteractable(false, false, false, false, false, false);
         StartCoroutine(MoveToMulti());
+    }
+
+    public void MoveCamToAnimal()
+    {
+        if (isMoving)
+        {
+            return;
+        }
+        shopWindowManager.buttonStateInteractable(false, false, false, false, false, false);
+        StartCoroutine(MoveToAnimal());
+
     }
 
     private IEnumerator MoveToHome(bool enableTriButtons)
@@ -293,6 +313,28 @@ public class SmoothCameraMovement : MonoBehaviour
         Debug.Log("Bases loaded into memory: " + InterfaceAPI.baseList.Count);
         //InterfaceAPI.loadUsernameList();
         SceneManager.LoadScene("MultiplayerMap");
+        //slotMachine.SetActive(true);
+    }
+
+    private IEnumerator MoveToAnimal()
+    {
+        isMoving = true;
+        while (Vector3.Distance(transform.position, animalPosition) > 20f || Quaternion.Angle(transform.rotation, Quaternion.Euler(animalRotation)) > 20f)
+        {
+            // Use Vector3.Lerp to smoothly move the camera towards the target position
+            transform.position = Vector3.Lerp(transform.position, animalPosition, moveSpeed * Time.deltaTime);
+            
+            // Use Quaternion.Lerp to smoothly rotate the camera towards the target rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(animalRotation), moveSpeed * Time.deltaTime);
+            
+            yield return null;
+        }
+        Quaternion rotation = Quaternion.Euler(animalRotation);
+        transform.position = animalPosition;
+        transform.rotation = rotation;
+        isMoving = false;
+        //InterfaceAPI.loadUsernameList();
+        SceneManager.LoadScene("Animal");
         //slotMachine.SetActive(true);
     }
 

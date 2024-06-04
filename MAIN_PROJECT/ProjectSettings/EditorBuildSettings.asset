@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MultiplayerMap.unity
     guid: c3b8b794ec43db548928ef3947edf253
+  - enabled: 1
+    path: Assets/Scenes/Animal.unity
+    guid: 91fd73b8995128f43b80f23d46815887
   m_configObjects: {}

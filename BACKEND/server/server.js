@@ -87,6 +87,33 @@ app.post("/login", (req, res) => {
     })
 })
 
+app.post("/getuser", (req, res) => {
+    const { user_id } = req.body;
+    console.log("GETUSER REQUEST (user_id): " + user_id);
+    client.query('SELECT user_id, username, sesh_token, level, coins, xp FROM users WHERE user_id = \'' + user_id + '\'', (sqlerr, sqlres) => {
+        if(!sqlerr){
+            //console.log(sqlres);
+            if (sqlres.rowCount == 0)
+            {
+                //No rows, send response
+                console.log("   no match (user_id): " + user_id);
+                res.json({ response: "no_match"});
+            }
+            else
+            {
+                //This can only be called ONCE
+                console.log("   found user (user_id): " + user_id);
+                res.json(sqlres.rows);
+            }
+        } else {
+            console.log("   sql_error for: " + user_id);
+            res.json({ response: "sql_error"});
+            //res.json(sqlerr.message);
+        }
+        client.end;
+    })
+})
+
 app.post("/updateuser", (req, res) => {
     const { user_id, sesh_id } = req.body;
     console.log("UPDATE USER REQUEST (user_id, sesh_id): " + user_id + ", " + sesh_id);

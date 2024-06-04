@@ -48,10 +48,16 @@ public class IslandLoaderScript : MonoBehaviour
         int startingIndex = 0;
         foreach (Base baseInstance in InterfaceAPI.baseList)
         {
-            Vector3 spawnPosition = new Vector3(possibleXPosList[startingIndex], 0, possibleZPosList[startingIndex]);
-            startingIndex++;
-            GameObject spawnedPrefab = Instantiate(islandPrefab, spawnPosition, Quaternion.identity, canvas.transform);
-            spawnedPrefab.GetComponent<ViewCity>().init(baseInstance.user_id_element);
+            if (baseInstance.user_id_element == InterfaceAPI.currentUser.user_id)
+            {
+                //Ignore current user
+            }
+            else{
+                Vector3 spawnPosition = new Vector3(possibleXPosList[startingIndex], 0, possibleZPosList[startingIndex]);
+                startingIndex++;
+                GameObject spawnedPrefab = Instantiate(islandPrefab, spawnPosition, Quaternion.identity, canvas.transform);
+                spawnedPrefab.GetComponent<ViewCity>().init(baseInstance.user_id_element);
+            }
         }
     }
 

@@ -10,12 +10,20 @@ public class ViewCity : MonoBehaviour
     public RectTransform uiElement; // The UI element's RectTransform
     public Canvas canvas; // The Canvas
     public Camera mainCamera; // The main camera
-    public TextMeshProUGUI buttonText; 
+    public TextMeshProUGUI usernameText;
+    public TextMeshProUGUI levelText; 
     public int user_id_arg;
 
     public void init(int user_id_arg)
     {
-        buttonText.text = user_id_arg.ToString();
+        foreach (User userCheck in InterfaceAPI.userList)
+        {
+            if (userCheck.user_id == user_id_arg)
+            {
+                usernameText.text = userCheck.username;
+                levelText.text = userCheck.level.ToString();
+            }
+        }
     }
     
     void Update()
