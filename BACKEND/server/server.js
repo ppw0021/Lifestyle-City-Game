@@ -11,6 +11,8 @@ docker pull dec5star/backend:arm64
 * This will run, and port forward HTTPS port 443, if you would like to add HTTP, uncomment the corresponding line and add -p 80:80
 * docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5star/backend:arm
 docker run -v /etc/letsencrypt/archive/penushost.ddns.net/:/cert -p 443:443 dec5star/backend:arm64
+
+RUN NEW SCRIPT FOR WORKING HOST.DOCKER.INTERNAL
 */
 
 //How to run POSTGRES shell
